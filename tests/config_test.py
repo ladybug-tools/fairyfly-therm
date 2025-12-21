@@ -1,54 +1,25 @@
 # coding=utf-8
-from honeybee_energy.config import folders
-from honeybee_energy.writer import energyplus_idf_version
+from fairyfly_therm.config import folders
 
 
 def test_config_init():
     """Test the initialization of the config module and basic properties."""
-    assert hasattr(folders, 'energyplus_path')
-    assert folders.energyplus_path is None or isinstance(folders.energyplus_path, str)
-    assert hasattr(folders, 'energyplus_exe')
-    assert folders.energyplus_exe is None or isinstance(folders.energyplus_exe, str)
-    assert hasattr(folders, 'energyplus_version')
-    assert folders.energyplus_version is None or isinstance(folders.energyplus_version, tuple)
+    assert hasattr(folders, 'therm_path')
+    assert folders.therm_path is None or isinstance(folders.therm_path, str)
+    assert hasattr(folders, 'therm_exe')
+    assert folders.therm_exe is None or isinstance(folders.therm_exe, str)
+    assert hasattr(folders, 'therm_version')
+    assert folders.therm_version is None or isinstance(folders.therm_version, tuple)
 
-    assert hasattr(folders, 'openstudio_path')
-    assert folders.openstudio_path is None or isinstance(folders.openstudio_path, str)
-    assert hasattr(folders, 'openstudio_exe')
-    assert folders.openstudio_exe is None or isinstance(folders.openstudio_exe, str)
-    assert hasattr(folders, 'openstudio_version')
-    assert folders.openstudio_version is None or isinstance(folders.openstudio_version, tuple)
-    assert hasattr(folders, 'openstudio_lib_path')
-    assert folders.openstudio_lib_path is None or isinstance(folders.openstudio_lib_path, str)
-
-    assert hasattr(folders, 'honeybee_openstudio_gem_path')
-    assert folders.honeybee_openstudio_gem_path is None or \
-        isinstance(folders.honeybee_openstudio_gem_path, str)
-
-    assert hasattr(folders, 'standards_data_folder')
-    assert isinstance(folders.standards_data_folder, str)
-    assert isinstance(folders.construction_lib, str)
-    assert isinstance(folders.constructionset_lib, str)
-    assert isinstance(folders.schedule_lib, str)
-    assert isinstance(folders.programtype_lib, str)
+    assert hasattr(folders, 'lbnl_data_path')
+    assert folders.lbnl_data_path is None or isinstance(folders.lbnl_data_path, str)
+    assert hasattr(folders, 'therm_settings_path')
+    assert folders.therm_settings_path is None or isinstance(folders.therm_settings_path, str)
+    assert hasattr(folders, 'therm_lib_path')
+    assert folders.therm_lib_path is None or isinstance(folders.therm_lib_path, str)
+    assert hasattr(folders, 'material_lib_file')
+    assert folders.material_lib_file is None or isinstance(folders.material_lib_file, str)
+    assert hasattr(folders, 'bc_steady_state_lib_file')
+    assert folders.bc_steady_state_lib_file is None or isinstance(folders.bc_steady_state_lib_file, str)
 
     assert isinstance(folders.config_file, str)
-
-
-def test_config_ironbug():
-    """Test the config's ability to sense Ironbug installations."""
-    assert hasattr(folders, 'ironbug_path')
-    assert isinstance(folders.ironbug_path, str)
-    assert hasattr(folders, 'ironbug_exe')
-    assert isinstance(folders.ironbug_exe, str)
-    assert hasattr(folders, 'ironbug_version_str')
-    assert isinstance(folders.ironbug_version_str, str)
-    assert hasattr(folders, 'openstudio_csharp_path')
-    assert isinstance(folders.openstudio_csharp_path, str)
-
-
-def test_writer_version_idf():
-    """Test the energyplus_idf_version method."""
-    assert energyplus_idf_version() is None or \
-        isinstance(energyplus_idf_version(), str)
-    assert isinstance(energyplus_idf_version((9, 2, 0)), str)

@@ -1,47 +1,59 @@
-"""Commands to set honeybee-radiance configurations."""
+"""Commands to set fairyfly-therm configurations."""
 import click
 import sys
 import logging
 import json
 
-from honeybee_radiance.config import folders
+from fairyfly_therm.config import folders
 
 _logger = logging.getLogger(__name__)
 
 
-@click.group(help='Commands to set honeybee-radiance configurations.')
+@click.group(help='Commands to set fairyfly-therm configurations.')
 def set_config():
     pass
 
 
-@set_config.command('radiance-path')
+@set_config.command('therm-path')
 @click.argument('folder-path', required=False, type=click.Path(
     exists=True, file_okay=False, dir_okay=True, resolve_path=True))
-def radiance_path(folder_path):
-    """Set the radiance-path configuration variable.
+def therm_path(folder_path):
+    """Set the therm-path configuration variable.
 
     \b
     Args:
-        folder_path: Path to a folder to be set as the radiance-path.
-            If unspecified, the radiance-path will be set back to
-            the default.
+        folder_path: Path to a folder to be set as the therm-path.
+            If unspecified, the therm-path will be set back to the default.
     """
-    _set_config_variable(folder_path, 'radiance_path')
+    _set_config_variable(folder_path, 'therm_path')
 
 
-@set_config.command('standards-data-folder')
+@set_config.command('lbnl-data-path')
 @click.argument('folder-path', required=False, type=click.Path(
     exists=True, file_okay=False, dir_okay=True, resolve_path=True))
-def standards_data_folder(folder_path):
-    """Set the standards-data-folder configuration variable.
+def lbnl_data_path(folder_path):
+    """Set the lbnl-data-path configuration variable.
 
     \b
     Args:
-        folder_path: Path to a folder to be set as the standards-data-folder.
-            If unspecified, the standards-data-folder will be set back to
-            the default.
+        folder_path: Path to a folder to be set as the lbnl-data-path.
+            If unspecified, the lbnl-data-path will be set back to the default.
     """
-    _set_config_variable(folder_path, 'standards_data_folder')
+    _set_config_variable(folder_path, 'lbnl_data_path')
+
+
+@set_config.command('therm-lib-path')
+@click.argument('folder-path', required=False, type=click.Path(
+    exists=True, file_okay=False, dir_okay=True, resolve_path=True))
+def therm_lib_path(folder_path):
+    """Set the therm-lib-path configuration variable.
+
+    \b
+    Args:
+        folder_path: Path to a folder to be set as the therm-lib-path.
+            If unspecified, the therm-lib-path will be set back to the default.
+    """
+    _set_config_variable(folder_path, 'therm_lib_path')
 
 
 def _set_config_variable(folder_path, variable_name):
