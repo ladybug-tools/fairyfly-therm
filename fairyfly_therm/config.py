@@ -130,7 +130,7 @@ class Folders(object):
             if path:
                 msg = '{} is not a valid path to a LBNL data folder.'.format(path)
                 print(msg)
-            self._therm_lib_path = None
+            self._lbnl_data_path = None
             self._therm_settings_path = None
 
     @property
