@@ -1,0 +1,3 @@
+from tests.material_solid_test import test_material_dict_methods
+
+test_material_dict_methods()

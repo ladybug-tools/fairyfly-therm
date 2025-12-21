@@ -1,4 +1,5 @@
-![Fairyfly](https://raw.githubusercontent.com/ladybug-tools/artwork/refs/heads/master/icons_bugs/png/fairyfly-small.png) <img src="i![mage_url.jpg](https://raw.githubusercontent.com/ladybug-tools/artwork/refs/heads/master/icons_components/fairyfly/png/therm.png)" alt="THERM" width="150" height="150">
+![Fairyfly](https://raw.githubusercontent.com/ladybug-tools/artwork/refs/heads/master/icons_bugs/png/fairyfly-small.png)
+<img src="https://raw.githubusercontent.com/ladybug-tools/artwork/refs/heads/master/icons_components/fairyfly/png/therm.png" alt="THERM" width="150" height="150">
 
 [![Build Status](https://github.com/ladybug-tools/fairyfly-therm/workflows/CI/badge.svg)](https://github.com/ladybug-tools/fairyfly-therm/actions)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-orange.svg)](https://www.python.org/downloads/release/python-3100/)
