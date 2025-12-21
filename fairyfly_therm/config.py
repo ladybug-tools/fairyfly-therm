@@ -66,7 +66,7 @@ class Folders(object):
             self._therm_path = t_path
             self._therm_exe = therm_exe_file
             self._therm_version = self.THERM_VERSION
-            self._therm_version_str = '.'.join(str(i for i in self.THERM_VERSION))
+            self._therm_version_str = '.'.join(str(i) for i in self.THERM_VERSION)
             if not self.mute:
                 print("Path to Therm is set to: %s" % self._therm_path)
         else:
