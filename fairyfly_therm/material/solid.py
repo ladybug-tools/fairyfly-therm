@@ -18,7 +18,8 @@ class SolidMaterial(_ThermMaterialBase):
         emissivity: Number between 0 and 1 for the infrared hemispherical
             emissivity of the front side of the glass. (Default: 0.9).
         emissivity_back: Number between 0 and 1 for the infrared hemispherical
-            emissivity of the back side of the glass. (Default: 0.9)
+            emissivity of the back side of the glass. If None, this will
+            default to the same value specified for emissivity. (Default: None)
         density: Optional number for the density of the material [kg/m3]. (Default: None).
         porosity: Optional number between zero and one for the porosity of
             the material. (Default: None).
@@ -63,7 +64,6 @@ class SolidMaterial(_ThermMaterialBase):
         self.porosity = porosity
         self.specific_heat = specific_heat
         self.vapor_diffusion_resistance = vapor_diffusion_resistance
-        self._locked = False
 
     @property
     def conductivity(self):
@@ -252,6 +252,10 @@ class SolidMaterial(_ThermMaterialBase):
             data['identifier'])
         if 'display_name' in data and data['display_name'] is not None:
             new_mat.display_name = data['display_name']
+        if 'color' in data and data['color'] is not None:
+            new_mat.color = data['color']
+        if 'protected' in data and data['protected'] is not None:
+            new_mat.protected = data['protected']
         if 'user_data' in data and data['user_data'] is not None:
             new_mat.user_data = data['user_data']
         return new_mat
@@ -298,6 +302,8 @@ class SolidMaterial(_ThermMaterialBase):
         xml_name.text = self.display_name
         xml_protect = ET.SubElement(xml_mat, 'Protected')
         xml_protect.text = 'true' if self.protected else 'false'
+        xml_color = ET.SubElement(xml_mat, 'Color')
+        xml_color.text = self.color.to_hex()
         xml_solid = ET.SubElement(xml_mat, 'Solid')
         # add all of the required hygrothermal and optical attributes
         xml_hyt = ET.SubElement(xml_solid, 'HygroThermal')
@@ -335,7 +341,7 @@ class SolidMaterial(_ThermMaterialBase):
             return ET.tostring(xml_root)
 
     def to_dict(self):
-        """Energy Material dictionary representation."""
+        """SolidMaterial dictionary representation."""
         base = {
             'type': 'SolidMaterial',
             'identifier': self.identifier,
@@ -354,6 +360,8 @@ class SolidMaterial(_ThermMaterialBase):
             base['vapor_diffusion_resistance'] = self.vapor_diffusion_resistance
         if self._display_name is not None:
             base['display_name'] = self.display_name
+        base['protected'] = self._protected
+        base['color'] = self.color.to_hex()
         if self._user_data is not None:
             base['user_data'] = self.user_data
         return base
@@ -379,6 +387,8 @@ class SolidMaterial(_ThermMaterialBase):
             self._density, self._porosity, self._specific_heat,
             self._vapor_diffusion_resistance, self.identifier)
         new_material._display_name = self._display_name
+        new_material._color = self._color
+        new_material._protected = self._protected
         new_material._user_data = None if self._user_data is None \
             else self._user_data.copy()
         return new_material

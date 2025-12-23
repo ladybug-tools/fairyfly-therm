@@ -1,3 +1,3 @@
-from tests.material_solid_test import test_material_dict_methods
+from tests.condition_comprehensive_test import test_condition_lockability
 
-test_material_dict_methods()
+test_condition_lockability()
