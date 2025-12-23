@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>fairyfly_therm.material.gas module &#8212; fairyfly-therm  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=0bf093e7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9ac6488d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="fairyfly_therm.material.solid module" href="fairyfly_therm.material.solid.html" />
+    <link rel="prev" title="fairyfly_therm.material package" href="fairyfly_therm.material.html" />
+<link rel="icon" type="image/x-icon" href="https://github.com/ladybug-tools/artwork/raw/refs/heads/master/icons_bugs/ico/fairyfly.ico">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          fairyfly-therm</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/index.html">CLI Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/index.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/setconfig.html">setconfig</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/setconfig.html#fairyfly-therm-set-config">fairyfly-therm set-config</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="cli/setconfig.html#fairyfly-therm-set-config-lbnl-data-path">lbnl-data-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="cli/setconfig.html#fairyfly-therm-set-config-therm-lib-path">therm-lib-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="cli/setconfig.html#fairyfly-therm-set-config-therm-path">therm-path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="fairyfly_therm.html">fairyfly_therm package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fairyfly_therm.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.cli.html">fairyfly_therm.cli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.cli.setconfig.html">fairyfly_therm.cli.setconfig module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.cli.html#module-fairyfly_therm.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.condition.html">fairyfly_therm.condition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.condition.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html">fairyfly_therm.condition.comprehensive module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition"><code class="docutils literal notranslate"><span class="pre">ComprehensiveCondition</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.film_coefficient"><code class="docutils literal notranslate"><span class="pre">film_coefficient</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.heat_flux"><code class="docutils literal notranslate"><span class="pre">heat_flux</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.project_tag"><code class="docutils literal notranslate"><span class="pre">project_tag</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.radiant_temperature"><code class="docutils literal notranslate"><span class="pre">radiant_temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.relative_humidity"><code class="docutils literal notranslate"><span class="pre">relative_humidity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.temperature"><code class="docutils literal notranslate"><span class="pre">temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.condition.html#module-fairyfly_therm.condition">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="fairyfly_therm.material.html">fairyfly_therm.material package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="fairyfly_therm.material.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">fairyfly_therm.material.gas module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas"><code class="docutils literal notranslate"><span class="pre">PureGas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_idf"><code class="docutils literal notranslate"><span class="pre">from_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_idf"><code class="docutils literal notranslate"><span class="pre">to_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_ratio"><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.material.solid.html">fairyfly_therm.material.solid module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial"><code class="docutils literal notranslate"><span class="pre">SolidMaterial</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.conductivity"><code class="docutils literal notranslate"><span class="pre">conductivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity_back"><code class="docutils literal notranslate"><span class="pre">emissivity_back</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.porosity"><code class="docutils literal notranslate"><span class="pre">porosity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.resistivity"><code class="docutils literal notranslate"><span class="pre">resistivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.specific_heat"><code class="docutils literal notranslate"><span class="pre">specific_heat</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.vapor_diffusion_resistance"><code class="docutils literal notranslate"><span class="pre">vapor_diffusion_resistance</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.material.html#module-fairyfly_therm.material">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.config.html">fairyfly_therm.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders"><code class="docutils literal notranslate"><span class="pre">Folders</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.THERM_VERSION"><code class="docutils literal notranslate"><span class="pre">THERM_VERSION</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.bc_steady_state_lib_file"><code class="docutils literal notranslate"><span class="pre">bc_steady_state_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.config_file"><code class="docutils literal notranslate"><span class="pre">config_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.lbnl_data_path"><code class="docutils literal notranslate"><span class="pre">lbnl_data_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.material_lib_file"><code class="docutils literal notranslate"><span class="pre">material_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_exe"><code class="docutils literal notranslate"><span class="pre">therm_exe</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_lib_path"><code class="docutils literal notranslate"><span class="pre">therm_lib_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_path"><code class="docutils literal notranslate"><span class="pre">therm_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_settings_path"><code class="docutils literal notranslate"><span class="pre">therm_settings_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version"><code class="docutils literal notranslate"><span class="pre">therm_version</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version_str"><code class="docutils literal notranslate"><span class="pre">therm_version_str</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#module-fairyfly_therm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/index.html">CLI Docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="fairyfly_therm.html">fairyfly_therm package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fairyfly_therm.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.cli.html">fairyfly_therm.cli package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.condition.html">fairyfly_therm.condition package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="fairyfly_therm.material.html">fairyfly_therm.material package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="fairyfly_therm.material.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">fairyfly_therm.material.gas module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas"><code class="docutils literal notranslate"><span class="pre">PureGas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_idf"><code class="docutils literal notranslate"><span class="pre">from_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_idf"><code class="docutils literal notranslate"><span class="pre">to_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_ratio"><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.material.solid.html">fairyfly_therm.material.solid module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.material.html#module-fairyfly_therm.material">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#module-fairyfly_therm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="fairyfly_therm.material.html" title="Previous Chapter: fairyfly_therm.material package"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; fairyfly_ther...</span>
+    </a>
+  </li>
+  <li>
+    <a href="fairyfly_therm.material.solid.html" title="Next Chapter: fairyfly_therm.material.solid module"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">fairyfly_ther... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/fairyfly_therm.material.gas.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/index.html">CLI Docs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="fairyfly_therm.html">fairyfly_therm package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="fairyfly_therm.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.cli.html">fairyfly_therm.cli package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fairyfly_therm.condition.html">fairyfly_therm.condition package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="fairyfly_therm.material.html">fairyfly_therm.material package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="fairyfly_therm.material.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">fairyfly_therm.material.gas module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas"><code class="docutils literal notranslate"><span class="pre">PureGas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.from_idf"><code class="docutils literal notranslate"><span class="pre">from_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.to_idf"><code class="docutils literal notranslate"><span class="pre">to_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.specific_heat_ratio"><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="fairyfly_therm.material.solid.html">fairyfly_therm.material.solid module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="fairyfly_therm.material.html#module-fairyfly_therm.material">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairyfly_therm.html#module-fairyfly_therm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <section id="module-fairyfly_therm.material.gas">
+<span id="fairyfly-therm-material-gas-module"></span><h1>fairyfly_therm.material.gas module<a class="headerlink" href="#module-fairyfly_therm.material.gas" title="Link to this heading">¶</a></h1>
+<p>Gas materials representing gaps within window constructions.</p>
+<p>They can only exist within window constructions bounded by glazing materials
+(they cannot be in the interior or exterior layer).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fairyfly_therm.material.gas.</span></span><span class="sig-name descname"><span class="pre">PureGas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductivity_coeff_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_coeff_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specific_heat_coeff_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductivity_coeff_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_coeff_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specific_heat_coeff_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductivity_coeff_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_coeff_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specific_heat_coeff_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specific_heat_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">molecular_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_ThermMaterialBase</span></code></p>
+<p>Custom gas gap layer.</p>
+<p>This object allows you to specify specific values for conductivity,
+viscosity and specific heat through the following formula:</p>
+<p>property = A + (B * T) + (C * T ** 2)</p>
+<p>where:</p>
+<ul class="simple">
+<li><p>A, B, and C = regression coefficients for the gas</p></li>
+<li><p>T = temperature [K]</p></li>
+</ul>
+<p>Note that setting properties B and C to 0 will mean the property will be
+equal to the A coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conductivity_coeff_a</strong> – First conductivity coefficient.
+Or conductivity in [W/m-K] if b and c coefficients are 0.</p></li>
+<li><p><strong>viscosity_coeff_a</strong> – First viscosity coefficient.
+Or viscosity in [kg/m-s] if b and c coefficients are 0.</p></li>
+<li><p><strong>specific_heat_coeff_a</strong> – First specific heat coefficient.
+Or specific heat in [J/kg-K] if b and c coefficients are 0.</p></li>
+<li><p><strong>conductivity_coeff_b</strong> – Second conductivity coefficient. Default = 0.</p></li>
+<li><p><strong>viscosity_coeff_b</strong> – Second viscosity coefficient. Default = 0.</p></li>
+<li><p><strong>specific_heat_coeff_b</strong> – Second specific heat coefficient. Default = 0.</p></li>
+<li><p><strong>conductivity_coeff_c</strong> – Third conductivity coefficient. Default = 0.</p></li>
+<li><p><strong>viscosity_coeff_c</strong> – Third viscosity coefficient. Default = 0.</p></li>
+<li><p><strong>specific_heat_coeff_c</strong> – Third specific heat coefficient. Default = 0.</p></li>
+<li><p><strong>specific_heat_ratio</strong> – A number for the the ratio of the specific heat at
+constant pressure, to the specific heat at constant volume.
+Default is 1.0 for Air.</p></li>
+<li><p><strong>molecular_weight</strong> – Number between 20 and 200 for the mass of 1 mol of
+the substance in grams. Default is 20.0.</p></li>
+<li><p><strong>identifier</strong> – Text string for a unique object ID. Must be a UUID in the
+format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. If None, a UUID will
+automatically be generated. (Default: None).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Properties:</dt><dd><ul class="simple">
+<li><p>identifier</p></li>
+<li><p>display_name</p></li>
+<li><p>conductivity_coeff_a</p></li>
+<li><p>viscosity_coeff_a</p></li>
+<li><p>specific_heat_coeff_a</p></li>
+<li><p>conductivity_coeff_b</p></li>
+<li><p>viscosity_coeff_b</p></li>
+<li><p>specific_heat_coeff_b</p></li>
+<li><p>conductivity_coeff_c</p></li>
+<li><p>viscosity_coeff_c</p></li>
+<li><p>specific_heat_coeff_c</p></li>
+<li><p>specific_heat_ratio</p></li>
+<li><p>molecular_weight</p></li>
+<li><p>color</p></li>
+<li><p>protected</p></li>
+<li><p>user_data</p></li>
+</ul>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">co2_mat</span> <span class="o">=</span> <span class="n">PureGas</span><span class="p">(</span><span class="mf">0.0146</span><span class="p">,</span> <span class="mf">0.000014</span><span class="p">,</span> <span class="mf">827.73</span><span class="p">)</span>
+<span class="n">co2_mat</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;CO2&#39;</span>
+<span class="n">co2_gap</span><span class="o">.</span><span class="n">specific_heat_ratio</span> <span class="o">=</span> <span class="mf">1.4</span>
+<span class="n">co2_gap</span><span class="o">.</span><span class="n">molecular_weight</span> <span class="o">=</span> <span class="mi">44</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">co2_gap</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.ToString">
+<span class="sig-name descname"><span class="pre">ToString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.ToString" title="Link to this definition">¶</a></dt>
+<dd><p>Overwrite .NET ToString.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.conductivity_at_temperature">
+<span class="sig-name descname"><span class="pre">conductivity_at_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_kelvin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.conductivity_at_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature" title="Link to this definition">¶</a></dt>
+<dd><p>Get the conductivity of the gas [W/m-K] at a given Kelvin temperature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.duplicate">
+<span class="sig-name descname"><span class="pre">duplicate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.duplicate" title="Link to this definition">¶</a></dt>
+<dd><p>Get a copy of this construction.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.from_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Create a EnergyWindowMaterialGasCustom from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – A python dictionary in the following format</p>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s1">&#39;EnergyWindowMaterialGasCustom&#39;</span><span class="p">,</span>
+<span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s1">&#39;CO2_0010_00146_0000014_82773_140_44&#39;</span><span class="p">,</span>
+<span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s1">&#39;CO2&#39;</span>
+<span class="s2">&quot;thickness&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+<span class="s2">&quot;conductivity_coeff_a&quot;</span><span class="p">:</span> <span class="mf">0.0146</span><span class="p">,</span>
+<span class="s2">&quot;viscosity_coeff_a&quot;</span><span class="p">:</span> <span class="mf">0.000014</span><span class="p">,</span>
+<span class="s2">&quot;specific_heat_coeff_a&quot;</span><span class="p">:</span> <span class="mf">827.73</span><span class="p">,</span>
+<span class="s2">&quot;specific_heat_ratio&quot;</span><span class="p">:</span> <span class="mf">1.4</span>
+<span class="s2">&quot;molecular_weight&quot;</span><span class="p">:</span> <span class="mi">44</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.from_idf">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_idf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idf_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.from_idf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.from_idf" title="Link to this definition">¶</a></dt>
+<dd><p>Create EnergyWindowMaterialGasCustom from an EnergyPlus text string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idf_string</strong> – A text string fully describing an EnergyPlus material.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.lock">
+<span class="sig-name descname"><span class="pre">lock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.lock" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature">
+<span class="sig-name descname"><span class="pre">specific_heat_at_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_kelvin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.specific_heat_at_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature" title="Link to this definition">¶</a></dt>
+<dd><p>Get the specific heat of the gas [J/kg-K] at a given Kelvin temperature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Energy Material Gas Custom dictionary representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.to_idf">
+<span class="sig-name descname"><span class="pre">to_idf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.to_idf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.to_idf" title="Link to this definition">¶</a></dt>
+<dd><p>Get an EnergyPlus string representation of the material.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>WindowMaterial:Gas,
+<span class="w">    </span>Gas_16_W_0_0003,<span class="w">    </span>!-<span class="w"> </span>gap<span class="w"> </span>name
+<span class="w">    </span>Custom,<span class="w">             </span>!-<span class="w"> </span><span class="nb">type</span>
+<span class="w">    </span><span class="m">0</span>.0003,<span class="w">             </span>!-<span class="w"> </span>thickness
+<span class="w">    </span><span class="m">2</span>.873000e-003,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Coefficient<span class="w"> </span>A
+<span class="w">    </span><span class="m">7</span>.760000e-005,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Coefficient<span class="w"> </span>B
+<span class="w">    </span><span class="m">0</span>.000000e+000,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Coefficient<span class="w"> </span>C
+<span class="w">    </span><span class="m">3</span>.723000e-006,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Viscosity<span class="w"> </span>A
+<span class="w">    </span><span class="m">4</span>.940000e-008,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Viscosity<span class="w"> </span>B
+<span class="w">    </span><span class="m">0</span>.000000e+000,<span class="w">      </span>!-<span class="w"> </span>Conductivity<span class="w"> </span>Viscosity<span class="w"> </span>C
+<span class="w">    </span><span class="m">1002</span>.737000,<span class="w">        </span>!-<span class="w"> </span>Specific<span class="w"> </span>Heat<span class="w"> </span>Coefficient<span class="w"> </span>A
+<span class="w">    </span><span class="m">0</span>.012324,<span class="w">           </span>!-<span class="w"> </span>Specific<span class="w"> </span>Heat<span class="w"> </span>Coefficient<span class="w"> </span>B
+<span class="w">    </span><span class="m">0</span>.000000,<span class="w">           </span>!-<span class="w"> </span>Specific<span class="w"> </span>Heat<span class="w"> </span>Coefficient<span class="w"> </span>C
+<span class="w">    </span><span class="m">28</span>.969999,<span class="w">          </span>!-<span class="w"> </span>Molecular<span class="w"> </span>Weight
+<span class="w">    </span><span class="m">1</span>.400000<span class="p">;</span><span class="w">           </span>!-<span class="w"> </span>Specific<span class="w"> </span>Heat<span class="w"> </span>Ratio
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.unlock">
+<span class="sig-name descname"><span class="pre">unlock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.unlock" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.viscosity_at_temperature">
+<span class="sig-name descname"><span class="pre">viscosity_at_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_kelvin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/fairyfly_therm/material/gas.html#PureGas.viscosity_at_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature" title="Link to this definition">¶</a></dt>
+<dd><p>Get the viscosity of the gas [kg/m-s] at a given Kelvin temperature.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.color">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.color" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set an optional color for the material as it displays in THERM.</p>
+<p>This will always be a Ladybug Color object when getting this property
+but the setter supports specifying hex codes. If unspecified, a radom
+color will automatically be assigned.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.conductivity_coeff_a">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conductivity_coeff_a</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the first conductivity coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.conductivity_coeff_b">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conductivity_coeff_b</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the second conductivity coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.conductivity_coeff_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conductivity_coeff_c</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the third conductivity coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.display_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">display_name</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.display_name" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set a string for the object name without any character restrictions.</p>
+<p>If not set, this will be equal to the identifier.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.identifier" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set a text string for the unique object identifier.</p>
+<p>This must be a UUID in the format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+and it remains constant as the object is mutated, copied, and
+serialized to different formats (eg. therm XML). As such, this
+property is used to reference the object across a Model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.molecular_weight">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">molecular_weight</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.molecular_weight" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the molecular weight.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.protected">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">protected</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.protected" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set a boolean for whether the material is protected in THERM.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">specific_heat_coeff_a</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the first specific heat coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">specific_heat_coeff_b</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the second specific heat coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">specific_heat_coeff_c</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the third specific heat coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.specific_heat_ratio">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">specific_heat_ratio</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.specific_heat_ratio" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the specific heat ratio.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.user_data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_data</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.user_data" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set an optional dictionary for additional meta data for this object.</p>
+<p>This will be None until it has been set. All keys and values of this
+dictionary should be of a standard Python type to ensure correct
+serialization of the object to/from JSON (eg. str, float, int, list, dict)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.viscosity_coeff_a">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">viscosity_coeff_a</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the first viscosity coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.viscosity_coeff_b">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">viscosity_coeff_b</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the second viscosity coefficient.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="fairyfly_therm.material.gas.PureGas.viscosity_coeff_c">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">viscosity_coeff_c</span></span><a class="headerlink" href="#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c" title="Link to this definition">¶</a></dt>
+<dd><p>Get or set the third viscosity coefficient.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2025, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

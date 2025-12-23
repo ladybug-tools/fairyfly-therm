@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fairyfly_therm.material.gas &#8212; fairyfly-therm  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css?v=0bf093e7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9ac6488d" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<link rel="icon" type="image/x-icon" href="https://github.com/ladybug-tools/artwork/raw/refs/heads/master/icons_bugs/ico/fairyfly.ico">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          fairyfly-therm</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/index.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/setconfig.html">setconfig</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config">fairyfly-therm set-config</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-lbnl-data-path">lbnl-data-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-therm-lib-path">therm-lib-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-therm-path">therm-path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.cli.html">fairyfly_therm.cli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.cli.setconfig.html">fairyfly_therm.cli.setconfig module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.cli.html#module-fairyfly_therm.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.condition.html">fairyfly_therm.condition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.condition.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html">fairyfly_therm.condition.comprehensive module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition"><code class="docutils literal notranslate"><span class="pre">ComprehensiveCondition</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.film_coefficient"><code class="docutils literal notranslate"><span class="pre">film_coefficient</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.heat_flux"><code class="docutils literal notranslate"><span class="pre">heat_flux</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.project_tag"><code class="docutils literal notranslate"><span class="pre">project_tag</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.radiant_temperature"><code class="docutils literal notranslate"><span class="pre">radiant_temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.relative_humidity"><code class="docutils literal notranslate"><span class="pre">relative_humidity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.temperature"><code class="docutils literal notranslate"><span class="pre">temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.comprehensive.html#fairyfly_therm.condition.comprehensive.ComprehensiveCondition.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.condition.html#module-fairyfly_therm.condition">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.material.html">fairyfly_therm.material package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.material.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html">fairyfly_therm.material.gas module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas"><code class="docutils literal notranslate"><span class="pre">PureGas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_idf"><code class="docutils literal notranslate"><span class="pre">from_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_idf"><code class="docutils literal notranslate"><span class="pre">to_idf()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_ratio"><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html">fairyfly_therm.material.solid module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial"><code class="docutils literal notranslate"><span class="pre">SolidMaterial</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.conductivity"><code class="docutils literal notranslate"><span class="pre">conductivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity_back"><code class="docutils literal notranslate"><span class="pre">emissivity_back</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.porosity"><code class="docutils literal notranslate"><span class="pre">porosity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.resistivity"><code class="docutils literal notranslate"><span class="pre">resistivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.specific_heat"><code class="docutils literal notranslate"><span class="pre">specific_heat</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.vapor_diffusion_resistance"><code class="docutils literal notranslate"><span class="pre">vapor_diffusion_resistance</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.material.html#module-fairyfly_therm.material">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.config.html">fairyfly_therm.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders"><code class="docutils literal notranslate"><span class="pre">Folders</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.THERM_VERSION"><code class="docutils literal notranslate"><span class="pre">THERM_VERSION</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.bc_steady_state_lib_file"><code class="docutils literal notranslate"><span class="pre">bc_steady_state_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.config_file"><code class="docutils literal notranslate"><span class="pre">config_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.lbnl_data_path"><code class="docutils literal notranslate"><span class="pre">lbnl_data_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.material_lib_file"><code class="docutils literal notranslate"><span class="pre">material_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_exe"><code class="docutils literal notranslate"><span class="pre">therm_exe</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_lib_path"><code class="docutils literal notranslate"><span class="pre">therm_lib_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_path"><code class="docutils literal notranslate"><span class="pre">therm_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_settings_path"><code class="docutils literal notranslate"><span class="pre">therm_settings_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version"><code class="docutils literal notranslate"><span class="pre">therm_version</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version_str"><code class="docutils literal notranslate"><span class="pre">therm_version_str</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#module-fairyfly_therm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <h1>Source code for fairyfly_therm.material.gas</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="sd">&quot;&quot;&quot;Gas materials representing gaps within window constructions.</span>
+
+<span class="sd">They can only exist within window constructions bounded by glazing materials</span>
+<span class="sd">(they cannot be in the interior or exterior layer).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly._lockable</span><span class="w"> </span><span class="kn">import</span> <span class="n">lockable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">float_positive</span><span class="p">,</span> <span class="n">float_in_range</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_ThermMaterialBase</span>
+
+
+<div class="viewcode-block" id="PureGas">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas">[docs]</a>
+<span class="nd">@lockable</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PureGas</span><span class="p">(</span><span class="n">_ThermMaterialBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom gas gap layer.</span>
+
+<span class="sd">    This object allows you to specify specific values for conductivity,</span>
+<span class="sd">    viscosity and specific heat through the following formula:</span>
+
+<span class="sd">    property = A + (B * T) + (C * T ** 2)</span>
+
+<span class="sd">    where:</span>
+
+<span class="sd">    * A, B, and C = regression coefficients for the gas</span>
+<span class="sd">    * T = temperature [K]</span>
+
+<span class="sd">    Note that setting properties B and C to 0 will mean the property will be</span>
+<span class="sd">    equal to the A coefficient.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conductivity_coeff_a: First conductivity coefficient.</span>
+<span class="sd">            Or conductivity in [W/m-K] if b and c coefficients are 0.</span>
+<span class="sd">        viscosity_coeff_a: First viscosity coefficient.</span>
+<span class="sd">            Or viscosity in [kg/m-s] if b and c coefficients are 0.</span>
+<span class="sd">        specific_heat_coeff_a: First specific heat coefficient.</span>
+<span class="sd">            Or specific heat in [J/kg-K] if b and c coefficients are 0.</span>
+<span class="sd">        conductivity_coeff_b: Second conductivity coefficient. Default = 0.</span>
+<span class="sd">        viscosity_coeff_b: Second viscosity coefficient. Default = 0.</span>
+<span class="sd">        specific_heat_coeff_b: Second specific heat coefficient. Default = 0.</span>
+<span class="sd">        conductivity_coeff_c: Third conductivity coefficient. Default = 0.</span>
+<span class="sd">        viscosity_coeff_c: Third viscosity coefficient. Default = 0.</span>
+<span class="sd">        specific_heat_coeff_c: Third specific heat coefficient. Default = 0.</span>
+<span class="sd">        specific_heat_ratio: A number for the the ratio of the specific heat at</span>
+<span class="sd">            constant pressure, to the specific heat at constant volume.</span>
+<span class="sd">            Default is 1.0 for Air.</span>
+<span class="sd">        molecular_weight: Number between 20 and 200 for the mass of 1 mol of</span>
+<span class="sd">            the substance in grams. Default is 20.0.</span>
+<span class="sd">        identifier: Text string for a unique object ID. Must be a UUID in the</span>
+<span class="sd">            format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. If None, a UUID will</span>
+<span class="sd">            automatically be generated. (Default: None).</span>
+
+<span class="sd">    Properties:</span>
+<span class="sd">        * identifier</span>
+<span class="sd">        * display_name</span>
+<span class="sd">        * conductivity_coeff_a</span>
+<span class="sd">        * viscosity_coeff_a</span>
+<span class="sd">        * specific_heat_coeff_a</span>
+<span class="sd">        * conductivity_coeff_b</span>
+<span class="sd">        * viscosity_coeff_b</span>
+<span class="sd">        * specific_heat_coeff_b</span>
+<span class="sd">        * conductivity_coeff_c</span>
+<span class="sd">        * viscosity_coeff_c</span>
+<span class="sd">        * specific_heat_coeff_c</span>
+<span class="sd">        * specific_heat_ratio</span>
+<span class="sd">        * molecular_weight</span>
+<span class="sd">        * color</span>
+<span class="sd">        * protected</span>
+<span class="sd">        * user_data</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        co2_mat = PureGas(0.0146, 0.000014, 827.73)</span>
+<span class="sd">        co2_mat.display_name = &#39;CO2&#39;</span>
+<span class="sd">        co2_gap.specific_heat_ratio = 1.4</span>
+<span class="sd">        co2_gap.molecular_weight = 44</span>
+<span class="sd">        print(co2_gap)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_conductivity_coeff_a&#39;</span><span class="p">,</span> <span class="s1">&#39;_viscosity_coeff_a&#39;</span><span class="p">,</span> <span class="s1">&#39;_specific_heat_coeff_a&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;_conductivity_coeff_b&#39;</span><span class="p">,</span> <span class="s1">&#39;_viscosity_coeff_b&#39;</span><span class="p">,</span> <span class="s1">&#39;_specific_heat_coeff_b&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;_conductivity_coeff_c&#39;</span><span class="p">,</span> <span class="s1">&#39;_viscosity_coeff_c&#39;</span><span class="p">,</span> <span class="s1">&#39;_specific_heat_coeff_c&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;_specific_heat_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;_molecular_weight&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span>
+                 <span class="n">conductivity_coeff_a</span><span class="p">,</span> <span class="n">viscosity_coeff_a</span><span class="p">,</span> <span class="n">specific_heat_coeff_a</span><span class="p">,</span>
+                 <span class="n">conductivity_coeff_b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">viscosity_coeff_b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">specific_heat_coeff_b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">conductivity_coeff_c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">viscosity_coeff_c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">specific_heat_coeff_c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">specific_heat_ratio</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">molecular_weight</span><span class="o">=</span><span class="mf">20.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize custom gas energy material.&quot;&quot;&quot;</span>
+        <span class="n">_ThermMaterialBase</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span> <span class="o">=</span> <span class="n">conductivity_coeff_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span> <span class="o">=</span> <span class="n">viscosity_coeff_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span> <span class="o">=</span> <span class="n">specific_heat_coeff_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span> <span class="o">=</span> <span class="n">conductivity_coeff_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span> <span class="o">=</span> <span class="n">viscosity_coeff_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span> <span class="o">=</span> <span class="n">specific_heat_coeff_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span> <span class="o">=</span> <span class="n">conductivity_coeff_c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span> <span class="o">=</span> <span class="n">viscosity_coeff_c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span> <span class="o">=</span> <span class="n">specific_heat_coeff_c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_ratio</span> <span class="o">=</span> <span class="n">specific_heat_ratio</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">molecular_weight</span> <span class="o">=</span> <span class="n">molecular_weight</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the first conductivity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_a</span>
+
+    <span class="nd">@conductivity_coeff_a</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the first viscosity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_a</span>
+
+    <span class="nd">@viscosity_coeff_a</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_a</span> <span class="o">=</span> <span class="n">float_positive</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the first specific heat coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_a</span>
+
+    <span class="nd">@specific_heat_coeff_a</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_a</span> <span class="o">=</span> <span class="n">float_positive</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the second conductivity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_b</span>
+
+    <span class="nd">@conductivity_coeff_b</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the second viscosity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_b</span>
+
+    <span class="nd">@viscosity_coeff_b</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the second specific heat coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_b</span>
+
+    <span class="nd">@specific_heat_coeff_b</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the third conductivity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_c</span>
+
+    <span class="nd">@conductivity_coeff_c</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conductivity_coeff_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the third viscosity coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_c</span>
+
+    <span class="nd">@viscosity_coeff_c</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_viscosity_coeff_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the third specific heat coefficient.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_c</span>
+
+    <span class="nd">@specific_heat_coeff_c</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_coeff_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coeff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_coeff_c</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the specific heat ratio.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_ratio</span>
+
+    <span class="nd">@specific_heat_ratio</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">number</span><span class="p">,</span> <span class="s1">&#39;Input specific_heat_ratio (</span><span class="si">{}</span><span class="s1">) must be &gt; 1.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_specific_heat_ratio</span> <span class="o">=</span> <span class="n">number</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">molecular_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get or set the molecular weight.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molecular_weight</span>
+
+    <span class="nd">@molecular_weight</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">molecular_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_molecular_weight</span> <span class="o">=</span> <span class="n">float_in_range</span><span class="p">(</span>
+            <span class="n">number</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="s1">&#39;gas material molecular weight&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PureGas.conductivity_at_temperature">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conductivity_at_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_kelvin</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the conductivity of the gas [W/m-K] at a given Kelvin temperature.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="PureGas.viscosity_at_temperature">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">viscosity_at_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_kelvin</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the viscosity of the gas [kg/m-s] at a given Kelvin temperature.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="PureGas.specific_heat_at_temperature">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">specific_heat_at_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t_kelvin</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the specific heat of the gas [J/kg-K] at a given Kelvin temperature.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span> <span class="o">*</span> <span class="n">t_kelvin</span> <span class="o">**</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="PureGas.from_idf">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_idf">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_idf</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">idf_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create EnergyWindowMaterialGasCustom from an EnergyPlus text string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idf_string: A text string fully describing an EnergyPlus material.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check that the gas is, in fact custom</span>
+        <span class="n">ep_s</span> <span class="o">=</span> <span class="n">parse_idf_string</span><span class="p">(</span><span class="n">idf_string</span><span class="p">,</span> <span class="s1">&#39;WindowMaterial:Gas,&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Custom&#39;</span><span class="p">,</span> <span class="s1">&#39;Exected Custom Gas. Got a specific one.&#39;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ep_s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">14</span><span class="p">,</span> <span class="s1">&#39;Not enough fields present for Custom Gas &#39;</span> \
+            <span class="s1">&#39;IDF description. Expected 14 properties. Got </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ep_s</span><span class="p">))</span>
+        <span class="n">ep_s</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># reorder the coefficients</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep_s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">a_coef</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep_s</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">8</span><span class="p">]]</span>
+        <span class="n">b_coef</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep_s</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">9</span><span class="p">]]</span>
+        <span class="n">c_coef</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep_s</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">10</span><span class="p">]]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="p">[</span><span class="n">ep_s</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">ep_s</span><span class="p">[</span><span class="mi">11</span><span class="p">]]</span>
+        <span class="n">eps_cl</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">a_coef</span> <span class="o">+</span> <span class="n">b_coef</span> <span class="o">+</span> <span class="n">c_coef</span> <span class="o">+</span> <span class="n">end</span>
+        <span class="c1"># assume that any blank strings are just coefficients of 0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eps_cl</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">11</span><span class="p">]):</span>
+            <span class="n">clean_val</span> <span class="o">=</span> <span class="n">val</span> <span class="k">if</span> <span class="n">val</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">eps_cl</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">clean_val</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">eps_cl</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PureGas.from_dict">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a EnergyWindowMaterialGasCustom from a dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: A python dictionary in the following format</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            {</span>
+<span class="sd">            &quot;type&quot;: &#39;EnergyWindowMaterialGasCustom&#39;,</span>
+<span class="sd">            &quot;identifier&quot;: &#39;CO2_0010_00146_0000014_82773_140_44&#39;,</span>
+<span class="sd">            &quot;display_name&quot;: &#39;CO2&#39;</span>
+<span class="sd">            &quot;thickness&quot;: 0.01,</span>
+<span class="sd">            &quot;conductivity_coeff_a&quot;: 0.0146,</span>
+<span class="sd">            &quot;viscosity_coeff_a&quot;: 0.000014,</span>
+<span class="sd">            &quot;specific_heat_coeff_a&quot;: 827.73,</span>
+<span class="sd">            &quot;specific_heat_ratio&quot;: 1.4</span>
+<span class="sd">            &quot;molecular_weight&quot;: 44</span>
+<span class="sd">            }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;EnergyWindowMaterialGasCustom&#39;</span><span class="p">,</span> \
+            <span class="s1">&#39;Expected EnergyWindowMaterialGasCustom. Got </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+        <span class="n">con_b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;conductivity_coeff_b&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;conductivity_coeff_b&#39;</span><span class="p">]</span>
+        <span class="n">vis_b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;viscosity_coeff_b&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;viscosity_coeff_b&#39;</span><span class="p">]</span>
+        <span class="n">sph_b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;specific_heat_coeff_b&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> \
+            <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;specific_heat_coeff_b&#39;</span><span class="p">]</span>
+        <span class="n">con_c</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;conductivity_coeff_c&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;conductivity_coeff_c&#39;</span><span class="p">]</span>
+        <span class="n">vis_c</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;viscosity_coeff_c&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;viscosity_coeff_c&#39;</span><span class="p">]</span>
+        <span class="n">sph_c</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s1">&#39;specific_heat_coeff_c&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> \
+            <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;specific_heat_coeff_c&#39;</span><span class="p">]</span>
+        <span class="n">sphr</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="s1">&#39;specific_heat_ratio&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;specific_heat_ratio&#39;</span><span class="p">]</span>
+        <span class="n">mw</span> <span class="o">=</span> <span class="mf">20.0</span> <span class="k">if</span> <span class="s1">&#39;molecular_weight&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;molecular_weight&#39;</span><span class="p">]</span>
+        <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;thickness&#39;</span><span class="p">],</span>
+                      <span class="n">data</span><span class="p">[</span><span class="s1">&#39;conductivity_coeff_a&#39;</span><span class="p">],</span>
+                      <span class="n">data</span><span class="p">[</span><span class="s1">&#39;viscosity_coeff_a&#39;</span><span class="p">],</span>
+                      <span class="n">data</span><span class="p">[</span><span class="s1">&#39;specific_heat_coeff_a&#39;</span><span class="p">],</span>
+                      <span class="n">con_b</span><span class="p">,</span> <span class="n">vis_b</span><span class="p">,</span> <span class="n">sph_b</span><span class="p">,</span> <span class="n">con_c</span><span class="p">,</span> <span class="n">vis_c</span><span class="p">,</span> <span class="n">sph_c</span><span class="p">,</span> <span class="n">sphr</span><span class="p">,</span> <span class="n">mw</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;display_name&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;display_name&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_obj</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;display_name&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;user_data&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;user_data&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_obj</span><span class="o">.</span><span class="n">user_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;user_data&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;properties&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_obj</span><span class="o">.</span><span class="n">_properties</span><span class="o">.</span><span class="n">_load_extension_attr_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">new_obj</span></div>
+
+
+<div class="viewcode-block" id="PureGas.to_idf">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_idf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_idf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get an EnergyPlus string representation of the material.</span>
+
+<span class="sd">        .. code-block:: shell</span>
+
+<span class="sd">            WindowMaterial:Gas,</span>
+<span class="sd">                Gas_16_W_0_0003,    !- gap name</span>
+<span class="sd">                Custom,             !- type</span>
+<span class="sd">                0.0003,             !- thickness</span>
+<span class="sd">                2.873000e-003,      !- Conductivity Coefficient A</span>
+<span class="sd">                7.760000e-005,      !- Conductivity Coefficient B</span>
+<span class="sd">                0.000000e+000,      !- Conductivity Coefficient C</span>
+<span class="sd">                3.723000e-006,      !- Conductivity Viscosity A</span>
+<span class="sd">                4.940000e-008,      !- Conductivity Viscosity B</span>
+<span class="sd">                0.000000e+000,      !- Conductivity Viscosity C</span>
+<span class="sd">                1002.737000,        !- Specific Heat Coefficient A</span>
+<span class="sd">                0.012324,           !- Specific Heat Coefficient B</span>
+<span class="sd">                0.000000,           !- Specific Heat Coefficient C</span>
+<span class="sd">                28.969999,          !- Molecular Weight</span>
+<span class="sd">                1.400000;           !- Specific Heat Ratio</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="s1">&#39;Custom&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">molecular_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_ratio</span><span class="p">)</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;gas type&#39;</span><span class="p">,</span> <span class="s1">&#39;thickness&#39;</span><span class="p">,</span> <span class="s1">&#39;conductivity coeff a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;conductivity coeff b&#39;</span><span class="p">,</span> <span class="s1">&#39;conductivity coeff c&#39;</span><span class="p">,</span> <span class="s1">&#39;viscosity coeff a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;viscosity coeff b&#39;</span><span class="p">,</span> <span class="s1">&#39;viscosity coeff c&#39;</span><span class="p">,</span> <span class="s1">&#39;specific heat coeff a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;specific heat coeff b&#39;</span><span class="p">,</span> <span class="s1">&#39;specific heat coeff c&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;molecular weight&#39;</span><span class="p">,</span> <span class="s1">&#39;specific heat ratio&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">generate_idf_string</span><span class="p">(</span><span class="s1">&#39;WindowMaterial:Gas&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">comments</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PureGas.to_dict">
+<a class="viewcode-back" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Energy Material Gas Custom dictionary representation.&quot;&quot;&quot;</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;EnergyWindowMaterialGasCustom&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
+            <span class="s1">&#39;thickness&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span><span class="p">,</span>
+            <span class="s1">&#39;conductivity_coeff_a&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span><span class="p">,</span>
+            <span class="s1">&#39;viscosity_coeff_a&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span><span class="p">,</span>
+            <span class="s1">&#39;specific_heat_coeff_a&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span><span class="p">,</span>
+            <span class="s1">&#39;conductivity_coeff_b&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span><span class="p">,</span>
+            <span class="s1">&#39;viscosity_coeff_b&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span><span class="p">,</span>
+            <span class="s1">&#39;specific_heat_coeff_b&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span><span class="p">,</span>
+            <span class="s1">&#39;conductivity_coeff_c&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span><span class="p">,</span>
+            <span class="s1">&#39;viscosity_coeff_c&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span><span class="p">,</span>
+            <span class="s1">&#39;specific_heat_coeff_c&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span><span class="p">,</span>
+            <span class="s1">&#39;specific_heat_ratio&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_ratio</span><span class="p">,</span>
+            <span class="s1">&#39;molecular_weight&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecular_weight</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="s1">&#39;display_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="s1">&#39;user_data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_data</span>
+        <span class="n">prop_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_properties</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">prop_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop_dict</span>
+        <span class="k">return</span> <span class="n">base</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A tuple based on the object properties, useful for hashing.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_ratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecular_weight</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__key</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">EnergyWindowMaterialGasCustom</span><span class="p">)</span> <span class="ow">and</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">__key</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__key</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_idf</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_obj</span> <span class="o">=</span> <span class="n">EnergyWindowMaterialGasCustom</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_b</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductivity_coeff_c</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viscosity_coeff_c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_coeff_c</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">specific_heat_ratio</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">molecular_weight</span><span class="p">)</span>
+        <span class="n">new_obj</span><span class="o">.</span><span class="n">_display_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_display_name</span>
+        <span class="n">new_obj</span><span class="o">.</span><span class="n">_user_data</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_obj</span><span class="o">.</span><span class="n">_properties</span><span class="o">.</span><span class="n">_duplicate_extension_attr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_properties</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_obj</span></div>
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2025, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
