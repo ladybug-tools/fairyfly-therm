@@ -10,8 +10,8 @@ from fairyfly.typing import valid_uuid
 
 
 @lockable
-class _ThermMaterialBase(object):
-    """Base therm material.
+class _ResourceObjectBase(object):
+    """Base class for resources.
 
     Args:
         identifier: Text string for a unique Material ID. Must be < 100 characters
@@ -21,19 +21,16 @@ class _ThermMaterialBase(object):
     Properties:
         * identifier
         * display_name
-        * color
         * protected
         * user_data
     """
-    __slots__ = ('_identifier', '_display_name', '_color', '_protected',
-                 '_user_data', '_locked')
+    __slots__ = ('_identifier', '_display_name', '_protected', '_user_data', '_locked')
 
     def __init__(self, identifier):
-        """Initialize therm material base."""
+        """Initialize resource object base."""
         self._locked = False
         self.identifier = identifier
         self._display_name = None
-        self.color = None
         self.protected = False
         self._user_data = None
 
@@ -75,31 +72,6 @@ class _ThermMaterialBase(object):
         self._display_name = value
 
     @property
-    def color(self):
-        """Get or set an optional color for the material as it displays in THERM.
-
-        This will always be a Ladybug Color object when getting this property
-        but the setter supports specifying hex codes. If unspecified, a radom
-        color will automatically be assigned.
-        """
-        return self._color
-
-    @color.setter
-    def color(self, value):
-        if value is None:
-            self._color = Color(
-                random.randint(0, 255),
-                random.randint(0, 255),
-                random.randint(0, 255)
-            )
-        elif isinstance(value, str):
-            self._color = Color.from_hex(value)
-        else:
-            assert isinstance(value, Color), 'Expected ladybug Color object for ' \
-                'material color. Got {}.'.format(type(value))
-            self._color = value
-
-    @property
     def protected(self):
         """Get or set a boolean for whether the material is protected in THERM."""
         return self._protected
@@ -131,8 +103,71 @@ class _ThermMaterialBase(object):
         self._user_data = value
 
     def duplicate(self):
-        """Get a copy of this construction."""
+        """Get a copy of this object."""
         return self.__copy__()
+
+    def __copy__(self):
+        new_obj = self.__class__(self.identifier)
+        new_obj._display_name = self._display_name
+        new_obj._protected = self._protected
+        new_obj._user_data = None if self._user_data is None else self._user_data.copy()
+        return new_obj
+
+    def ToString(self):
+        """Overwrite .NET ToString."""
+        return self.__repr__()
+
+    def __repr__(self):
+        return 'Base THERM Resource:\n{}'.format(self.display_name)
+
+
+@lockable
+class _ThermMaterialBase(_ResourceObjectBase):
+    """Base therm material.
+
+    Args:
+        identifier: Text string for a unique Material ID. Must be < 100 characters
+            and not contain any thermPlus special characters. This will be used to
+            identify the object across a model and in the exported IDF.
+
+    Properties:
+        * identifier
+        * display_name
+        * color
+        * protected
+        * user_data
+    """
+    __slots__ = ('_color',)
+
+    def __init__(self, identifier):
+        """Initialize therm material base."""
+        _ResourceObjectBase.__init__(self, identifier)
+        self.color = None
+
+    @property
+    def color(self):
+        """Get or set an optional color for the material as it displays in THERM.
+
+        This will always be a Ladybug Color object when getting this property
+        but the setter supports specifying hex codes. If unspecified, a radom
+        color will automatically be assigned.
+        """
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        if value is None:
+            self._color = Color(
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255)
+            )
+        elif isinstance(value, str):
+            self._color = Color.from_hex(value)
+        else:
+            assert isinstance(value, Color), 'Expected ladybug Color object for ' \
+                'material color. Got {}.'.format(type(value))
+            self._color = value
 
     def __copy__(self):
         new_obj = self.__class__(self.identifier)
@@ -141,10 +176,6 @@ class _ThermMaterialBase(object):
         new_obj._protected = self._protected
         new_obj._user_data = None if self._user_data is None else self._user_data.copy()
         return new_obj
-
-    def ToString(self):
-        """Overwrite .NET ToString."""
-        return self.__repr__()
 
     def __repr__(self):
         return 'Base THERM Material:\n{}'.format(self.display_name)

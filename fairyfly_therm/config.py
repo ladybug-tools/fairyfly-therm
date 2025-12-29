@@ -35,6 +35,7 @@ class Folders(object):
         * therm_settings_path
         * therm_lib_path
         * material_lib_file
+        * gas_lib_file
         * bc_steady_state_lib_file
         * config_file
         * mute
@@ -158,8 +159,10 @@ class Folders(object):
         # gather all of the sub folders underneath the master folder
         if path and os.path.isdir(path):
             self._therm_lib_path = path
-            self._material_lib_file = self._check_therm_materials(path)
-            self._bc_steady_state_lib_file = self._check_therm_bcs(path)
+            self._material_lib_file = self._check_therm_lib_file(path, 'Materials.xml')
+            self._gas_lib_file = self._check_therm_lib_file(path, 'Gases.xml')
+            self._bc_steady_state_lib_file = self._check_therm_lib_file(
+                path, 'BoundaryConditionsSteadyState')
             if not self.mute:
                 print('Path to LBNL data is set to: {}'.format(self._lbnl_data_path))
         else:
@@ -168,12 +171,18 @@ class Folders(object):
                 print(msg)
             self._therm_lib_path = None
             self._material_lib_file = None
+            self._gas_lib_file = None
             self._bc_steady_state_lib_file = None
 
     @property
     def material_lib_file(self):
-        """Get the path to the ."""
+        """Get the path to the material library file."""
         return self._material_lib_file
+
+    @property
+    def gas_lib_file(self):
+        """Get the path to the gas library file."""
+        return self._gas_lib_file
 
     @property
     def bc_steady_state_lib_file(self):
@@ -300,22 +309,13 @@ class Folders(object):
         return lib_folder
 
     @staticmethod
-    def _check_therm_materials(path):
-        """Check that a materials XML file exists within the therm library."""
-        if not path:  # first check that a path exists
-            return None
-        mat_file = os.path.join(path, 'Materials.xml')
-        if os.path.isfile(mat_file):
-            return mat_file
-
-    @staticmethod
-    def _check_therm_bcs(path):
+    def _check_therm_lib_file(path, lib_file):
         """Check that a boundary conditions XML file exists within the therm library."""
         if not path:  # first check that a path exists
             return None
-        bc_file = os.path.join(path, 'BoundaryConditionsSteadyState.xml')
-        if os.path.isfile(bc_file):
-            return bc_file
+        lib_path = os.path.join(path, lib_file)
+        if os.path.isfile(lib_path):
+            return lib_path
 
 
 """Object possesing all key folders within the configuration."""
