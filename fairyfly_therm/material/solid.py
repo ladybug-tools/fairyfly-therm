@@ -1,5 +1,5 @@
 # coding=utf-8
-"""Solid THERM materials."""
+"""Solid THERM material."""
 from __future__ import division
 import xml.etree.ElementTree as ET
 
@@ -16,9 +16,9 @@ class SolidMaterial(_ThermMaterialBase):
     Args:
         conductivity: Number for the thermal conductivity of the material [W/m-K].
         emissivity: Number between 0 and 1 for the infrared hemispherical
-            emissivity of the front side of the glass. (Default: 0.9).
+            emissivity of the front side of the material. (Default: 0.9).
         emissivity_back: Number between 0 and 1 for the infrared hemispherical
-            emissivity of the back side of the glass. If None, this will
+            emissivity of the back side of the material. If None, this will
             default to the same value specified for emissivity. (Default: None)
         density: Optional number for the density of the material [kg/m3]. (Default: None).
         porosity: Optional number between zero and one for the porosity of
@@ -394,4 +394,4 @@ class SolidMaterial(_ThermMaterialBase):
         return new_material
 
     def __repr__(self):
-        return 'Solid THERM Material:\n{}'.format(self.display_name)
+        return 'Solid THERM Material: {}'.format(self.display_name)

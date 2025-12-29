@@ -382,4 +382,4 @@ class ComprehensiveCondition(_ThermConditionBase):
         return new_cond
 
     def __repr__(self):
-        return 'Comprehensive THERM Condition:\n{}'.format(self.display_name)
+        return 'Comprehensive THERM Condition: {}'.format(self.display_name)

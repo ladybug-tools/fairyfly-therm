@@ -5,7 +5,7 @@ import uuid
 from fairyfly_therm.material.solid import SolidMaterial
 
 
-def test_material_init():
+def test_solid_material_init():
     """Test the initialization of SolidMaterial objects and basic properties."""
     mat_id = uuid.uuid4()
     concrete = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9, identifier=mat_id)
@@ -28,7 +28,7 @@ def test_material_init():
         concrete.conductivity = 0
 
 
-def test_material_equivalency():
+def test_solid_material_equivalency():
     """Test the equality of a material to another SolidMaterial."""
     concrete_1 = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9)
     concrete_1.display_name = 'Concrete'
@@ -46,7 +46,7 @@ def test_material_equivalency():
     assert len(set(collection)) == 3
 
 
-def test_material_lockability():
+def test_solid_material_lockability():
     """Test the lockability of the SolidMaterial."""
     concrete = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9)
     concrete.density = 600
@@ -57,7 +57,7 @@ def test_material_lockability():
     concrete.density = 700
 
 
-def test_material_invalid():
+def test_solid_material_invalid():
     """Test the initialization of SolidMaterial objects with invalid properties."""
     concrete = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9)
 
@@ -75,7 +75,7 @@ def test_material_invalid():
         concrete.specific_heat = -1
 
 
-def test_material_to_from_xml():
+def test_solid_material_to_from_xml():
     """Test the initialization of SolidMaterial objects from XML elements."""
     mat_id = uuid.uuid4()
     concrete = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9, identifier=mat_id)
@@ -95,7 +95,7 @@ def test_material_to_from_xml():
     assert concrete.vapor_diffusion_resistance == concrete_dup.vapor_diffusion_resistance == 7.9
 
 
-def test_material_dict_methods():
+def test_solid_material_dict_methods():
     """Test the to/from dict methods."""
     mat_id = uuid.uuid4()
     concrete = SolidMaterial(0.5, 0.95, None, 800, 0.81, 1200, 7.9, identifier=mat_id)
