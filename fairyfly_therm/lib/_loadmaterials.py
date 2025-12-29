@@ -1,83 +1,98 @@
 """Load all materials from the LBNL XML files and JSON libraries."""
-from fairyfly_therm.config import folders
-from honeybee_energy.material.dictutil import dict_to_material
-
 import os
 import json
 
+from fairyfly_therm.config import folders
+from fairyfly_therm.material.solid import SolidMaterial
+from fairyfly_therm.material.cavity import CavityMaterial
+from fairyfly_therm.material.xmlutil import extract_all_materials_from_xml_file
+from ._loadgases import _gases
 
 # empty dictionaries to hold loaded materials
 _solid_materials = {}
 _cavity_materials = {}
 
+# ensure that there is always a concrete material
+concrete_dict = {
+    'type': 'SolidMaterial',
+    'identifier': '6442842d-7c8f-4231-a9b3-64302e3b2bc4',
+    'display_name': 'Generic HW Concrete',
+    'conductivity': 1.95,
+    'emissivity': 0.9,
+    'emissivity_back': 0.9,
+    'density': 2240,
+    'porosity': 0.24,
+    'specific_heat': 900,
+    'vapor_diffusion_resistance': 19,
+    'color': '#808080',
+    'protected': True
+}
+concrete = SolidMaterial.from_dict(concrete_dict)
+concrete.lock()
+_solid_materials[concrete.display_name] = concrete
 
-# first load the honeybee defaults
-with open(folders.defaults_file) as json_file:
-    default_data = json.load(json_file)['materials']
-for mat_dict in default_data:
-    mat_obj = dict_to_material(mat_dict, False)
-    mat_obj.lock()
-    if mat_obj.is_window_material:
-        _window_materials[mat_dict['identifier']] = mat_obj
-    else:
-        _opaque_materials[mat_dict['identifier']] = mat_obj
-_default_mats = set(list(_opaque_materials.keys()) + list(_window_materials.keys()))
-
-
-# then load honeybee extension data into a dictionary but don't make the objects yet
-_opaque_mat_standards_dict = {}
-_window_mat_standards_dict = {}
-
-for ext_folder in folders.standards_extension_folders:
-    _data_dir = os.path.join(ext_folder, 'constructions')
-    _opaque_dir = os.path.join(_data_dir, 'opaque_material.json')
-    if os.path.isfile(_opaque_dir):
-        with open(_opaque_dir, 'r') as f:
-            _opaque_mat_standards_dict.update(json.load(f))
-    _window_dir = os.path.join(_data_dir, 'window_material.json')
-    if os.path.isfile(_window_dir):
-        with open(_window_dir, 'r') as f:
-            _window_mat_standards_dict.update(json.load(f))
+# ensure that we always have an air cavity material
+air_mat = CavityMaterial(identifier='0b46bbd7-0dbc-c148-3afe-87431bf0f66f')
+air_mat.display_name = 'Frame Cavity - CEN Simplified'
+air_mat.protected = True
+air_mat.lock()
+_cavity_materials[air_mat.display_name] = air_mat
 
 
-# then load material JSONs from the default and user-supplied files
-def load_material_object(mat_dict, opaque_mats, window_mats):
-    """Load a material object from a dictionary and add it to the library dict."""
-    try:
-        mat_obj = dict_to_material(mat_dict, False)
-        if mat_obj is not None:
-            mat_obj.lock()
-            assert mat_dict['identifier'] not in _default_mats, 'Cannot overwrite ' \
-                'default material "{}".'.format(mat_dict['identifier'])
-            if mat_obj.is_window_material:
-                window_mats[mat_dict['identifier']] = mat_obj
-            else:
-                opaque_mats[mat_dict['identifier']] = mat_obj
-    except (TypeError, KeyError):
-        pass  # not a Honeybee Material JSON; possibly a comment
+# load the materials from the LBNL library if they exist
+if folders.material_lib_file is not None:
+    solid, cavit = extract_all_materials_from_xml_file(folders.material_lib_file, _gases)
+    for sol in solid:
+        sol.lock()
+        _solid_materials[sol.display_name] = sol
+    for cav in cavit:
+        cav.lock()
+        _cavity_materials[cav.display_name] = cav
 
 
-def load_materials_from_folder(construction_lib_folder):
-    """Load all of the material layer objects from a construction standards folder.
+def check_and_add_material(mat):
+    """Check that a mat is not overwriting a default and add it."""
+    mat.lock()
+    if mat.display_name not in ('Generic HW Concrete', 'Frame Cavity - CEN Simplified'):
+        if isinstance(mat, SolidMaterial):
+            _solid_materials[mat.display_name] = mat
+        elif isinstance(mat, CavityMaterial):
+            _cavity_materials[mat.display_name] = mat
+
+
+def load_materials_from_folder(lib_folder):
+    """Load all of the material objects from a therm standards folder.
 
     Args:
-        construction_lib_folder: Path to a constructions sub-folder within a
-            honeybee standards folder.
+        lib_folder: Path to a sub-folder within a honeybee standards folder.
     """
-    opaque_mats, window_mats = {}, {}
-    for f in os.listdir(construction_lib_folder):
-        f_path = os.path.join(construction_lib_folder, f)
-        if os.path.isfile(f_path) and f_path.endswith('.json'):
-            with open(f_path) as json_file:
-                data = json.load(json_file)
-            if 'type' in data:  # single object
-                load_material_object(data, opaque_mats, window_mats)
-            else:  # a collection of several objects
-                for mat_id in data:
-                    load_material_object(data[mat_id], opaque_mats, window_mats)
-    return opaque_mats, window_mats
+    for f in os.listdir(lib_folder):
+        f_path = os.path.join(lib_folder, f)
+        if os.path.isfile(f_path):
+            if f_path.endswith('.xml'):
+                solid, cavity = extract_all_materials_from_xml_file(f_path, _gases)
+                for m in solid + cavity:
+                    check_and_add_material(m)
+            elif f_path.endswith('.json'):
+                with open(f_path) as json_file:
+                    data = json.load(json_file)
+                if 'type' in data:  # single object
+                    if data['type'] == 'SolidMaterial':
+                        check_and_add_material(SolidMaterial.from_dict(data))
+                    elif data['type'] == 'CavityMaterial':
+                        check_and_add_material(CavityMaterial.from_dict(data))
+                else:  # a collection of several objects
+                    for m_id in data:
+                        try:
+                            m_dict = data[m_id]
+                            if m_dict['type'] == 'SolidMaterial':
+                                check_and_add_material(SolidMaterial.from_dict(m_dict))
+                            elif m_dict['type'] == 'CavityMaterial':
+                                check_and_add_material(CavityMaterial.from_dict(m_dict))
+                        except (TypeError, KeyError):
+                            pass  # not an acceptable JSON; possibly a comment
 
 
-opaque_m, window_m = load_materials_from_folder(folders.construction_lib)
-_opaque_materials.update(opaque_m)
-_window_materials.update(window_m)
+# load therm gases from a user folder if we are not using the official THERM lib
+if folders.therm_lib_path is not None:
+    load_materials_from_folder(folders.therm_lib_path)

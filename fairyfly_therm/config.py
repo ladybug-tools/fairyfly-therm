@@ -125,6 +125,10 @@ class Folders(object):
         if path and os.path.isdir(path):
             self._lbnl_data_path = path
             self._therm_settings_path = self._check_therm_settings(path)
+            self._material_lib_file = self._check_therm_lib_file(path, 'Materials.xml')
+            self._gas_lib_file = self._check_therm_lib_file(path, 'Gases.xml')
+            self._bc_steady_state_lib_file = self._check_therm_lib_file(
+                path, 'BoundaryConditionsSteadyState.xml')
             if not self.mute:
                 print('Path to LBNL data is set to: {}'.format(self._lbnl_data_path))
         else:
@@ -133,6 +137,9 @@ class Folders(object):
                 print(msg)
             self._lbnl_data_path = None
             self._therm_settings_path = None
+            self._material_lib_file = None
+            self._gas_lib_file = None
+            self._bc_steady_state_lib_file = None
 
     @property
     def therm_settings_path(self):
@@ -146,8 +153,8 @@ class Folders(object):
     def therm_lib_path(self):
         """Get or set the path to the folder from which therm materials are loaded.
 
-        This might be either the official library folder within the LBNL data
-        folder or a user standards within the user's standards folder.
+        This will be the therm folder within within the user's standards folder
+        if it exists.
         """
         return self._therm_lib_path
 
@@ -159,20 +166,13 @@ class Folders(object):
         # gather all of the sub folders underneath the master folder
         if path and os.path.isdir(path):
             self._therm_lib_path = path
-            self._material_lib_file = self._check_therm_lib_file(path, 'Materials.xml')
-            self._gas_lib_file = self._check_therm_lib_file(path, 'Gases.xml')
-            self._bc_steady_state_lib_file = self._check_therm_lib_file(
-                path, 'BoundaryConditionsSteadyState')
             if not self.mute:
-                print('Path to LBNL data is set to: {}'.format(self._lbnl_data_path))
+                print('Path to THERM library is set to: {}'.format(self._lbnl_data_path))
         else:
             if path:
-                msg = '{} is not a valid path to a LBNL data folder.'.format(path)
+                msg = '{} is not a valid path to a THERM standards library.'.format(path)
                 print(msg)
             self._therm_lib_path = None
-            self._material_lib_file = None
-            self._gas_lib_file = None
-            self._bc_steady_state_lib_file = None
 
     @property
     def material_lib_file(self):
@@ -299,23 +299,16 @@ class Folders(object):
             if os.path.isdir(lib_folder):
                 return lib_folder
 
-        # then check the default location where the LBNL installer puts it
-        lib_folder = None
-        if os.name == 'nt':  # search the C:/ drive on Windows
-            major, minor, _ = Folders.THERM_VERSION
-            test_path = 'C:/Users/Public/LBNL/THERM{}.{}/lib'.format(major, minor)
-            if os.path.isdir(test_path):
-                lib_folder = test_path
-        return lib_folder
-
     @staticmethod
     def _check_therm_lib_file(path, lib_file):
-        """Check that a boundary conditions XML file exists within the therm library."""
+        """Check that a XML file exists within the LBNL therm library."""
         if not path:  # first check that a path exists
             return None
-        lib_path = os.path.join(path, lib_file)
-        if os.path.isfile(lib_path):
-            return lib_path
+        if os.name == 'nt':
+            major, minor, _ = Folders.THERM_VERSION
+            lib_path = os.path.join(path, 'THERM{}.{}/lib'.format(major, minor), lib_file)
+            if os.path.isfile(lib_path):
+                return lib_path
 
 
 """Object possesing all key folders within the configuration."""

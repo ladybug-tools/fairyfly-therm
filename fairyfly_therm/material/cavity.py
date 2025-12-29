@@ -140,7 +140,9 @@ class CavityMaterial(_ThermMaterialBase):
         """
         # create the base material from the UUID and conductivity
         xml_uuid = xml_element.find('UUID')
-        identifier = uuid_from_therm_id(xml_uuid.text)
+        identifier = xml_uuid.text
+        if len(identifier) == 31:
+            identifier = uuid_from_therm_id(identifier)
         xml_cavity = xml_element.find('Cavity')
         xml_c_model = xml_cavity.find('CavityStandard')
         cavity_model = xml_c_model.text
@@ -296,7 +298,7 @@ class CavityMaterial(_ThermMaterialBase):
         xml_protect = ET.SubElement(xml_mat, 'Protected')
         xml_protect.text = 'true' if self.protected else 'false'
         xml_color = ET.SubElement(xml_mat, 'Color')
-        xml_color.text = self.color.to_hex()
+        xml_color.text = self.color.to_hex().replace('#', '0x')
         xml_cavity = ET.SubElement(xml_mat, 'Cavity')
         # add all of the required cavity attributes
         xml_model = ET.SubElement(xml_cavity, 'CavityStandard')

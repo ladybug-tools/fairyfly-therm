@@ -4,7 +4,7 @@ from __future__ import division
 import xml.etree.ElementTree as ET
 
 from fairyfly._lockable import lockable
-from fairyfly.typing import float_in_range, float_positive
+from fairyfly.typing import float_in_range, float_positive, uuid_from_therm_id
 
 from ._base import _ThermMaterialBase
 
@@ -160,6 +160,8 @@ class SolidMaterial(_ThermMaterialBase):
         # create the base material from the UUID and conductivity
         xml_uuid = xml_element.find('UUID')
         identifier = xml_uuid.text
+        if len(identifier) == 31:
+            identifier = uuid_from_therm_id(identifier)
         xml_solid = xml_element.find('Solid')
         xml_hyt = xml_solid.find('HygroThermal')
         xml_cond = xml_hyt.find('ThermalConductivityDry')
@@ -303,7 +305,7 @@ class SolidMaterial(_ThermMaterialBase):
         xml_protect = ET.SubElement(xml_mat, 'Protected')
         xml_protect.text = 'true' if self.protected else 'false'
         xml_color = ET.SubElement(xml_mat, 'Color')
-        xml_color.text = self.color.to_hex()
+        xml_color.text = self.color.to_hex().replace('#', '0x')
         xml_solid = ET.SubElement(xml_mat, 'Solid')
         # add all of the required hygrothermal and optical attributes
         xml_hyt = ET.SubElement(xml_solid, 'HygroThermal')

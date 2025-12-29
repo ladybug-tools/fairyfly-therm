@@ -4,7 +4,7 @@ from __future__ import division
 import xml.etree.ElementTree as ET
 
 from fairyfly._lockable import lockable
-from fairyfly.typing import float_in_range, float_positive
+from fairyfly.typing import float_in_range, float_positive, uuid_from_therm_id
 
 from ._base import _ThermConditionBase
 
@@ -142,6 +142,8 @@ class ComprehensiveCondition(_ThermConditionBase):
         # create the base material from the UUID, temperature, and film coefficient
         xml_uuid = xml_element.find('UUID')
         identifier = xml_uuid.text
+        if len(identifier) == 31:
+            identifier = uuid_from_therm_id(identifier)
         xml_comp = xml_element.find('Comprehensive')
         xml_conv = xml_comp.find('Convection')
         xml_t = xml_conv.find('Temperature')
@@ -294,7 +296,7 @@ class ComprehensiveCondition(_ThermConditionBase):
         xml_protect = ET.SubElement(xml_cond, 'Protected')
         xml_protect.text = 'true' if self.protected else 'false'
         xml_color = ET.SubElement(xml_cond, 'Color')
-        xml_color.text = self.color.to_hex()
+        xml_color.text = self.color.to_hex().replace('#', '0x')
         xml_igu = ET.SubElement(xml_cond, 'IGUSurface')
         xml_igu.text = 'false'
         # add all of the comprehensive attributes
@@ -351,6 +353,31 @@ class ComprehensiveCondition(_ThermConditionBase):
         if self._user_data is not None:
             base['user_data'] = self.user_data
         return base
+
+    @staticmethod
+    def extract_all_from_xml_file(xml_file):
+        """Extract all Condition objects from a THERM XML file.
+
+        Args:
+            xml_file: A path to an XML file containing objects Condition objects.
+
+        Returns:
+            A list of all Comprehensive Condition objects in the file.
+        """
+        # read the file and get the root
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        # extract all of the PureGas objects
+        conditions = []
+        for con_obj in root:
+            if con_obj.tag == 'BoundaryCondition' and \
+                    con_obj.find('Comprehensive') is not None:
+                ComprehensiveCondition.from_therm_xml(con_obj)
+                try:
+                    conditions.append(ComprehensiveCondition.from_therm_xml(con_obj))
+                except Exception:  # not a valid conditions
+                    pass
+        return conditions
 
     def __key(self):
         """A tuple based on the object properties, useful for hashing."""

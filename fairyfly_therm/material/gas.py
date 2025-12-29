@@ -4,7 +4,8 @@ from __future__ import division
 import xml.etree.ElementTree as ET
 
 from fairyfly._lockable import lockable
-from fairyfly.typing import float_positive, float_in_range, tuple_with_length
+from fairyfly.typing import float_positive, float_in_range, tuple_with_length, \
+    uuid_from_therm_id
 
 from ._base import _ResourceObjectBase
 
@@ -269,6 +270,8 @@ class PureGas(_ResourceObjectBase):
         # get the identifier, molecular weight and specific heat ratio
         xml_uuid = xml_element.find('UUID')
         identifier = xml_uuid.text
+        if len(identifier) == 31:
+            identifier = uuid_from_therm_id(identifier)
         xml_prop = xml_element.find('Properties')
         xml_mw = xml_prop.find('MolecularWeight')
         molecular_weight = xml_mw.text
@@ -661,6 +664,8 @@ class Gas(_ResourceObjectBase):
         # get the identifier, gases and initialize the object
         xml_uuid = xml_element.find('UUID')
         identifier = xml_uuid.text
+        if len(identifier) == 31:
+            identifier = uuid_from_therm_id(identifier)
         xml_comps = xml_element.find('Components')
         pure_gas_objs, gas_fractions = [], []
         for xml_comp in xml_comps:

@@ -6,7 +6,9 @@ from fairyfly.typing import therm_id_from_uuid
 
 from fairyfly_therm.material.cavity import CavityMaterial
 from fairyfly_therm.material.gas import Gas, PureGas
-from fairyfly_therm.lib.gases import air
+from fairyfly_therm.material.solid import SolidMaterial
+from fairyfly_therm.material.xmlutil import extract_all_materials_from_xml_file
+from fairyfly_therm.lib.gases import air, _gases
 
 
 def test_cavity_material_init():
@@ -111,3 +113,16 @@ def test_cavity_material_dict_methods():
     assert co2_gap.cavity_model == co2_gap_dup.cavity_model == co2_gap_dup2.cavity_model == 'ISO15099'
     assert co2_gap.emissivity == co2_gap_dup.emissivity == co2_gap_dup2.emissivity == 0.95
     assert co2_gap.emissivity_back == co2_gap_dup.emissivity_back == co2_gap_dup2.emissivity_back == 0.95
+
+
+def test_extract_all_materials_from_xml_file():
+    """Test the extract_all_materials_from_xml_file method."""
+    lbnl_mat_file = './tests/assets/xml/Materials.xml'
+    solids, cavities = extract_all_materials_from_xml_file(lbnl_mat_file, _gases)
+
+    assert len(solids) == 194
+    for solid in solids:
+        assert isinstance(solid, SolidMaterial)
+    assert len(cavities) == 4
+    for cavity in cavities:
+        assert isinstance(cavity, CavityMaterial)

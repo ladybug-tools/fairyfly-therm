@@ -90,3 +90,13 @@ def test_condition_dict_methods():
     assert nfrc_ext.radiant_temperature == nfrc_ext_dup.radiant_temperature == -18
     assert nfrc_ext.heat_flux == nfrc_ext_dup.heat_flux == 0
     assert nfrc_ext.relative_humidity == nfrc_ext_dup.relative_humidity == 0.5
+
+
+def test_extract_all_from_xml_file():
+    """Test the initialization of conditions from a file."""
+    lbnl_con_file = './tests/assets/xml/BoundaryConditionsSteadyState.xml'
+    conditions = ComprehensiveCondition.extract_all_from_xml_file(lbnl_con_file)
+
+    assert len(conditions) == 9
+    for con in conditions:
+        assert isinstance(con, ComprehensiveCondition)

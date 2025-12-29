@@ -1,4 +1,4 @@
-"""Load all schedule type limits from the standards library."""
+"""Load all gases from the standards library."""
 from fairyfly_therm.config import folders
 from fairyfly_therm.material.gas import PureGas, Gas
 
@@ -6,7 +6,7 @@ import os
 import json
 
 
-# empty dictionary to hold loaded schedule type limits
+# empty dictionary to hold loaded gases
 _pure_gases = {}
 _gases = {}
 
@@ -21,22 +21,22 @@ if folders.gas_lib_file is not None:
         _gases[g.display_name] = g
 else:  # if not, at least make sure that we have an Air gas
     air_dict = {
-        "type": "PureGas",
-        "identifier": "8d33196f-f052-46e6-8353-bccb9a779f9c",
-        "conductivity_coeff_a": 0.002873,
-        "viscosity_coeff_a": 3.723e-06,
-        "specific_heat_coeff_a": 1002.737,
-        "conductivity_coeff_b": 7.76e-05,
-        "viscosity_coeff_b": 4.94e-08,
-        "specific_heat_coeff_b": 0.012324,
-        "conductivity_coeff_c": 0.0,
-        "viscosity_coeff_c": 0.0,
-        "specific_heat_coeff_c": 0.0,
-        "specific_heat_ratio": 1.4,
-        "molecular_weight": 28.97,
-        "display_name": "Air",
-        "protected": True,
-        "color": "#556d11"
+        'type': 'PureGas',
+        'identifier': '8d33196f-f052-46e6-8353-bccb9a779f9c',
+        'conductivity_coeff_a': 0.002873,
+        'viscosity_coeff_a': 3.723e-06,
+        'specific_heat_coeff_a': 1002.737,
+        'conductivity_coeff_b': 7.76e-05,
+        'viscosity_coeff_b': 4.94e-08,
+        'specific_heat_coeff_b': 0.012324,
+        'conductivity_coeff_c': 0.0,
+        'viscosity_coeff_c': 0.0,
+        'specific_heat_coeff_c': 0.0,
+        'specific_heat_ratio': 1.4,
+        'molecular_weight': 28.97,
+        'display_name': 'Air',
+        'protected': True,
+        'color': '#556d11'
     }
     pure_air = PureGas.from_dict(air_dict)
     pure_air.lock()
@@ -60,15 +60,14 @@ def check_and_add_gas(gas):
             _gases[gas.display_name] = gas
 
 
-def load_type_limits_from_folder(schedule_lib_folder):
-    """Load all of the type limit objects from a schedule standards folder.
+def load_gases_from_folder(lib_folder):
+    """Load all of the gas objects from a therm standards folder.
 
     Args:
-        schedule_lib_folder: Path to a schedules sub-folder within a honeybee
-            standards folder.
+        lib_folder: Path to a sub-folder within a honeybee standards folder.
     """
-    for f in os.listdir(schedule_lib_folder):
-        f_path = os.path.join(schedule_lib_folder, f)
+    for f in os.listdir(lib_folder):
+        f_path = os.path.join(lib_folder, f)
         if os.path.isfile(f_path):
             if f_path.endswith('.xml'):
                 gs, pgs = Gas.extract_all_from_xml_file(f_path)
@@ -95,5 +94,5 @@ def load_type_limits_from_folder(schedule_lib_folder):
 
 
 # load therm gases from a user folder if we are not using the official THERM lib
-if not folders.therm_lib_path.endswith('lib'):
-    load_type_limits_from_folder(folders.therm_lib_path)
+if folders.therm_lib_path is not None:
+    load_gases_from_folder(folders.therm_lib_path)

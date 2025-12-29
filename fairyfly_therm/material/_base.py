@@ -163,6 +163,7 @@ class _ThermMaterialBase(_ResourceObjectBase):
                 random.randint(0, 255)
             )
         elif isinstance(value, str):
+            value = value.replace('0x', '')
             self._color = Color.from_hex(value)
         else:
             assert isinstance(value, Color), 'Expected ladybug Color object for ' \
