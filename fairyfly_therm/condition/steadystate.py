@@ -10,7 +10,7 @@ from ._base import _ThermConditionBase
 
 
 @lockable
-class ComprehensiveCondition(_ThermConditionBase):
+class SteadyState(_ThermConditionBase):
     """Typical comprehensive condition.
 
     Args:
@@ -134,7 +134,7 @@ class ComprehensiveCondition(_ThermConditionBase):
 
     @classmethod
     def from_therm_xml(cls, xml_element):
-        """Create ComprehensiveCondition from an XML element of a THERM BoundaryCondition.
+        """Create SteadyState from an XML element of a THERM BoundaryCondition.
 
         Args:
             xml_element: An XML element of a THERM BoundaryCondition.
@@ -150,7 +150,7 @@ class ComprehensiveCondition(_ThermConditionBase):
         temperature = xml_t.text
         xml_fc = xml_conv.find('FilmCoefficient')
         film_coefficient = xml_fc.text
-        cond = ComprehensiveCondition(temperature, film_coefficient, identifier=identifier)
+        cond = SteadyState(temperature, film_coefficient, identifier=identifier)
         # assign the other attributes if specified
         xml_rh = xml_comp.find('RelativeHumidity')
         if xml_rh is not None:
@@ -190,7 +190,7 @@ class ComprehensiveCondition(_ThermConditionBase):
 
     @classmethod
     def from_therm_xml_str(cls, xml_str):
-        """Create ComprehensiveCondition from an XML string of a THERM BoundaryCondition.
+        """Create SteadyState from an XML string of a THERM BoundaryCondition.
 
         Args:
             xml_str: An XML text string of a THERM BoundaryCondition.
@@ -200,7 +200,7 @@ class ComprehensiveCondition(_ThermConditionBase):
 
     @classmethod
     def from_dict(cls, data):
-        """Create a ComprehensiveCondition from a dictionary.
+        """Create a SteadyState from a dictionary.
 
         Args:
             data: A python dictionary in the following format
@@ -208,7 +208,7 @@ class ComprehensiveCondition(_ThermConditionBase):
         .. code-block:: python
 
             {
-            "type": 'ComprehensiveCondition',
+            "type": 'SteadyState',
             "identifier": 'f26f3597-e3ee-43fe-a0b3-ec673f993d86',
             "display_name": 'NFRC 100-2010 Exterior',
             "temperature": -18,
@@ -219,8 +219,8 @@ class ComprehensiveCondition(_ThermConditionBase):
             "relative_humidity": 0.5
             }
         """
-        assert data['type'] == 'ComprehensiveCondition', \
-            'Expected ComprehensiveCondition. Got {}.'.format(data['type'])
+        assert data['type'] == 'SteadyState', \
+            'Expected SteadyState. Got {}.'.format(data['type'])
 
         emiss = data['emissivity'] if 'emissivity' in data and \
             data['emissivity'] is not None else 1.0
@@ -329,9 +329,9 @@ class ComprehensiveCondition(_ThermConditionBase):
             return ET.tostring(xml_root)
 
     def to_dict(self):
-        """ComprehensiveCondition dictionary representation."""
+        """SteadyState dictionary representation."""
         base = {
-            'type': 'ComprehensiveCondition',
+            'type': 'SteadyState',
             'identifier': self.identifier,
             'temperature': self.temperature,
             'film_coefficient': self.film_coefficient
@@ -372,9 +372,9 @@ class ComprehensiveCondition(_ThermConditionBase):
         for con_obj in root:
             if con_obj.tag == 'BoundaryCondition' and \
                     con_obj.find('Comprehensive') is not None:
-                ComprehensiveCondition.from_therm_xml(con_obj)
+                SteadyState.from_therm_xml(con_obj)
                 try:
-                    conditions.append(ComprehensiveCondition.from_therm_xml(con_obj))
+                    conditions.append(SteadyState.from_therm_xml(con_obj))
                 except Exception:  # not a valid conditions
                     pass
         return conditions
@@ -389,7 +389,7 @@ class ComprehensiveCondition(_ThermConditionBase):
         return hash(self.__key())
 
     def __eq__(self, other):
-        return isinstance(other, ComprehensiveCondition) and self.__key() == other.__key()
+        return isinstance(other, SteadyState) and self.__key() == other.__key()
 
     def __ne__(self, other):
         return not self.__eq__(other)
