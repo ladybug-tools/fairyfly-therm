@@ -2,7 +2,7 @@
 """Boundary Therm Properties."""
 from fairyfly.checkdup import is_equivalent
 
-from ..condition.comprehensive import ComprehensiveCondition
+from ..condition.steadystate import SteadyState
 from ..lib.conditions import exterior
 
 
@@ -40,8 +40,8 @@ class BoundaryThermProperties(object):
     @condition.setter
     def condition(self, value):
         if value is not None:
-            assert isinstance(value, ComprehensiveCondition), \
-                'Expected ComprehensiveCondition. Got {}.'.format(type(value))
+            assert isinstance(value, SteadyState), \
+                'Expected SteadyState. Got {}.'.format(type(value))
             value.lock()  # lock editing in case condition has multiple references
         self._condition = value
 
@@ -61,14 +61,14 @@ class BoundaryThermProperties(object):
 
             {
             "type": 'BoundaryThermProperties',
-            "condition": {},  # A ComprehensiveCondition dictionary
+            "condition": {},  # A SteadyState dictionary
             }
         """
         assert data['type'] == 'BoundaryThermProperties', \
             'Expected BoundaryThermProperties. Got {}.'.format(data['type'])
         new_prop = cls(host)
         if 'condition' in data and data['condition'] is not None:
-            new_prop.condition = ComprehensiveCondition.from_dict(data['condition'])
+            new_prop.condition = SteadyState.from_dict(data['condition'])
         return new_prop
 
     def apply_properties_from_dict(self, abridged_data, conditions):

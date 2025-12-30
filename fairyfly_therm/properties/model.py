@@ -13,8 +13,7 @@ from ..material.dictutil import dict_to_material, dict_abridged_to_material, \
     MATERIAL_TYPES
 from ..material.gas import PureGas, Gas
 from ..material.cavity import CavityMaterial
-from ..condition.comprehensive import ComprehensiveCondition
-from ..config import folders
+from ..condition.steadystate import SteadyState
 
 
 class ModelThermProperties(object):
@@ -97,7 +96,6 @@ class ModelThermProperties(object):
         detailed = False if raise_exception else detailed
         msgs = []
         tol = self.host.tolerance
-        ang_tol = self.host.angle_tolerance
 
         # perform checks for duplicate identifiers, which might mess with other checks
         msgs.append(self.host.check_all_duplicate_identifiers(False, detailed))
@@ -258,8 +256,22 @@ class ModelThermProperties(object):
         if len(all_mats) != 0:
             base['therm']['materials'] = []
             for mat in all_mats:
-            
-
+                if isinstance(mat, CavityMaterial):
+                    base['therm']['materials'].append(mat.to_dict(abridged=True))
+                    gases.append(mat.gas)
+                    for pg in mat.gas.pure_gases:
+                        pure_gases.append(pg)
+                else:  # SolidMaterial
+                    base['therm']['materials'].append(mat.to_dict())
+            if len(gases) != 0:
+                base['therm']['gases'] = [g.to_dict(abridged=True) for g in set(gases)]
+                base['therm']['pure_gases'] = [pg.to_dict() for pg in set(pure_gases)]
+        # add the conditions to the dictionary
+        all_conds = self.conditions
+        if len(all_conds) != 0:
+            base['therm']['conditions'] = []
+            for con in all_conds:
+                base['therm']['conditions'].append(con.to_dict())
         return base
 
     def duplicate(self, new_host=None):
@@ -355,144 +367,12 @@ class ModelThermProperties(object):
             for con in data['properties']['therm']['conditions']:
                 try:
                     conditions[con['identifier']] = \
-                        ComprehensiveCondition.from_dict(con)
+                        SteadyState.from_dict(con)
                 except Exception as e:
                     if not skip_invalid:
                         invalid_dict_error(con, e)
 
         return materials, conditions, gases, pure_gases
-
-    def _add_constr_type_objs_to_dict(self, base):
-        """Add materials, constructions and construction sets to a base dictionary.
-
-        Args:
-            base: A base dictionary for a Fairyfly Model.
-
-        Returns:
-            A list of of schedules that are assigned to the constructions.
-        """
-        # add the global construction set to the dictionary
-        gs = self.global_construction_set.to_dict(abridged=True, none_for_defaults=False)
-        gs['type'] = 'GlobalConstructionSet'
-        del gs['identifier']
-        g_constr = self.global_construction_set.constructions_unique
-        g_materials = []
-        for constr in g_constr:
-            try:
-                g_materials.extend(constr.materials)
-            except AttributeError:
-                pass  # ShadeConstruction or AirBoundaryConstruction
-        gs['context_construction'] = generic_context.identifier
-        gs['constructions'] = [generic_context.to_dict()]
-        for cnst in g_constr:
-            try:
-                gs['constructions'].append(cnst.to_dict(abridged=True))
-            except TypeError:  # ShadeConstruction
-                gs['constructions'].append(cnst.to_dict())
-        gs['materials'] = [mat.to_dict() for mat in set(g_materials)]
-        base['therm']['global_construction_set'] = gs
-
-        # add all ConstructionSets to the dictionary
-        base['therm']['construction_sets'] = []
-        construction_sets = self.construction_sets
-        for cnstr_set in construction_sets:
-            base['therm']['construction_sets'].append(cnstr_set.to_dict(abridged=True))
-
-        # add all unique Constructions to the dictionary
-        room_constrs = []
-        for cnstr_set in construction_sets:
-            room_constrs.extend(cnstr_set.modified_constructions_unique)
-        mass_constrs = []
-        for room in self.host.rooms:
-            for int_mass in room.properties.therm._internal_masses:
-                constr = int_mass.construction
-                if not self._instance_in_array(constr, mass_constrs):
-                    mass_constrs.append(constr)
-        all_constrs = room_constrs + mass_constrs + \
-            self.face_constructions + self.shade_constructions
-        constructions = list(set(all_constrs))
-        base['therm']['constructions'] = []
-        for cnst in constructions:
-            try:
-                base['therm']['constructions'].append(cnst.to_dict(abridged=True))
-            except TypeError:  # ShadeConstruction
-                base['therm']['constructions'].append(cnst.to_dict())
-
-        # add all unique Materials to the dictionary
-        materials = []
-        for cnstr in constructions:
-            try:
-                materials.extend(cnstr.materials)
-                if cnstr.has_frame:
-                    materials.append(cnstr.frame)
-                if isinstance(cnstr, WindowConstructionShade):
-                    if cnstr.is_switchable_glazing:
-                        materials.append(cnstr.switched_glass_material)
-                    if cnstr.shade_location == 'Between':
-                        materials.append(cnstr.window_construction.materials[-2])
-            except AttributeError:
-                pass  # ShadeConstruction
-        base['therm']['materials'] = [mat.to_dict() for mat in set(materials)]
-
-        # extract all of the schedules from the constructions
-        schedules = []
-        for constr in constructions:
-            if isinstance(constr, AirBoundaryConstruction):
-                self._check_and_add_schedule(constr.air_mixing_schedule, schedules)
-            elif isinstance(constr, WindowConstructionShade):
-                if constr.schedule is not None:
-                    self._check_and_add_schedule(constr.schedule, schedules)
-            elif isinstance(constr, WindowConstructionDynamic):
-                self._check_and_add_schedule(constr.schedule, schedules)
-        return schedules
-
-    def _add_sched_type_objs_to_dict(self, base, schs):
-        """Add type limits, schedules, program types, hvacs, shws to a base dictionary.
-
-        Args:
-            base: A base dictionary for a Fairyfly Model.
-            schs: A list of additional schedules to be serialized to the
-                base dictionary.
-        """
-        # add all unique hvacs to the dictionary
-        hvacs = self.hvacs
-        base['therm']['hvacs'] = []
-        for hvac in hvacs:
-            base['therm']['hvacs'].append(hvac.to_dict(abridged=True))
-
-        # add all unique shws to the dictionary
-        base['therm']['shws'] = [shw.to_dict() for shw in self.shws]
-
-        # add all unique program types to the dictionary
-        program_types = self.program_types
-        base['therm']['program_types'] = []
-        for p_type in program_types:
-            base['therm']['program_types'].append(p_type.to_dict(abridged=True))
-
-        # add all unique Schedules to the dictionary
-        p_type_scheds = []
-        for p_type in program_types:
-            for sched in p_type.schedules:
-                self._check_and_add_schedule(sched, p_type_scheds)
-        hvac_scheds = []
-        for hvac in hvacs:
-            for sched in hvac.schedules:
-                self._check_and_add_schedule(sched, hvac_scheds)
-        all_scheds = hvac_scheds + p_type_scheds + self.room_schedules + \
-            self.shade_schedules + schs
-        schedules = list(set(all_scheds))
-        base['therm']['schedules'] = []
-        for sched in schedules:
-            base['therm']['schedules'].append(sched.to_dict(abridged=True))
-
-        # add all unique ScheduleTypeLimits to the dictionary
-        type_limits = []
-        for sched in schedules:
-            t_lim = sched.schedule_type_limit
-            if t_lim is not None and not self._instance_in_array(t_lim, type_limits):
-                type_limits.append(t_lim)
-        base['therm']['schedule_type_limits'] = \
-            [s_typ.to_dict() for s_typ in set(type_limits)]
 
     @staticmethod
     def _instance_in_array(object_instance, object_array):
