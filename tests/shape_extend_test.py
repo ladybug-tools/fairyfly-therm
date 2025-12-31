@@ -86,3 +86,18 @@ def test_from_dict():
     new_shape = Shape.from_dict(sd)
     assert new_shape.properties.therm.material == insulation
     assert new_shape.to_dict() == sd
+
+
+def test_writer_to_therm_xml():
+    """Test the Shape therm_xml method."""
+    pts = (Point3D(0, 0, 0), Point3D(0, 0, 3), Point3D(1, 0, 3), Point3D(1, 0, 0))
+    shape = Shape(Face3D(pts))
+    shape.display_name = 'TestShape'
+    insulation = SolidMaterial(0.049, 0.9, None, 265, None, 836)
+    insulation.display_name = 'Insulation'
+    shape.properties.therm.material = insulation
+
+    assert hasattr(shape.to, 'therm_xml')
+    xml_string = shape.to.therm_xml(shape)
+    assert insulation.identifier in xml_string
+    assert 'Insulation' in xml_string
