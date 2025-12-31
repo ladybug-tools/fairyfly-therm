@@ -90,3 +90,19 @@ def test_from_dict():
     new_boundary = Boundary.from_dict(bd)
     assert new_boundary.properties.therm.condition == interior_wood
     assert new_boundary.to_dict() == bd
+
+
+def test_writer_to_therm_xml():
+    """Test the Boundary therm_xml method."""
+    line_1 = LineSegment3D.from_end_points(Point3D(0, 0, 0), Point3D(0, 0, 3))
+    line_2 = LineSegment3D.from_end_points(Point3D(1, 0, 0), Point3D(1, 0, 3))
+    boundary = Boundary((line_1, line_2))
+    boundary.display_name = 'TestBoundary'
+    interior_wood = SteadyState(24, 2.44)
+    interior_wood.display_name = 'Interior Wood/Vinyl Frame'
+    boundary.properties.therm.condition = interior_wood
+
+    assert hasattr(boundary.to, 'therm_xml')
+    xml_string = boundary.to.therm_xml(boundary)
+    assert interior_wood.display_name in xml_string
+    assert boundary.identifier[:-12] in xml_string

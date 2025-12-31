@@ -1,39 +1,230 @@
 # coding=utf-8
 """Methods to write Fairyfly core objects to THERM XML and THMZ."""
 import os
+import uuid
+import random
+import datetime
 import xml.etree.ElementTree as ET
+
+from ladybug_geometry.geometry3d import Point3D, Plane, Polyline3D, Face3D, Polyface3D
+from ladybug_geometry.bounding import bounding_box
+
+from fairyfly.typing import clean_string
+from fairyfly.shape import Shape
+from fairyfly.boundary import Boundary
+from fairyfly_therm.config import folders
+from fairyfly_therm.lib.conditions import adiabatic
 
 HANDLE_COUNTER = 1  # counter used to generate unique handles when necessary
 
 
-def shape_to_therm_xml(shape, polygons_element=None, reset_counter=True):
+def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=True):
     """Generate an THERM XML Polygon Element object from a fairyfly Shape.
 
     Args:
         shape: A fairyfly Shape for which an THERM XML Polygon Element object will
             be returned.
+        plane: An optional ladybug-geometry Plane to set the 2D coordinate system
+            into which the 3D Shape will be projected to THERM space. If None
+            the Face3D.plane of the Shape's geometry will be used. (Default: None).
         polygons_element: An optional XML Element for the Polygons to which the
             generated Element will be added. If None, a new XML Element
-            will be generated.
+            will be generated. (Default: None).
         reset_counter: A boolean to note whether the global counter for unique
             handles should be reset after the method is run. (Default: True).
+
+    .. code-block:: xml
+
+        <Polygon>
+            <UUID>9320589a-2ee0-bab0-72c3f49441f3</UUID>
+            <ID>1</ID>
+            <MaterialUUID>8dd145d0-5f30-11ea-bc55-0242ac130003</MaterialUUID>
+            <MaterialName>Laminated panel</MaterialName>
+            <Origin>
+                <x>0</x>
+                <y>0</y>
+            </Origin>
+            <Points>
+                <Point>
+                    <x>181</x>
+                    <y>-219</y>
+                </Point>
+                <Point>
+                    <x>181</x>
+                    <y>-371.4</y>
+                </Point>
+                <Point>
+                    <x>200</x>
+                    <y>-371.4</y>
+                </Point>
+                <Point>
+                    <x>200</x>
+                    <y>-219</y>
+                </Point>
+            </Points>
+            <Type>Material</Type>
+        </Polygon>
     """
-    return None
+    global HANDLE_COUNTER  # declare that we will edit the global variable
+    # create a new Polygon element if one is not specified
+    if polygons_element is not None:
+        xml_poly = ET.SubElement(polygons_element, 'Polygon')
+    else:
+        xml_poly = ET.Element('Polygon')
+    # add all of the required basic attributes
+    xml_uuid = ET.SubElement(xml_poly, 'UUID')
+    xml_uuid.text = shape.identifier
+    xml_id = ET.SubElement(xml_poly, 'ID')
+    xml_id.text = str(HANDLE_COUNTER)
+    HANDLE_COUNTER += 1
+    xml_mat_id = ET.SubElement(xml_poly, 'MaterialUUID')
+    xml_mat_id.text = shape.properties.therm.material.identifier
+    xml_mat_name = ET.SubElement(xml_poly, 'MaterialName')
+    xml_mat_name.text = shape.properties.therm.material.display_name
+    # add an origin
+    xml_origin = ET.SubElement(xml_poly, 'Origin')
+    for coord in ('x', 'y'):
+        xml_oc = ET.SubElement(xml_origin, coord)
+        xml_oc.text = '0'
+    # add all of the geometry
+    xml_points = ET.SubElement(xml_poly, 'Points')
+    polygon = shape.geometry.polygon2d.vertices if plane is None else \
+        [plane.xyz_to_xy(pt3) for pt3 in shape.geometry.vertices]
+    for pt_2d in polygon:
+        xml_point = ET.SubElement(xml_points, 'Point')
+        xml_x = ET.SubElement(xml_point, 'x')
+        xml_x.text = str(round(pt_2d.x, 1))
+        xml_y = ET.SubElement(xml_point, 'y')
+        xml_y.text = str(round(pt_2d.y, 1))
+    # add the type of polygon
+    xml_type = ET.SubElement(xml_poly, 'Type')
+    xml_type.text = 'Material'
+    if reset_counter:  # reset the counter back to 1 if requested
+        HANDLE_COUNTER = 1
+    return xml_poly
 
 
-def boundary_to_therm_xml(boundary, polygons_element=None, reset_counter=True):
+def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
+                          reset_counter=True):
     """Generate an THERM XML Boundary Element object from a fairyfly Boundary.
 
     Args:
         boundary: A fairyfly Boundary for which an THERM XML Boundary Element
             object will be returned.
-        building_element: An optional XML Element for the Boundaries to which the
+        plane: An optional ladybug-geometry Plane to set the 2D coordinate
+            system into which the 3D Boundary will be projected to THERM space.
+            If None, it will be assumed that the Boundary lies in the World XY
+            plane. (Default: None).
+        boundaries_element: An optional XML Element for the Boundaries to which the
             generated objects will be added. If None, a new XML Element
-            will be generated.
+            will be generated. (Default: None).
         reset_counter: A boolean to note whether the global counter for unique
             handles should be reset after the method is run. (Default: True).
+
+    .. code-block:: xml
+
+        <Boundary>
+            <ID>45</ID>
+            <UUID>14264c7e-1801-a3c1-0e115d8227ac</UUID>
+            <Name>NFRC 100-2010 Exterior</Name>
+            <FluxTag></FluxTag>
+            <IsBlocking>true</IsBlocking>
+            <NeighborPolygonUUID>5b9e5933-1080-4e9e-5c3b537d8230</NeighborPolygonUUID>
+            <Origin>
+                <x>0</x>
+                <y>0</y>
+            </Origin>
+            <StartPoint>
+                <x>235.670456</x>
+                <y>-147.081726</y>
+            </StartPoint>
+            <EndPoint>
+                <x>235.670456</x>
+                <y>-297.081238</y>
+            </EndPoint>
+            <Side>0</Side>
+            <ThermalEmissionProperties>
+                <Emissivity>0.84</Emissivity>
+                <Temperature>0</Temperature>
+                <UseGlobalEmissivity>true</UseGlobalEmissivity>
+            </ThermalEmissionProperties>
+            <IsIlluminated>false</IsIlluminated>
+            <EdgeID>0</EdgeID>
+            <Type>Boundary Condition</Type>
+            <Color>0x000000</Color>
+            <Status>0</Status>
+        </Boundary>
     """
-    return None
+    global HANDLE_COUNTER  # declare that we will edit the global variable
+    # create a new Boundaries element if one is not specified
+    if boundaries_element is None:
+        boundaries_element = ET.Element('Boundaries')
+    # determine an edge ID and color to be used for all segments in the boundary
+    edge_id = str(random.randint(10000000, 99999999))
+    color = boundary.properties.therm.condition.color.to_hex().replace('#', '0x')
+    # loop through each of the line segments and add a Boundary element
+    for i, seg in enumerate(boundary.geometry):
+        # add all of the required basic attributes
+        xml_bound = ET.SubElement(boundaries_element, 'Boundary')
+        xml_id = ET.SubElement(xml_bound, 'ID')
+        xml_id.text = str(HANDLE_COUNTER)
+        HANDLE_COUNTER += 1
+        xml_uuid = ET.SubElement(xml_bound, 'UUID')
+        xml_uuid.text = boundary.identifier[:-12] + str(uuid.uuid4())[-12:]
+        xml_name = ET.SubElement(xml_bound, 'Name')
+        xml_name.text = boundary.properties.therm.condition.display_name
+        ET.SubElement(xml_bound, 'FluxTag')
+        xml_blocks = ET.SubElement(xml_bound, 'IsBlocking')
+        xml_blocks.text = 'true'
+        # add the UUIDs of the neighboring shapes
+        if boundary.user_data is not None and 'adj_polys' in boundary.user_data:
+            adj_ids = boundary.user_data['adj_polys'][i]
+            for j, adj_id in enumerate(adj_ids):
+                if j == 0:
+                    xml_ajd_p = ET.SubElement(xml_bound, 'NeighborPolygonUUID')
+                else:
+                    xml_ajd_p = ET.SubElement(
+                        xml_bound, 'NeighborPolygonUUID{}'.format(j + 1))
+                xml_ajd_p.text = adj_id
+        # add an origin
+        xml_origin = ET.SubElement(xml_bound, 'Origin')
+        for coord in ('x', 'y'):
+            xml_oc = ET.SubElement(xml_origin, coord)
+            xml_oc.text = '0'
+        # add the boundary geometry
+        pts_2d = seg.vertices if plane is None else \
+            [plane.xyz_to_xy(pt3) for pt3 in seg.vertices]
+        for k, pt_2d in enumerate(pts_2d):
+            xml_point = ET.SubElement(xml_bound, 'StartPoint') if k == 0 else \
+                ET.SubElement(xml_bound, 'EndPoint')
+            xml_x = ET.SubElement(xml_point, 'x')
+            xml_x.text = str(round(pt_2d.x, 1))
+            xml_y = ET.SubElement(xml_point, 'y')
+            xml_y.text = str(round(pt_2d.y, 1))
+        # add the various thermal properties
+        xml_side = ET.SubElement(xml_bound, 'Side')
+        xml_side.text = '0'
+        xml_e_prop = ET.SubElement(xml_bound, 'ThermalEmissionProperties')
+        xml_emiss = ET.SubElement(xml_e_prop, 'Emissivity')
+        xml_emiss.text = '0.9'
+        xml_temp = ET.SubElement(xml_e_prop, 'Temperature')
+        xml_temp.text = '0'
+        xml_g_emiss = ET.SubElement(xml_e_prop, 'UseGlobalEmissivity')
+        xml_g_emiss.text = 'true'
+        xml_is_ill = ET.SubElement(xml_bound, 'IsIlluminated')
+        xml_is_ill.text = 'false'
+        # add the final identifying properties
+        xml_edge_id = ET.SubElement(xml_bound, 'EdgeID')
+        xml_edge_id.text = edge_id
+        xml_type = ET.SubElement(xml_bound, 'Type')
+        xml_type.text = 'Boundary Condition'
+        xml_color = ET.SubElement(xml_bound, 'Color')
+        xml_color.text = color
+        xml_status = ET.SubElement(xml_bound, 'Status')
+        xml_status.text = '0'
+    if reset_counter:  # reset the counter back to 1 if requested
+        HANDLE_COUNTER = 1
+    return boundaries_element
 
 
 def model_to_therm_xml(model):
@@ -45,7 +236,185 @@ def model_to_therm_xml(model):
         model: A fairyfly Model for which a THERM XML ElementTree object will
             be returned.
     """
-    return None
+    global HANDLE_COUNTER  # declare that we will edit the global variable
+    # check that we have at least one shape to translate
+    assert len(model.shapes) > 0, \
+        'Model must have at least one Shape to translate to THERM.'
+    # duplicate model to avoid mutating it as we edit it for THERM export
+    original_model = model
+    model = model.duplicate()
+    # scale the model if the units are not millimeters
+    if model.units != 'Millimeters':
+        model.convert_to_units('Millimeters')
+    # remove degenerate geometry within THERM native tolerance
+    try:
+        model.remove_degenerate_geometry(0.1)
+    except ValueError:
+        error = 'Failed to remove degenerate Shapes.\nYour Model units system is: {}. ' \
+            'Is this correct?'.format(original_model.units)
+        raise ValueError(error)
+    # determine the plane and the scale to be used for all geometry translation
+    min_pt, max_pt = bounding_box([s.geometry for s in model.shapes])
+    origin = Point3D(min_pt.x, max_pt.y, max_pt.z)
+    normal = model.shapes[0].geometry.normal
+    if normal.z < 0:
+        normal = normal.reverse()
+    if normal.y > 0:
+        normal = normal.reverse()
+    bp = Plane(n=normal, o=origin)
+    t_vec = (bp.x * -100) + (bp.y * 100)
+    offset_origin = origin.move(t_vec)
+    plane = Plane(n=normal, o=offset_origin)
+    max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
+    scale = 1.0 if max_dim < 100 else 100 / max_dim
+
+    # check that all geometries lie within the tolerance of the plane
+    for shape in model.shapes:
+        for pt in shape.vertices:
+            if plane.distance_to_point(pt) > 0.1:
+                msg = 'Not all of the model shapes lie in the same plane as ' \
+                    'each other. Shape "{}" is out of plane by {} ' \
+                    'millimeters.'.format(shape.full_id, plane.distance_to_point(pt))
+                raise ValueError(msg)
+    for bound in model.boundaries:
+        for pt in bound.vertices:
+            if plane.distance_to_point(pt) > 0.1:
+                msg = 'Not all of the model boundaries lie in the same plane as ' \
+                    'the shapes. Boundary "{}" is out of plane by {} ' \
+                    'millimeters.'.format(bound.full_id, plane.distance_to_point(pt))
+                raise ValueError(msg)
+
+    # intersect the shape geometries with one another
+    Shape.intersect_adjacency(model.shapes, 0.1, plane)
+
+    # determine if there are any Boundary points that do not share a Shape vertex
+    boundary_pts = []
+    for bound in model.boundaries:
+        for seg in bound.geometry:
+            for pt in seg.vertices:
+                for o_pt in boundary_pts:
+                    if pt.is_equivalent(o_pt, tolerance=0.1):
+                        break
+                else:  # the point is unique
+                    boundary_pts.append(pt)
+    orphaned_points = []
+    for bpt in boundary_pts:
+        matched = False
+        for shape in model.shapes:
+            if matched:
+                break
+            for spt in shape.vertices:
+                if bpt.is_equivalent(spt, tolerance=0.1):
+                    matched = True
+                    break
+        else:  # a boundary point with no Shape
+            orphaned_points.append(bpt)
+
+    # insert extra vertices to the shapes if they do not align with boundary end points
+    for or_pt in orphaned_points:
+        for shape in model.shapes:
+            shape.insert_vertex(or_pt, tolerance=0.1)
+
+    # add the UUIDs of the polygons next to the edges to the Boundary.user_data
+    for bound in model.boundaries:
+        bound_adj_shapes = []
+        for seg in bound.geometry:
+            adj_shapes = []
+            for shape in model.shapes:
+                for pt in shape.geometry:
+                    if seg.p1.is_equivalent(pt, 0.1) or seg.p2.is_equivalent(pt, 0.1):
+                        adj_shapes.append(shape.identifier)
+                        break
+            bound_adj_shapes.append(adj_shapes)
+        if bound.user_data is None:
+            bound.user_data = {'adj_polys': bound_adj_shapes}
+        else:
+            bound.user_data['adj_polys'] = bound_adj_shapes
+
+    # ensure that there is only one contiguous shape without holes
+    shape_geos = [shape.geometry for shape in model.shapes]
+    polyface = Polyface3D.from_faces(shape_geos, tolerance=0.1)
+    outer_edges = polyface.naked_edges
+    joined_boundary = Polyline3D.join_segments(outer_edges, tolerance=0.1)
+    if len(joined_boundary) != 1:
+        b_msg = 'The Shapes of the input model do not form a contiguous region ' \
+            'without any holes.'
+        join_faces = [Face3D(poly.vertices) for poly in joined_boundary]
+        merged_faces = Face3D.merge_faces_to_holes(join_faces, 0.1)
+        region_count = len(merged_faces)
+        plural = 's' if region_count != 1 else ''
+        hole_count = 0
+        for mf in merged_faces:
+            hole_count += len(mf.holes)
+        d_msg = '{} distinct region{} with {} total holes were found.'.format(
+            region_count, plural, hole_count)
+        raise ValueError('{}\n{}'.format(b_msg, d_msg))
+
+    # gather all of the extra edges to be written as adiabatic
+    adiabatic_geo = []
+    for edge in outer_edges:
+        matched = False
+        for bound in model.boundaries:
+            if matched:
+                break
+            for seg in bound.geometry:
+                if edge.p1.is_equivalent(seg.p1, 0.1) or edge.p1.is_equivalent(seg.p2, 0.1):
+                    if edge.p2.is_equivalent(seg.p1, 0.1) or \
+                            edge.p2.is_equivalent(seg.p2, 0.1):
+                        matched = True
+                        break
+        else:  # adiabatic segment to be added at the end
+            adiabatic_geo.append(edge)
+
+    # load up the template XML file for the model
+    package_dir = os.path.dirname(os.path.abspath(__file__))
+    template_file = os.path.join(package_dir, '_templates', 'Default.xml')
+    xml_tree = ET.parse(template_file)
+    xml_root = xml_tree.getroot()
+    model_name = clean_string(model.display_name)
+
+    # assign the property for the scale
+    xml_preferences = xml_root.find('Preferences')
+    xml_settings = xml_preferences.find('Settings')
+    xml_scale = xml_settings.find('Scale')
+    xml_scale.text = str(scale)
+
+    # set the properties for the document
+    xml_props = xml_root.find('Properties')
+    xml_gen = xml_props.find('General')
+    therm_ver = '.'.join(str(i) for i in folders.THERM_VERSION)
+    therm_ver = 'Version {}'.format(therm_ver)
+    xml_calc_ver = xml_gen.find('CalculationVersion')
+    xml_calc_ver.text = therm_ver
+    xml_cre_ver = xml_gen.find('CreationVersion')
+    xml_cre_ver.text = therm_ver
+    xml_mod_ver = xml_gen.find('LastModifiedVersion')
+    xml_mod_ver.text = therm_ver
+    xml_cre_date = xml_gen.find('CreationDate')
+    xml_cre_date.text = str(datetime.datetime.now())
+    xml_cre_date = xml_gen.find('LastModified')
+    xml_cre_date.text = str(datetime.datetime.now())
+    xml_model_name = xml_gen.find('Title')
+    xml_model_name.text = model_name
+
+    # translate all Shapes to polygons
+    xml_polygons = ET.SubElement(xml_root, 'Polygons')
+    for shape in model.shapes:
+        shape_to_therm_xml(shape, plane, xml_polygons, reset_counter=False)
+
+    # translate all Boundaries
+    xml_boundaries = ET.SubElement(xml_root, 'Boundaries')
+    for bound in model.boundaries:
+        boundary_to_therm_xml(bound, plane, xml_boundaries, reset_counter=False)
+
+    # add the extra adiabatic Boundaries
+    ad_bnd = Boundary(adiabatic_geo)
+    ad_bnd.properties.therm.condition = adiabatic
+    boundary_to_therm_xml(ad_bnd, plane, xml_boundaries, reset_counter=False)
+
+    # reset the handle counter back to 1 and return the root XML element
+    HANDLE_COUNTER = 1
+    return xml_root
 
 
 def model_to_therm_xml_str(model):
@@ -86,7 +455,7 @@ def model_to_therm_xml_str(model):
     # create the XML string
     xml_root = model_to_therm_xml(model)
     try:  # try to indent the XML to make it read-able
-        ET.indent(xml_root)
+        ET.indent(xml_root, '\t')
         return ET.tostring(xml_root, encoding='unicode')
     except AttributeError:  # we are in Python 2 and no indent is available
         return ET.tostring(xml_root)

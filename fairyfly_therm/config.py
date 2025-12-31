@@ -40,7 +40,7 @@ class Folders(object):
         * config_file
         * mute
     """
-    THERM_VERSION = (8, 1, 30)
+    THERM_VERSION = (8, 1, 30, 0)
 
     def __init__(self, config_file=None, mute=True):
         self.mute = bool(mute)  # set the mute value
@@ -261,7 +261,7 @@ class Folders(object):
         if thm_path is not None:
             pass  # we found a version of therm in the ladybug_tools folder
         elif os.name == 'nt':  # search the C:/ drive on Windows
-            major, minor, _ = Folders.THERM_VERSION
+            major, minor, _, _ = Folders.THERM_VERSION
             test_path = 'C:/Program Files (x86)/lbnl/THERM{}.{}'.format(major, minor)
             thm_path = test_path if os.path.isdir(test_path) else None
 
@@ -283,7 +283,7 @@ class Folders(object):
         """Check that a settings file exists within the LBNL data folder."""
         if not path:  # first check that a path exists
             return None
-        major, minor, _ = Folders.THERM_VERSION
+        major, minor, _, _ = Folders.THERM_VERSION
         settings_dir = os.path.join(path, 'Settings')
         set_file = os.path.join(settings_dir, 'therm{}.{}.ini'.format(major, minor))
         if os.path.isfile(set_file):
@@ -305,7 +305,7 @@ class Folders(object):
         if not path:  # first check that a path exists
             return None
         if os.name == 'nt':
-            major, minor, _ = Folders.THERM_VERSION
+            major, minor, _, _ = Folders.THERM_VERSION
             lib_path = os.path.join(path, 'THERM{}.{}/lib'.format(major, minor), lib_file)
             if os.path.isfile(lib_path):
                 return lib_path

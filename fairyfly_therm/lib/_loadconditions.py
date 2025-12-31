@@ -35,6 +35,19 @@ interior = SteadyState.from_dict(interior_dict)
 interior.lock()
 _conditions[interior.display_name] = interior
 
+adiabatic_dict = {
+    'type': 'SteadyState',
+    'identifier': '61d7bd1c-22c6-4ea0-8720-0696e8c194ad',
+    'temperature': 0,
+    'film_coefficient': 0,
+    'display_name': 'Adiabatic',
+    'protected': True,
+    'color': '#000000'
+}
+adiabatic = SteadyState.from_dict(adiabatic_dict)
+adiabatic.lock()
+_conditions[adiabatic.display_name] = adiabatic
+
 
 # load the conditions from the LBNL library if they exist
 if folders.bc_steady_state_lib_file is not None:

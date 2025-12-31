@@ -1,5 +1,5 @@
 # coding=utf-8
-"""Comprehensive THERM condition."""
+"""SteadyState THERM condition."""
 from __future__ import division
 import xml.etree.ElementTree as ET
 
@@ -11,7 +11,7 @@ from ._base import _ThermConditionBase
 
 @lockable
 class SteadyState(_ThermConditionBase):
-    """Typical comprehensive condition.
+    """Typical steady state condition.
 
     Args:
         temperature: A number for the temperature at the boundary in degrees Celsius.
@@ -299,24 +299,32 @@ class SteadyState(_ThermConditionBase):
         xml_color.text = self.color.to_hex().replace('#', '0x')
         xml_igu = ET.SubElement(xml_cond, 'IGUSurface')
         xml_igu.text = 'false'
-        # add all of the comprehensive attributes
-        xml_comp = ET.SubElement(xml_cond, 'Comprehensive')
-        xml_rh = ET.SubElement(xml_comp, 'RelativeHumidity')
-        xml_rh.text = str(self.relative_humidity)
-        xml_conv = ET.SubElement(xml_comp, 'Convection')
-        xml_ct = ET.SubElement(xml_conv, 'Temperature')
-        xml_ct.text = str(self.temperature)
-        xml_fc = ET.SubElement(xml_conv, 'FilmCoefficient')
-        xml_fc.text = str(self.film_coefficient)
-        xml_heat = ET.SubElement(xml_comp, 'ConstantFlux')
-        xml_flux = ET.SubElement(xml_heat, 'Flux')
-        xml_flux.text = str(self.heat_flux)
-        xml_rad = ET.SubElement(xml_comp, 'Radiation')
-        xml_auto = ET.SubElement(xml_rad, 'Radiation')
-        xml_mrt = ET.SubElement(xml_auto, 'Temperature')
-        xml_mrt.text = str(self.radiant_temperature)
-        xml_emiss = ET.SubElement(xml_auto, 'Emissivity')
-        xml_emiss.text = str(self.emissivity)
+        if self.film_coefficient == 0:  # translate the condition as simple
+            xml_simple = ET.SubElement(xml_cond, 'Simplified')
+            xml_rh = ET.SubElement(xml_simple, 'RelativeHumidity')
+            xml_rh.text = str(self.relative_humidity)
+            xml_fc = ET.SubElement(xml_simple, 'FilmCoefficient')
+            xml_fc = '0'
+            xml_ct = ET.SubElement(xml_simple, 'Temperature')
+            xml_ct.text = str(self.temperature)
+        else:  # add all of the comprehensive attributes
+            xml_comp = ET.SubElement(xml_cond, 'Comprehensive')
+            xml_rh = ET.SubElement(xml_comp, 'RelativeHumidity')
+            xml_rh.text = str(self.relative_humidity)
+            xml_conv = ET.SubElement(xml_comp, 'Convection')
+            xml_ct = ET.SubElement(xml_conv, 'Temperature')
+            xml_ct.text = str(self.temperature)
+            xml_fc = ET.SubElement(xml_conv, 'FilmCoefficient')
+            xml_fc.text = str(self.film_coefficient)
+            xml_heat = ET.SubElement(xml_comp, 'ConstantFlux')
+            xml_flux = ET.SubElement(xml_heat, 'Flux')
+            xml_flux.text = str(self.heat_flux)
+            xml_rad = ET.SubElement(xml_comp, 'Radiation')
+            xml_auto = ET.SubElement(xml_rad, 'AutomaticEnclosure')
+            xml_mrt = ET.SubElement(xml_auto, 'Temperature')
+            xml_mrt.text = str(self.radiant_temperature)
+            xml_emiss = ET.SubElement(xml_auto, 'Emissivity')
+            xml_emiss.text = str(self.emissivity)
         return xml_cond
 
     def to_therm_xml_str(self):

@@ -1,6 +1,9 @@
 # coding=utf-8
 # import all of the modules for writing geometry to dsbXML
 from fairyfly.properties import ModelProperties, ShapeProperties, BoundaryProperties
+from fairyfly.shape import Shape
+from fairyfly.boundary import Boundary
+from fairyfly.model import Model
 import fairyfly.writer.shape as shape_writer
 import fairyfly.writer.boundary as boundary_writer
 import fairyfly.writer.model as model_writer
@@ -46,3 +49,9 @@ shape_writer.therm_xml = shape_to_therm_xml_str
 boundary_writer.therm_xml = boundary_to_therm_xml_str
 model_writer.therm_xml = model_to_therm_xml_str
 model_writer.thmz = model_to_thmz
+
+# add energy writer to core objects
+Shape.to_therm_xml = shape_to_therm_xml_str
+Boundary.to_therm_xml = boundary_to_therm_xml_str
+Model.to_therm_xml = model_to_therm_xml_str
+Model.to_thmz = model_to_thmz
