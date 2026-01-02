@@ -1,5 +1,6 @@
 """Tests the features that fairyfly_therm adds to fairyfly_core Model."""
 import pytest
+import os
 
 from fairyfly.model import Model
 
@@ -155,6 +156,26 @@ def test_to_therm_xml():
     assert hasattr(model, 'to_therm_xml')
     xml_str = model.to_therm_xml()
     assert len(xml_str) != 0
-    output_file = './tests/assets/xml/TestModel.xml'
-    with open(output_file, 'wb') as fp:
-        fp.write(xml_str.encode('utf-8'))
+
+
+def test_to_thmz():
+    """Test the Model to_thmz method ."""
+    model = Model.from_layers([100, 200, 100], height=1000)
+    aer_concrete = SolidMaterial(0.1, 0.9, None, 400, 0.81, 850, 7.9)
+    aer_concrete.display_name = 'Aerated Concrete'
+    insulation = SolidMaterial(0.049, 0.9, None, 265, None, 836)
+    insulation.display_name = 'Insulation'
+    interior_warm = SteadyState(26, 3.2)
+    interior_warm.display_name = 'Warm Interior'
+    model.shapes[0].properties.therm.material = concrete
+    model.shapes[1].properties.therm.material = insulation
+    model.shapes[2].properties.therm.material = aer_concrete
+    model.boundaries[0].properties.therm.condition = exterior
+    model.boundaries[1].properties.therm.condition = interior_warm
+    model.display_name = 'Roman Bath Wall'
+
+    assert hasattr(model.to, 'thmz')
+    assert hasattr(model, 'to_thmz')
+    output_file = './tests/assets/thmz/TestModel.thmz'
+    model.to_thmz(output_file)
+    assert os.path.isfile(output_file)

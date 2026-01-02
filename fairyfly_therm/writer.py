@@ -4,15 +4,18 @@ import os
 import uuid
 import random
 import datetime
+import zipfile
+import tempfile
 import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry3d import Point3D, Plane, Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
-
 from fairyfly.typing import clean_string
 from fairyfly.shape import Shape
 from fairyfly.boundary import Boundary
+
 from fairyfly_therm.config import folders
+from fairyfly_therm.material import CavityMaterial
 from fairyfly_therm.lib.conditions import adiabatic
 
 HANDLE_COUNTER = 1  # counter used to generate unique handles when necessary
@@ -417,6 +420,36 @@ def model_to_therm_xml(model):
     return xml_root
 
 
+def shape_to_therm_xml_str(shape):
+    """Generate an THERM XML string from a fairyfly Shape.
+
+    Args:
+        shape: A fairyfly Shape for which an THERM XML Polygon string will
+            be returned.
+    """
+    xml_root = shape_to_therm_xml(shape)
+    try:  # try to indent the XML to make it read-able
+        ET.indent(xml_root)
+        return ET.tostring(xml_root, encoding='unicode')
+    except AttributeError:  # we are in Python 2 and no indent is available
+        return ET.tostring(xml_root)
+
+
+def boundary_to_therm_xml_str(boundary):
+    """Generate an THERM XML string from a fairyfly Boundary.
+
+    Args:
+        shape_mesh: A fairyfly Boundary for which an THERM XML Boundary string
+            will be returned.
+    """
+    xml_root = boundary_to_therm_xml(boundary)
+    try:  # try to indent the XML to make it read-able
+        ET.indent(xml_root)
+        return ET.tostring(xml_root, encoding='unicode')
+    except AttributeError:  # we are in Python 2 and no indent is available
+        return ET.tostring(xml_root)
+
+
 def model_to_therm_xml_str(model):
     """Generate a THERM XML string for a Model.
 
@@ -472,41 +505,68 @@ def model_to_thmz(model, output_file):
     dir_name = os.path.dirname(os.path.abspath(output_file))
     if not os.path.isdir(dir_name):
         os.makedirs(dir_name)
-    # get the string of the THERM XML file
-    xml_str = model_to_therm_xml_str(model)
-    # write the string into file file
-    with open(output_file, 'wb') as fp:
-        fp.write(xml_str.encode('utf-8'))
-    # write the model materials, gases, and conditions to a file
+    # create a temporary directory where everything will be zipped
+    therm_trans_dir = tempfile.gettempdir()
+    files_to_zip = []
+
+    # write the Model into the temporary directory
+    model_file = os.path.join(therm_trans_dir, 'Model.xml')
+    xml_model = model_to_therm_xml(model)
+    _xml_element_to_file(xml_model, model_file)
+    files_to_zip.append(model_file)
+
+    # write the materials and gases to a file
+    mat_file = os.path.join(therm_trans_dir, 'Materials.xml')
+    gas_file = os.path.join(therm_trans_dir, 'Gases.xml')
+    gases, pure_gases = [], []
+    xml_materials = ET.Element('Materials')
+    xml_gases = ET.Element('Gases')
+    for xml_rt in (xml_materials, xml_gases):
+        xml_ver = ET.SubElement(xml_rt, 'Version')
+        xml_ver.text = '1'
+    for mat in model.properties.therm.materials:
+        mat.to_therm_xml(xml_materials)
+        if isinstance(mat, CavityMaterial):
+            gases.append(mat.gas)
+            for pg in mat.gas.pure_gases:
+                pure_gases.append(pg)
+    _xml_element_to_file(xml_materials, mat_file)
+    files_to_zip.append(mat_file)
+    if len(gases) != 0:
+        for pg in pure_gases:
+            pg.to_therm_xml(xml_gases)
+        for g in gases:
+            g.to_therm_xml(xml_gases)
+        _xml_element_to_file(xml_gases, gas_file)
+        files_to_zip.append(gas_file)
+
+    # write the boundary conditions to a file
+    bc_file = os.path.join(therm_trans_dir, 'SteadyStateBC.xml')
+    xml_bcs = ET.Element('BoundaryConditions')
+    xml_ver = ET.SubElement(xml_bcs, 'Version')
+    xml_ver.text = '1'
+    for bc in [adiabatic] + model.properties.therm.conditions:
+        bc.to_therm_xml(xml_bcs)
+    _xml_element_to_file(xml_bcs, bc_file)
+    files_to_zip.append(bc_file)
+
     # zip everything together
+    with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for file in files_to_zip:
+            # Add the file to the zip archive
+            # arcname=os.path.basename(file) ensures only the filename is used
+            # inside the zip, avoiding unwanted directory structures
+            zipf.write(file, arcname=os.path.basename(file))
+
     return output_file
 
 
-def shape_to_therm_xml_str(shape):
-    """Generate an THERM XML string from a fairyfly Shape.
-
-    Args:
-        shape: A fairyfly Shape for which an THERM XML Polygon string will
-            be returned.
-    """
-    xml_root = shape_to_therm_xml(shape)
+def _xml_element_to_file(xml_root, file_path):
+    """Write an XML element to a file."""
     try:  # try to indent the XML to make it read-able
-        ET.indent(xml_root)
-        return ET.tostring(xml_root, encoding='unicode')
+        ET.indent(xml_root, '\t')
+        xml_str = ET.tostring(xml_root, encoding='unicode')
     except AttributeError:  # we are in Python 2 and no indent is available
-        return ET.tostring(xml_root)
-
-
-def boundary_to_therm_xml_str(boundary):
-    """Generate an THERM XML string from a fairyfly Boundary.
-
-    Args:
-        shape_mesh: A fairyfly Boundary for which an THERM XML Boundary string
-            will be returned.
-    """
-    xml_root = boundary_to_therm_xml(boundary)
-    try:  # try to indent the XML to make it read-able
-        ET.indent(xml_root)
-        return ET.tostring(xml_root, encoding='unicode')
-    except AttributeError:  # we are in Python 2 and no indent is available
-        return ET.tostring(xml_root)
+        xml_str = ET.tostring(xml_root)
+    with open(file_path, 'wb') as fp:
+        fp.write(xml_str.encode('utf-8'))
