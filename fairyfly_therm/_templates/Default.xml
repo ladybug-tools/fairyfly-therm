@@ -10,24 +10,24 @@
 			<Scale>0.032758</Scale>
 			<ConductivityUnits>Btu/hr-ft-F</ConductivityUnits>
 			<UValueBasis>Y-projected</UValueBasis>
-			<CondensationResistanceModel>true</CondensationResistanceModel>
+			<CondensationResistanceModel>false</CondensationResistanceModel>
 		</Settings>
 		<Underlay>
 			<Name></Name>
 			<IsUnderlayOn>false</IsUnderlayOn>
-			<UnitSystem>IP</UnitSystem>
+			<UnitSystem>SI</UnitSystem>
 			<Origin>
 				<x>250</x>
 				<y>-250</y>
 			</Origin>
-			<UnderlayType>Unknown</UnderlayType>
+			<UnderlayType>None</UnderlayType>
 			<HorizontalScale>1</HorizontalScale>
 			<VerticalScale>1</VerticalScale>
 		</Underlay>
 		<Snap>
 			<SnapToGrid>false</SnapToGrid>
 			<SmartSnap>false</SmartSnap>
-			<SnapToUnderlay>true</SnapToUnderlay>
+			<SnapToUnderlay>false</SnapToUnderlay>
 			<SnapToVertical>true</SnapToVertical>
 			<SnapToHorizontal>true</SnapToHorizontal>
 			<SnapToAngle>false</SnapToAngle>
@@ -119,4 +119,8 @@
 			<CheckingTolerance>0.1</CheckingTolerance>
 		</Miscellaneous>
 	</Properties>
+	<GlazingOrigin>
+		<x>250</x>
+		<y>-250</y>
+	</GlazingOrigin>
 </ThermModel>

@@ -76,7 +76,7 @@ def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=T
         xml_poly = ET.Element('Polygon')
     # add all of the required basic attributes
     xml_uuid = ET.SubElement(xml_poly, 'UUID')
-    xml_uuid.text = shape.identifier
+    xml_uuid.text = shape.therm_uuid
     xml_id = ET.SubElement(xml_poly, 'ID')
     xml_id.text = str(HANDLE_COUNTER)
     HANDLE_COUNTER += 1
@@ -173,7 +173,7 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         xml_id.text = str(HANDLE_COUNTER)
         HANDLE_COUNTER += 1
         xml_uuid = ET.SubElement(xml_bound, 'UUID')
-        xml_uuid.text = boundary.identifier[:-12] + str(uuid.uuid4())[-12:]
+        xml_uuid.text = boundary.therm_uuid[:-12] + str(uuid.uuid4())[-12:]
         xml_name = ET.SubElement(xml_bound, 'Name')
         xml_name.text = boundary.properties.therm.condition.display_name
         ET.SubElement(xml_bound, 'FluxTag')
@@ -310,7 +310,7 @@ def model_to_therm_xml(model):
                 if bpt.is_equivalent(spt, tolerance=0.1):
                     matched = True
                     break
-        else:  # a boundary point with no Shape
+        if not matched:  # a boundary point with no Shape
             orphaned_points.append(bpt)
 
     # insert extra vertices to the shapes if they do not align with boundary end points
@@ -320,15 +320,22 @@ def model_to_therm_xml(model):
 
     # add the UUIDs of the polygons next to the edges to the Boundary.user_data
     for bound in model.boundaries:
-        bound_adj_shapes = []
-        for seg in bound.geometry:
+        oriented_geo, bound_adj_shapes = [], []
+        for edge in bound.geometry:
             adj_shapes = []
             for shape in model.shapes:
-                for pt in shape.geometry:
-                    if seg.p1.is_equivalent(pt, 0.1) or seg.p2.is_equivalent(pt, 0.1):
-                        adj_shapes.append(shape.identifier)
-                        break
+                for seg in shape.geometry.segments:
+                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
+                            edge.p1.is_equivalent(seg.p2, 0.1):
+                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
+                                edge.p2.is_equivalent(seg.p2, 0.1):
+                            adj_shapes.append(shape.therm_uuid)
+                            if edge.p1.is_equivalent(seg.p2, 0.1):
+                                edge = edge.flip()
+                            break
             bound_adj_shapes.append(adj_shapes)
+            oriented_geo.append(edge)
+        bound._geometry = tuple(oriented_geo)
         if bound.user_data is None:
             bound.user_data = {'adj_polys': bound_adj_shapes}
         else:
@@ -354,20 +361,36 @@ def model_to_therm_xml(model):
         raise ValueError('{}\n{}'.format(b_msg, d_msg))
 
     # gather all of the extra edges to be written as adiabatic
-    adiabatic_geo = []
+    adiabatic_geo, adiabatic_adj = [], []
     for edge in outer_edges:
-        matched = False
+        bnd_matched = False
         for bound in model.boundaries:
-            if matched:
-                break
             for seg in bound.geometry:
                 if edge.p1.is_equivalent(seg.p1, 0.1) or edge.p1.is_equivalent(seg.p2, 0.1):
                     if edge.p2.is_equivalent(seg.p1, 0.1) or \
                             edge.p2.is_equivalent(seg.p2, 0.1):
-                        matched = True
+                        bnd_matched = True
                         break
+            if bnd_matched:
+                break
         else:  # adiabatic segment to be added at the end
+            shape_matched = False
+            for shape in model.shapes:
+                if shape_matched:
+                    break
+                for seg in shape.geometry.segments:
+                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
+                            edge.p1.is_equivalent(seg.p2, 0.1):
+                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
+                                edge.p2.is_equivalent(seg.p2, 0.1):
+                            adiabatic_adj.append([shape.therm_uuid])
+                            if edge.p1.is_equivalent(seg.p2, 0.1):
+                                edge = edge.flip()
+                            shape_matched = True
+                            break
             adiabatic_geo.append(edge)
+            if not shape_matched:
+                adiabatic_adj.append([])
 
     # load up the template XML file for the model
     package_dir = os.path.dirname(os.path.abspath(__file__))
@@ -394,9 +417,9 @@ def model_to_therm_xml(model):
     xml_mod_ver = xml_gen.find('LastModifiedVersion')
     xml_mod_ver.text = therm_ver
     xml_cre_date = xml_gen.find('CreationDate')
-    xml_cre_date.text = str(datetime.datetime.now())
+    xml_cre_date.text = str(datetime.datetime.now().replace(microsecond=0))
     xml_cre_date = xml_gen.find('LastModified')
-    xml_cre_date.text = str(datetime.datetime.now())
+    xml_cre_date.text = str(datetime.datetime.now().replace(microsecond=0))
     xml_model_name = xml_gen.find('Title')
     xml_model_name.text = model_name
 
@@ -413,6 +436,7 @@ def model_to_therm_xml(model):
     # add the extra adiabatic Boundaries
     ad_bnd = Boundary(adiabatic_geo)
     ad_bnd.properties.therm.condition = adiabatic
+    ad_bnd.user_data = {'adj_polys': adiabatic_adj}
     boundary_to_therm_xml(ad_bnd, plane, xml_boundaries, reset_counter=False)
 
     # reset the handle counter back to 1 and return the root XML element
@@ -512,6 +536,12 @@ def model_to_thmz(model, output_file):
     # write the Model into the temporary directory
     model_file = os.path.join(therm_trans_dir, 'Model.xml')
     xml_model = model_to_therm_xml(model)
+    xml_props = xml_model.find('Properties')
+    xml_gen = xml_props.find('General')
+    xml_direct = xml_gen.find('Directory')
+    xml_direct.text = dir_name
+    xml_file_name = xml_gen.find('FileName')
+    xml_file_name.text = os.path.basename(output_file.replace('.thmz', ''))
     _xml_element_to_file(xml_model, model_file)
     files_to_zip.append(model_file)
 
@@ -532,13 +562,12 @@ def model_to_thmz(model, output_file):
                 pure_gases.append(pg)
     _xml_element_to_file(xml_materials, mat_file)
     files_to_zip.append(mat_file)
-    if len(gases) != 0:
-        for pg in pure_gases:
-            pg.to_therm_xml(xml_gases)
-        for g in gases:
-            g.to_therm_xml(xml_gases)
-        _xml_element_to_file(xml_gases, gas_file)
-        files_to_zip.append(gas_file)
+    for pg in pure_gases:
+        pg.to_therm_xml(xml_gases)
+    for g in gases:
+        g.to_therm_xml(xml_gases)
+    _xml_element_to_file(xml_gases, gas_file)
+    files_to_zip.append(gas_file)
 
     # write the boundary conditions to a file
     bc_file = os.path.join(therm_trans_dir, 'SteadyStateBC.xml')
@@ -565,7 +594,7 @@ def _xml_element_to_file(xml_root, file_path):
     """Write an XML element to a file."""
     try:  # try to indent the XML to make it read-able
         ET.indent(xml_root, '\t')
-        xml_str = ET.tostring(xml_root, encoding='unicode')
+        xml_str = ET.tostring(xml_root, encoding='unicode', short_empty_elements=False)
     except AttributeError:  # we are in Python 2 and no indent is available
         xml_str = ET.tostring(xml_root)
     with open(file_path, 'wb') as fp:

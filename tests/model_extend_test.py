@@ -160,10 +160,10 @@ def test_to_therm_xml():
 
 def test_to_thmz():
     """Test the Model to_thmz method ."""
-    model = Model.from_layers([100, 200, 100], height=1000)
+    model = Model.from_layers([100, 200, 100], height=500)
     aer_concrete = SolidMaterial(0.1, 0.9, None, 400, 0.81, 850, 7.9)
     aer_concrete.display_name = 'Aerated Concrete'
-    insulation = SolidMaterial(0.049, 0.9, None, 265, None, 836)
+    insulation = SolidMaterial(0.049, 0.9, None, None, None, None)
     insulation.display_name = 'Insulation'
     interior_warm = SteadyState(26, 3.2)
     interior_warm.display_name = 'Warm Interior'

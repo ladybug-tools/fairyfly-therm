@@ -49,7 +49,7 @@ class ModelThermProperties(object):
         """Get a list of all unique materials assigned to Shapes."""
         materials = []
         for shape in self.host.shapes:
-            mat = shape.properties.therm._material
+            mat = shape.properties.therm.material
             if not self._instance_in_array(mat, materials):
                 materials.append(mat)
         return list(set(materials))
@@ -59,7 +59,7 @@ class ModelThermProperties(object):
         """Get a list of all unique conditions contained within the model."""
         conditions = []
         for bnd in self.host.boundaries:
-            con = bnd.properties.therm._condition
+            con = bnd.properties.therm.condition
             if not self._instance_in_array(con, conditions):
                 conditions.append(con)
         return list(set(conditions))

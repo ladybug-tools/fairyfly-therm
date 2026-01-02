@@ -290,8 +290,8 @@ class SteadyState(_ThermConditionBase):
         xml_id.text = self.identifier
         xml_name = ET.SubElement(xml_cond, 'Name')
         xml_name.text = self.display_name
+        xml_tag = ET.SubElement(xml_cond, 'ProjectNameTag')
         if self.project_tag:
-            xml_tag = ET.SubElement(xml_cond, 'ProjectNameTag')
             xml_tag.text = self.project_tag
         xml_protect = ET.SubElement(xml_cond, 'Protected')
         xml_protect.text = 'true' if self.protected else 'false'
@@ -301,12 +301,12 @@ class SteadyState(_ThermConditionBase):
         xml_igu.text = 'false'
         if self.film_coefficient == 0:  # translate the condition as simple
             xml_simple = ET.SubElement(xml_cond, 'Simplified')
-            xml_rh = ET.SubElement(xml_simple, 'RelativeHumidity')
-            xml_rh.text = str(self.relative_humidity)
-            xml_fc = ET.SubElement(xml_simple, 'FilmCoefficient')
-            xml_fc = '0'
             xml_ct = ET.SubElement(xml_simple, 'Temperature')
             xml_ct.text = str(self.temperature)
+            xml_fc = ET.SubElement(xml_simple, 'FilmCoefficient')
+            xml_fc.text = '0'
+            xml_rh = ET.SubElement(xml_simple, 'RelativeHumidity')
+            xml_rh.text = str(self.relative_humidity)
         else:  # add all of the comprehensive attributes
             xml_comp = ET.SubElement(xml_cond, 'Comprehensive')
             xml_rh = ET.SubElement(xml_comp, 'RelativeHumidity')

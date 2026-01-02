@@ -105,4 +105,4 @@ def test_writer_to_therm_xml():
     assert hasattr(boundary.to, 'therm_xml')
     xml_string = boundary.to.therm_xml(boundary)
     assert interior_wood.display_name in xml_string
-    assert boundary.identifier[:-12] in xml_string
+    assert boundary.therm_uuid[:-12] in xml_string
