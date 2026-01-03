@@ -159,9 +159,9 @@ def test_to_therm_xml():
 
 
 def test_to_thmz():
-    """Test the Model to_thmz method ."""
+    """Test the Model to_thmz method with a basic model."""
     model = Model.from_layers([100, 200, 100], height=500)
-    aer_concrete = SolidMaterial(0.1, 0.9, None, 400, 0.81, 850, 7.9)
+    aer_concrete = SolidMaterial(0.1, 0.95, None, 400, 0.81, 850, 7.9)
     aer_concrete.display_name = 'Aerated Concrete'
     insulation = SolidMaterial(0.049, 0.9, None, None, None, None)
     insulation.display_name = 'Insulation'
@@ -177,5 +177,22 @@ def test_to_thmz():
     assert hasattr(model.to, 'thmz')
     assert hasattr(model, 'to_thmz')
     output_file = './tests/assets/thmz/TestModel.thmz'
+    model.to_thmz(output_file)
+    assert os.path.isfile(output_file)
+    os.remove(output_file)
+
+
+def test_to_thmz_cavity():
+    """Test the Model to_therm_xml method with an air cavity."""
+    model = Model.from_layers([100, 200, 100], height=200)
+    interior_warm = SteadyState(26, 3.2)
+    interior_warm.display_name = 'Warm Interior'
+    model.shapes[0].properties.therm.material = concrete
+    model.shapes[1].properties.therm.material = air_cavity
+    model.shapes[2].properties.therm.material = concrete
+    model.boundaries[0].properties.therm.condition = exterior
+    model.boundaries[1].properties.therm.condition = interior_warm
+
+    output_file = './tests/assets/thmz/CavityModel.thmz'
     model.to_thmz(output_file)
     assert os.path.isfile(output_file)

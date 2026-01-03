@@ -3,9 +3,10 @@ from ._loadconditions import _conditions
 
 
 # establish variables for the default materials used across the library
+adiabatic = _conditions['Adiabatic']
+frame_cavity = _conditions['Frame Cavity Surface']
 exterior = _conditions['Generic Exterior']
 interior = _conditions['Generic Interior']
-adiabatic = _conditions['Adiabatic']
 
 
 # make lists of condition names to look up items in the library

@@ -10,13 +10,13 @@ import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry3d import Point3D, Plane, Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
-from fairyfly.typing import clean_string
+from fairyfly.typing import clean_string, therm_id_from_uuid
 from fairyfly.shape import Shape
 from fairyfly.boundary import Boundary
 
 from fairyfly_therm.config import folders
 from fairyfly_therm.material import CavityMaterial
-from fairyfly_therm.lib.conditions import adiabatic
+from fairyfly_therm.lib.conditions import adiabatic, frame_cavity
 
 HANDLE_COUNTER = 1  # counter used to generate unique handles when necessary
 
@@ -99,6 +99,10 @@ def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=T
         xml_x.text = str(round(pt_2d.x, 1))
         xml_y = ET.SubElement(xml_point, 'y')
         xml_y.text = str(round(pt_2d.y, 1))
+    # add the cavity ID if it exists
+    if shape.user_data is not None and 'cavity_id' in shape.user_data:
+        xml_cav_id = ET.SubElement(xml_poly, 'CavityUUID')
+        xml_cav_id.text = str(shape.user_data['cavity_id'])
     # add the type of polygon
     xml_type = ET.SubElement(xml_poly, 'Type')
     xml_type.text = 'Material'
@@ -108,7 +112,7 @@ def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=T
 
 
 def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
-                          reset_counter=True):
+                          boundary_type='Boundary Condition', reset_counter=True):
     """Generate an THERM XML Boundary Element object from a fairyfly Boundary.
 
     Args:
@@ -121,6 +125,7 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         boundaries_element: An optional XML Element for the Boundaries to which the
             generated objects will be added. If None, a new XML Element
             will be generated. (Default: None).
+        boundary_type: Text for the type of boundary. (Default: Boundary Condition).
         reset_counter: A boolean to note whether the global counter for unique
             handles should be reset after the method is run. (Default: True).
 
@@ -209,7 +214,10 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         xml_side.text = '0'
         xml_e_prop = ET.SubElement(xml_bound, 'ThermalEmissionProperties')
         xml_emiss = ET.SubElement(xml_e_prop, 'Emissivity')
-        xml_emiss.text = '0.9'
+        if boundary.user_data is not None and 'emissivities' in boundary.user_data:
+            xml_emiss.text = str(boundary.user_data['emissivities'][i])
+        else:
+            xml_emiss.text = '0.9'
         xml_temp = ET.SubElement(xml_e_prop, 'Temperature')
         xml_temp.text = '0'
         xml_g_emiss = ET.SubElement(xml_e_prop, 'UseGlobalEmissivity')
@@ -220,7 +228,7 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         xml_edge_id = ET.SubElement(xml_bound, 'EdgeID')
         xml_edge_id.text = edge_id
         xml_type = ET.SubElement(xml_bound, 'Type')
-        xml_type.text = 'Boundary Condition'
+        xml_type.text = boundary_type
         xml_color = ET.SubElement(xml_bound, 'Color')
         xml_color.text = color
         xml_status = ET.SubElement(xml_bound, 'Status')
@@ -228,6 +236,83 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
     if reset_counter:  # reset the counter back to 1 if requested
         HANDLE_COUNTER = 1
     return boundaries_element
+
+
+def _cavity_to_therm_xml(properties, cavities_element=None):
+    """Generate an THERM XML Cavity Element object from a list of properties.
+
+    Args:
+        properties: A list of cavity properties, including emissivities and cavity area.
+        cavities_element: An optional XML Element for the Cavities to which the
+            generated objects will be added. If None, a new XML Element
+            will be generated. (Default: None).
+
+    .. code-block:: xml
+
+        <Cavity>
+            <UUID>adfca13b-af61-a0d7-d29f0fbefbcc</UUID>
+            <HeatFlowDirection>Unknown</HeatFlowDirection>
+            <Emissivity1>0.9</Emissivity1>
+            <Emissivity2>0.9</Emissivity2>
+            <Temperature1>7</Temperature1>
+            <Temperature2>-4</Temperature2>
+            <MaxXDimension>-1</MaxXDimension>
+            <MaxYDimension>-1</MaxYDimension>
+            <ActualHeight>1000</ActualHeight>
+            <Area>3.260304e-12</Area>
+            <LocalEmissivities>false</LocalEmissivities>
+            <Pressure>1.013e+05</Pressure>
+            <WarmLocator>
+                <x>0</x>
+                <y>0</y>
+            </WarmLocator>
+            <ColdLocator>
+                <x>0</x>
+                <y>0</y>
+            </ColdLocator>
+        </Cavity>
+    """
+    # create a new Cavity element if one is not specified
+    if cavities_element is not None:
+        xml_cav = ET.SubElement(cavities_element, 'Cavity')
+    else:
+        xml_cav = ET.Element('Cavity')
+    # add all of the required basic attributes
+    xml_uuid = ET.SubElement(xml_cav, 'UUID')
+    xml_uuid.text = str(properties[0])
+    xml_hfd = ET.SubElement(xml_cav, 'HeatFlowDirection')
+    xml_hfd.text = 'Unknown'
+    xml_e1 = ET.SubElement(xml_cav, 'Emissivity1')
+    xml_e1.text = str(properties[1])
+    xml_e2 = ET.SubElement(xml_cav, 'Emissivity2')
+    xml_e2.text = str(properties[2])
+    xml_t1 = ET.SubElement(xml_cav, 'Temperature1')
+    xml_t1.text = '7'
+    xml_t2 = ET.SubElement(xml_cav, 'Temperature2')
+    xml_t2.text = '-4'
+    xml_mx = ET.SubElement(xml_cav, 'MaxXDimension')
+    xml_mx.text = '-1'
+    xml_my = ET.SubElement(xml_cav, 'MaxYDimension')
+    xml_my.text = '-1'
+    xml_ah = ET.SubElement(xml_cav, 'ActualHeight')
+    xml_ah.text = '1000'
+    xml_ar = ET.SubElement(xml_cav, 'Area')
+    xml_ar.text = str(properties[3])
+    xml_le = ET.SubElement(xml_cav, 'LocalEmissivities')
+    xml_le.text = 'true'
+    xml_pressure = ET.SubElement(xml_cav, 'Pressure')
+    xml_pressure.text = '1.01e+05'
+    # add a warm locator
+    xml_warm = ET.SubElement(xml_cav, 'WarmLocator')
+    for coord in ('x', 'y'):
+        xml_oc = ET.SubElement(xml_warm, coord)
+        xml_oc.text = '0'
+    # add a cold locator
+    xml_cold = ET.SubElement(xml_cav, 'ColdLocator')
+    for coord in ('x', 'y'):
+        xml_oc = ET.SubElement(xml_cold, coord)
+        xml_oc.text = '0'
+    return xml_cav
 
 
 def model_to_therm_xml(model):
@@ -318,29 +403,6 @@ def model_to_therm_xml(model):
         for shape in model.shapes:
             shape.insert_vertex(or_pt, tolerance=0.1)
 
-    # add the UUIDs of the polygons next to the edges to the Boundary.user_data
-    for bound in model.boundaries:
-        oriented_geo, bound_adj_shapes = [], []
-        for edge in bound.geometry:
-            adj_shapes = []
-            for shape in model.shapes:
-                for seg in shape.geometry.segments:
-                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
-                            edge.p1.is_equivalent(seg.p2, 0.1):
-                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
-                                edge.p2.is_equivalent(seg.p2, 0.1):
-                            adj_shapes.append(shape.therm_uuid)
-                            if edge.p1.is_equivalent(seg.p2, 0.1):
-                                edge = edge.flip()
-                            break
-            bound_adj_shapes.append(adj_shapes)
-            oriented_geo.append(edge)
-        bound._geometry = tuple(oriented_geo)
-        if bound.user_data is None:
-            bound.user_data = {'adj_polys': bound_adj_shapes}
-        else:
-            bound.user_data['adj_polys'] = bound_adj_shapes
-
     # ensure that there is only one contiguous shape without holes
     shape_geos = [shape.geometry for shape in model.shapes]
     polyface = Polyface3D.from_faces(shape_geos, tolerance=0.1)
@@ -376,8 +438,6 @@ def model_to_therm_xml(model):
         else:  # adiabatic segment to be added at the end
             shape_matched = False
             for shape in model.shapes:
-                if shape_matched:
-                    break
                 for seg in shape.geometry.segments:
                     if edge.p1.is_equivalent(seg.p1, 0.1) or \
                             edge.p1.is_equivalent(seg.p2, 0.1):
@@ -388,9 +448,72 @@ def model_to_therm_xml(model):
                                 edge = edge.flip()
                             shape_matched = True
                             break
+                if shape_matched:
+                    break
             adiabatic_geo.append(edge)
             if not shape_matched:
                 adiabatic_adj.append([])
+
+    # gather any edges to be written with a frame cavity boundary
+    frame_cavity_geo, cavity_props = [], []
+    for shape in model.shapes:
+        c_mat = shape.properties.therm.material
+        if isinstance(c_mat, CavityMaterial):
+            cav_id = therm_id_from_uuid(str(uuid.uuid4()))
+            if shape.user_data is None:
+                shape.user_data = {'cavity_id': cav_id}
+            else:
+                shape.user_data['cavity_id'] = cav_id
+            cavity_prop = [cav_id, c_mat.emissivity, c_mat.emissivity_back,
+                           shape.area * 1e-6]
+            cavity_props.append(cavity_prop)
+            for edge in shape.geometry.segments:
+                for seg in outer_edges:
+                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
+                            edge.p1.is_equivalent(seg.p2, 0.1):
+                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
+                                edge.p2.is_equivalent(seg.p2, 0.1):
+                            break
+                else:  # edge not on the outside; write as frame cavity surface
+                    frame_cavity_geo.append(edge)
+    if len(frame_cavity_geo) == 0:
+        cavity_boundary = None
+        all_boundaries = model.boundaries
+    else:
+        cavity_boundary = Boundary(frame_cavity_geo)
+        cavity_boundary.properties.therm.condition = frame_cavity
+        all_boundaries = model.boundaries + (cavity_boundary,)
+
+    # add the UUIDs of the polygons next to the edges to the Boundary.user_data
+    for bound in all_boundaries:
+        oriented_geo, bound_adj_shapes, bound_emissivity = [], [], []
+        for edge in bound.geometry:
+            adj_shapes, bnd_e = [], 0.9
+            for shape in model.shapes:
+                for seg in shape.geometry.segments:
+                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
+                            edge.p1.is_equivalent(seg.p2, 0.1):
+                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
+                                edge.p2.is_equivalent(seg.p2, 0.1):
+                            adj_shapes.append(shape.therm_uuid)
+                            if edge.p1.is_equivalent(seg.p2, 0.1):
+                                edge = edge.flip()
+                            shape_mat = shape.properties.therm.material
+                            if not isinstance(shape_mat, CavityMaterial):
+                                bnd_e = shape_mat.emissivity
+                            break
+            bound_adj_shapes.append(adj_shapes)
+            bound_emissivity.append(bnd_e)
+            oriented_geo.append(edge)
+        bound._geometry = tuple(oriented_geo)
+        if bound.user_data is None:
+            bound.user_data = {
+                'adj_polys': bound_adj_shapes,
+                'emissivities': bound_emissivity
+            }
+        else:
+            bound.user_data['adj_polys'] = bound_adj_shapes
+            bound.user_data['emissivities'] = bound_emissivity
 
     # load up the template XML file for the model
     package_dir = os.path.dirname(os.path.abspath(__file__))
@@ -399,7 +522,7 @@ def model_to_therm_xml(model):
     xml_root = xml_tree.getroot()
     model_name = clean_string(model.display_name)
 
-    # assign the property for the scale
+    # assign the property for the scale so it looks good in THERM
     xml_preferences = xml_root.find('Preferences')
     xml_settings = xml_preferences.find('Settings')
     xml_scale = xml_settings.find('Scale')
@@ -423,6 +546,12 @@ def model_to_therm_xml(model):
     xml_model_name = xml_gen.find('Title')
     xml_model_name.text = model_name
 
+    # write all of the cavity definitions into the model
+    if len(cavity_props) != 0:
+        xml_cavities = ET.SubElement(xml_root, 'Cavities')
+        for cp in cavity_props:
+            _cavity_to_therm_xml(cp, xml_cavities)
+
     # translate all Shapes to polygons
     xml_polygons = ET.SubElement(xml_root, 'Polygons')
     for shape in model.shapes:
@@ -433,7 +562,12 @@ def model_to_therm_xml(model):
     for bound in model.boundaries:
         boundary_to_therm_xml(bound, plane, xml_boundaries, reset_counter=False)
 
-    # add the extra adiabatic Boundaries
+    # add the cavity boundaries if they exist
+    if cavity_boundary is not None:
+        boundary_to_therm_xml(cavity_boundary, plane, xml_boundaries, 'Frame Cavity',
+                              reset_counter=False)
+
+    # add the extra adiabatic boundaries
     ad_bnd = Boundary(adiabatic_geo)
     ad_bnd.properties.therm.condition = adiabatic
     ad_bnd.user_data = {'adj_polys': adiabatic_adj}

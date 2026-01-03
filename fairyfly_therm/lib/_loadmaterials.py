@@ -33,7 +33,7 @@ _solid_materials[concrete.display_name] = concrete
 
 # ensure that we always have an air cavity material
 air_mat = CavityMaterial(identifier='0b46bbd7-0dbc-c148-3afe-87431bf0f66f')
-air_mat.display_name = 'Frame Cavity - CEN Simplified'
+air_mat.display_name = 'Frame Cavity - Simple'
 air_mat.protected = True
 air_mat.lock()
 _cavity_materials[air_mat.display_name] = air_mat

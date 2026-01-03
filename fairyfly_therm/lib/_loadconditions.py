@@ -7,8 +7,37 @@ from fairyfly_therm.condition.steadystate import SteadyState
 
 # empty dictionaries to hold loaded conditions
 _conditions = {}
+_FUNDAMENTALS = ('Adiabatic', 'Frame Cavity Surface',
+                 'Generic Exterior', 'Generic Interior')
 
-# ensure that there is always a generic indoor and outdoor conditions
+# ensure that there is always an adiabatic and frame cavity condition
+adiabatic_dict = {
+    'type': 'SteadyState',
+    'identifier': '61d7bd1c-22c6-4ea0-8720-0696e8c194ad',
+    'temperature': 0,
+    'film_coefficient': 0,
+    'display_name': 'Adiabatic',
+    'protected': True,
+    'color': '#000000'
+}
+adiabatic = SteadyState.from_dict(adiabatic_dict)
+adiabatic.lock()
+_conditions[adiabatic.display_name] = adiabatic
+
+frame_cavity_dict = {
+    'type': 'SteadyState',
+    'identifier': '320f2027-a8f4-44d3-907f-1d90f5118632',
+    'temperature': 0,
+    'film_coefficient': 0,
+    'display_name': 'Frame Cavity Surface',
+    'protected': True,
+    'color': '#FF0000'
+}
+frame_cavity = SteadyState.from_dict(frame_cavity_dict)
+frame_cavity.lock()
+_conditions[frame_cavity.display_name] = frame_cavity
+
+# add generic indoor and outdoor conditions
 exterior_dict = {
     'type': 'SteadyState',
     'identifier': 'de5cfad3-8a58-48b7-8583-b31a2650bc80',
@@ -35,19 +64,6 @@ interior = SteadyState.from_dict(interior_dict)
 interior.lock()
 _conditions[interior.display_name] = interior
 
-adiabatic_dict = {
-    'type': 'SteadyState',
-    'identifier': '61d7bd1c-22c6-4ea0-8720-0696e8c194ad',
-    'temperature': 0,
-    'film_coefficient': 0,
-    'display_name': 'Adiabatic',
-    'protected': True,
-    'color': '#000000'
-}
-adiabatic = SteadyState.from_dict(adiabatic_dict)
-adiabatic.lock()
-_conditions[adiabatic.display_name] = adiabatic
-
 
 # load the conditions from the LBNL library if they exist
 if folders.bc_steady_state_lib_file is not None:
@@ -60,7 +76,7 @@ if folders.bc_steady_state_lib_file is not None:
 def check_and_add_condition(con):
     """Check that a condition is not overwriting a default and add it."""
     con.lock()
-    if con.display_name not in ('Generic Exterior', 'Generic Interior'):
+    if con.display_name not in _FUNDAMENTALS:
         if isinstance(con, SteadyState):
             _conditions[con.display_name] = con
 
