@@ -112,7 +112,7 @@ def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=T
 
 
 def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
-                          boundary_type='Boundary Condition', reset_counter=True):
+                          reset_counter=True):
     """Generate an THERM XML Boundary Element object from a fairyfly Boundary.
 
     Args:
@@ -125,7 +125,6 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         boundaries_element: An optional XML Element for the Boundaries to which the
             generated objects will be added. If None, a new XML Element
             will be generated. (Default: None).
-        boundary_type: Text for the type of boundary. (Default: Boundary Condition).
         reset_counter: A boolean to note whether the global counter for unique
             handles should be reset after the method is run. (Default: True).
 
@@ -227,12 +226,21 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         # add the final identifying properties
         xml_edge_id = ET.SubElement(xml_bound, 'EdgeID')
         xml_edge_id.text = edge_id
-        xml_type = ET.SubElement(xml_bound, 'Type')
-        xml_type.text = boundary_type
+        if boundary.user_data is not None and 'enclosure_numbers' in boundary.user_data:
+            xml_enclosure = ET.SubElement(xml_bound, 'EnclosureNumber')
+            xml_enclosure.text = boundary.user_data['enclosure_numbers'][i]
+            xml_type = ET.SubElement(xml_bound, 'Type')
+            xml_type.text = 'Frame Cavity'
+        else:
+            xml_type = ET.SubElement(xml_bound, 'Type')
+            xml_type.text = 'Boundary Condition'
         xml_color = ET.SubElement(xml_bound, 'Color')
         xml_color.text = color
         xml_status = ET.SubElement(xml_bound, 'Status')
-        xml_status.text = '0'
+        if boundary.user_data is not None and 'enclosure_numbers' in boundary.user_data:
+            xml_status.text = '64'
+        else:
+            xml_status.text = '0'
     if reset_counter:  # reset the counter back to 1 if requested
         HANDLE_COUNTER = 1
     return boundaries_element
@@ -455,11 +463,16 @@ def model_to_therm_xml(model):
                 adiabatic_adj.append([])
 
     # gather any edges to be written with a frame cavity boundary
-    frame_cavity_geo, cavity_props = [], []
+    frame_cavity_geo, cavity_props, enclosure_numbers = [], [], []
+    enclosure_count = 1
+    solid_shapes, cavity_shapes = [], []
     for shape in model.shapes:
         c_mat = shape.properties.therm.material
         if isinstance(c_mat, CavityMaterial):
+            cavity_shapes.append(shape)
             cav_id = therm_id_from_uuid(str(uuid.uuid4()))
+            cav_number = str(enclosure_count)
+            enclosure_count += 1
             if shape.user_data is None:
                 shape.user_data = {'cavity_id': cav_id}
             else:
@@ -476,20 +489,25 @@ def model_to_therm_xml(model):
                             break
                 else:  # edge not on the outside; write as frame cavity surface
                     frame_cavity_geo.append(edge)
+                    enclosure_numbers.append(cav_number)
+        else:
+            solid_shapes.append(shape)
     if len(frame_cavity_geo) == 0:
         cavity_boundary = None
         all_boundaries = model.boundaries
     else:
         cavity_boundary = Boundary(frame_cavity_geo)
         cavity_boundary.properties.therm.condition = frame_cavity
+        cavity_boundary.user_data = {'enclosure_numbers': enclosure_numbers}
         all_boundaries = model.boundaries + (cavity_boundary,)
 
     # add the UUIDs of the polygons next to the edges to the Boundary.user_data
+    ordered_shapes = cavity_shapes + solid_shapes
     for bound in all_boundaries:
         oriented_geo, bound_adj_shapes, bound_emissivity = [], [], []
         for edge in bound.geometry:
             adj_shapes, bnd_e = [], 0.9
-            for shape in model.shapes:
+            for shape in ordered_shapes:
                 for seg in shape.geometry.segments:
                     if edge.p1.is_equivalent(seg.p1, 0.1) or \
                             edge.p1.is_equivalent(seg.p2, 0.1):
@@ -564,8 +582,7 @@ def model_to_therm_xml(model):
 
     # add the cavity boundaries if they exist
     if cavity_boundary is not None:
-        boundary_to_therm_xml(cavity_boundary, plane, xml_boundaries, 'Frame Cavity',
-                              reset_counter=False)
+        boundary_to_therm_xml(cavity_boundary, plane, xml_boundaries, reset_counter=False)
 
     # add the extra adiabatic boundaries
     ad_bnd = Boundary(adiabatic_geo)
