@@ -32,9 +32,18 @@ concrete.lock()
 _solid_materials[concrete.display_name] = concrete
 
 # ensure that we always have an air cavity material
-air_mat = CavityMaterial(identifier='0b46bbd7-0dbc-c148-3afe-87431bf0f66f')
-air_mat.display_name = 'Frame Cavity - Simple'
-air_mat.protected = True
+air_dict = {
+    'type': 'CavityMaterialAbridged',
+    'identifier': '0b46bbd7-0dbc-c148-3afe-87431bf0f66f',
+    'gas': 'Air',
+    'cavity_model': 'ISO15099',
+    'emissivity': 0.9,
+    'emissivity_back': 0.9,
+    'display_name': 'Frame Cavity - Generic',
+    'protected': True,
+    'color': '#00ff00'
+}
+air_mat = CavityMaterial.from_dict_abridged(air_dict, _gases)
 air_mat.lock()
 _cavity_materials[air_mat.display_name] = air_mat
 
