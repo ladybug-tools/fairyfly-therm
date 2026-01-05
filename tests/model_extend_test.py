@@ -196,3 +196,4 @@ def test_to_thmz_cavity():
     output_file = './tests/assets/thmz/CavityModel.thmz'
     model.to_thmz(output_file)
     assert os.path.isfile(output_file)
+    os.remove(output_file)

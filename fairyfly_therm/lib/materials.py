@@ -4,7 +4,7 @@ from ._loadmaterials import _solid_materials, _cavity_materials
 
 # establish variables for the default materials used across the library
 concrete = _solid_materials['Generic HW Concrete']
-air_cavity = _cavity_materials['Frame Cavity - Simple']
+air_cavity = _cavity_materials['Frame Cavity - Generic']
 
 
 # make lists of material identifiers to look up items in the library

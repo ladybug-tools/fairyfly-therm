@@ -468,7 +468,7 @@ def model_to_therm_xml(model):
     solid_shapes, cavity_shapes = [], []
     for shape in model.shapes:
         c_mat = shape.properties.therm.material
-        if isinstance(c_mat, CavityMaterial):
+        if isinstance(c_mat, CavityMaterial) and c_mat.cavity_model != 'CEN':
             cavity_shapes.append(shape)
             cav_id = therm_id_from_uuid(str(uuid.uuid4()))
             cav_number = str(enclosure_count)
@@ -481,15 +481,8 @@ def model_to_therm_xml(model):
                            shape.area * 1e-6]
             cavity_props.append(cavity_prop)
             for edge in shape.geometry.segments:
-                for seg in outer_edges:
-                    if edge.p1.is_equivalent(seg.p1, 0.1) or \
-                            edge.p1.is_equivalent(seg.p2, 0.1):
-                        if edge.p2.is_equivalent(seg.p1, 0.1) or \
-                                edge.p2.is_equivalent(seg.p2, 0.1):
-                            break
-                else:  # edge not on the outside; write as frame cavity surface
-                    frame_cavity_geo.append(edge)
-                    enclosure_numbers.append(cav_number)
+                frame_cavity_geo.append(edge)
+                enclosure_numbers.append(cav_number)
         else:
             solid_shapes.append(shape)
     if len(frame_cavity_geo) == 0:
@@ -580,15 +573,15 @@ def model_to_therm_xml(model):
     for bound in model.boundaries:
         boundary_to_therm_xml(bound, plane, xml_boundaries, reset_counter=False)
 
-    # add the cavity boundaries if they exist
-    if cavity_boundary is not None:
-        boundary_to_therm_xml(cavity_boundary, plane, xml_boundaries, reset_counter=False)
-
     # add the extra adiabatic boundaries
     ad_bnd = Boundary(adiabatic_geo)
     ad_bnd.properties.therm.condition = adiabatic
     ad_bnd.user_data = {'adj_polys': adiabatic_adj}
     boundary_to_therm_xml(ad_bnd, plane, xml_boundaries, reset_counter=False)
+
+    # add the cavity boundaries if they exist
+    if cavity_boundary is not None:
+        boundary_to_therm_xml(cavity_boundary, plane, xml_boundaries, reset_counter=False)
 
     # reset the handle counter back to 1 and return the root XML element
     HANDLE_COUNTER = 1
