@@ -172,6 +172,7 @@ def test_to_thmz():
     model.shapes[2].properties.therm.material = aer_concrete
     model.boundaries[0].properties.therm.condition = exterior
     model.boundaries[1].properties.therm.condition = interior_warm
+    model.boundaries[1].properties.therm.u_factor_tag = 'Wall Assembly'
     model.display_name = 'Roman Bath Wall'
 
     assert hasattr(model.to, 'thmz')

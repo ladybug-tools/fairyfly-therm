@@ -13,17 +13,31 @@ class BoundaryThermProperties(object):
         host: A fairyfly_core Boundary object that hosts these properties.
         condition: An optional Condition object to set the conductive properties
             of the Boundary. The default is set to a generic concrete condition.
+        u_factor_tag: An optional text string for to define a U-Factor tag along
+            the boundary condition. This tags is used tell THERM the boundary on
+            which a net U-Value shall be computed. Typical values to input here,
+            which are recognizable in LBNL WINDOW include the following.
+
+            * Frame
+            * Edge
+            * Spacer
+            * ShadeInETag
+            * ShadeOutETag
+            * SHGC Exterior
+            * New
 
     Properties:
         * host
         * condition
+        * u_factor_tag
     """
-    __slots__ = ('_host', '_condition')
+    __slots__ = ('_host', '_condition', '_u_factor_tag')
 
-    def __init__(self, host, condition=None):
+    def __init__(self, host, condition=None, u_factor_tag=None):
         """Initialize Boundary THERM properties."""
         self._host = host
         self.condition = condition
+        self.u_factor_tag = u_factor_tag
 
     @property
     def host(self):
@@ -45,6 +59,21 @@ class BoundaryThermProperties(object):
             value.lock()  # lock editing in case condition has multiple references
         self._condition = value
 
+    @property
+    def u_factor_tag(self):
+        """Get or set a string for to define a U-Factor tag along the boundary condition.
+        """
+        return self._u_factor_tag
+
+    @u_factor_tag.setter
+    def u_factor_tag(self, value):
+        if value is not None:
+            try:
+                value = str(value)
+            except UnicodeEncodeError:  # Python 2 machine lacking the character set
+                pass  # keep it as unicode
+        self._u_factor_tag = value
+
     @classmethod
     def from_dict(cls, data, host):
         """Create BoundaryThermProperties from a dictionary.
@@ -62,6 +91,7 @@ class BoundaryThermProperties(object):
             {
             "type": 'BoundaryThermProperties',
             "condition": {},  # A SteadyState dictionary
+            "u_factor_tag": "Frame"  # text for the u-factor tag
             }
         """
         assert data['type'] == 'BoundaryThermProperties', \
@@ -69,6 +99,8 @@ class BoundaryThermProperties(object):
         new_prop = cls(host)
         if 'condition' in data and data['condition'] is not None:
             new_prop.condition = SteadyState.from_dict(data['condition'])
+        if 'u_factor_tag' in data and data['u_factor_tag'] is not None:
+            new_prop.u_factor_tag = data['u_factor_tag']
         return new_prop
 
     def apply_properties_from_dict(self, abridged_data, conditions):
@@ -86,6 +118,8 @@ class BoundaryThermProperties(object):
             except KeyError:
                 raise ValueError('Boundary condition "{}" was not found in '
                                  'conditions.'.format(abridged_data['condition']))
+        if 'u_factor_tag' in abridged_data and abridged_data['u_factor_tag'] is not None:
+            self.u_factor_tag = abridged_data['u_factor_tag']
 
     def to_dict(self, abridged=False):
         """Return therm properties as a dictionary.
@@ -101,6 +135,8 @@ class BoundaryThermProperties(object):
         if self._condition is not None:
             base['therm']['condition'] = \
                 self._condition.identifier if abridged else self._condition.to_dict()
+        if self.u_factor_tag is not None:
+            base['therm']['u_factor_tag'] = self.u_factor_tag
         return base
 
     def duplicate(self, new_host=None):
@@ -111,7 +147,7 @@ class BoundaryThermProperties(object):
                 If None, the properties will be duplicated with the same host.
         """
         _host = new_host or self._host
-        return BoundaryThermProperties(_host, self._condition)
+        return BoundaryThermProperties(_host, self._condition, self._u_factor_tag)
 
     def is_equivalent(self, other):
         """Check to see if these therm properties are equivalent to another object.
@@ -120,6 +156,8 @@ class BoundaryThermProperties(object):
         will otherwise be False.
         """
         if not is_equivalent(self._condition, other._condition):
+            return False
+        if self._u_factor_tag != other._u_factor_tag:
             return False
         return True
 

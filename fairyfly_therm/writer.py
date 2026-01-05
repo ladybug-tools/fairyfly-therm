@@ -180,7 +180,9 @@ def boundary_to_therm_xml(boundary, plane=None, boundaries_element=None,
         xml_uuid.text = boundary.therm_uuid[:-12] + str(uuid.uuid4())[-12:]
         xml_name = ET.SubElement(xml_bound, 'Name')
         xml_name.text = boundary.properties.therm.condition.display_name
-        ET.SubElement(xml_bound, 'FluxTag')
+        xml_flux = ET.SubElement(xml_bound, 'FluxTag')
+        if boundary.properties.therm.u_factor_tag is not None:
+            xml_flux.text = boundary.properties.therm.u_factor_tag
         xml_blocks = ET.SubElement(xml_bound, 'IsBlocking')
         xml_blocks.text = 'true'
         # add the UUIDs of the neighboring shapes
