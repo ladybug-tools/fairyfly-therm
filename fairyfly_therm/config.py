@@ -41,6 +41,7 @@ class Folders(object):
         * mute
     """
     THERM_VERSION = (8, 1, 30, 0)
+    LBNL_URL = 'https://windows.lbl.gov/therm-software-downloads'
 
     def __init__(self, config_file=None, mute=True):
         self.mute = bool(mute)  # set the mute value
@@ -71,10 +72,12 @@ class Folders(object):
             if not self.mute:
                 print("Path to Therm is set to: %s" % self._therm_path)
         else:
-            if t_path:
+            if t_path is not None and os.path.isdir(t_path):
+                self._therm_path = t_path
+            else:
                 msg = '{} is not a valid path to a Therm installation.'.format(t_path)
                 print(msg)
-            self._therm_path = None
+                self._therm_path = None
             self._therm_exe = None
             self._therm_version = None
             self._therm_version_str = None
@@ -205,6 +208,26 @@ class Folders(object):
         self._load_from_file(cfg)
         self._config_file = cfg
 
+    def check_therm_version(self):
+        """Raise an exception message about the THERM installation if it is not usable."""
+        if os.name != 'nt':
+            msg = 'LBNL THERM can only run on Windows machines and so it cannot ' \
+                'be used while on "{}" operating system.'.format(os.name)
+            raise ValueError(msg)
+        ver_str = '.'.join(str(i) for i in self.THERM_VERSION)
+        dn_msg = 'Download and install THERM version {} from {}.'.format(
+            ver_str, self.LBNL_URL)
+        if self.therm_exe is not None:
+            return None  # everything is good
+        elif self.therm_path is not None:
+            msg = 'A THERM installation was found at "{}" but it is not ' \
+                'for version {}.\nFairyfly is currently only compatible with ' \
+                'this version of THERM.\n{}.'.format(self.therm_path, ver_str, dn_msg)
+            raise ValueError(msg)
+        else:
+            msg = 'No THERM installation was found on this machine.\n{}'.format(dn_msg)
+            raise ValueError(msg)
+
     def _load_from_file(self, file_path):
         """Set all of the the properties of this object from a config JSON file.
 
@@ -257,13 +280,30 @@ class Folders(object):
             test_path = os.path.join(lb_install, 'THERM')
             thm_path = test_path if os.path.isdir(test_path) else None
 
+        def getversion(therm_path):
+            """Get digits for the version of Version."""
+            try:
+                ver = ''.join(s for s in therm_path if (s.isdigit() or s == '.'))
+                return sum(int(d) * (10 ** i)
+                           for i, d in enumerate(reversed(ver.split('.'))))
+            except ValueError:  # folder starting with 'THERM' and no version
+                return 0
+
         # then check for the default location where standalone Therm is installed
-        if thm_path is not None:
-            pass  # we found a version of therm in the ladybug_tools folder
-        elif os.name == 'nt':  # search the C:/ drive on Windows
+        if thm_path is None and os.name == 'nt':  # search the C:/ drive on Windows
             major, minor, _, _ = Folders.THERM_VERSION
-            test_path = 'C:/Program Files (x86)/lbnl/THERM{}.{}'.format(major, minor)
-            thm_path = test_path if os.path.isdir(test_path) else None
+            lbnl_install_dir = 'C:/Program Files (x86)/lbnl'
+            test_path = '{}/THERM{}.{}'.format(lbnl_install_dir, major, minor)
+            if os.path.isdir(test_path):
+                thm_path = test_path
+            elif os.path.isdir(lbnl_install_dir):
+                therm_folders = []
+                for f in os.listdir(lbnl_install_dir):
+                    f_path = os.path.join(lbnl_install_dir, f)
+                    if f.lower().startswith('therm') and os.path.isdir(f_path):
+                        therm_folders.append(f_path)
+                if len(therm_folders) != 0:
+                    thm_path = sorted(therm_folders, key=getversion, reverse=True)[0]
 
         return thm_path
 
