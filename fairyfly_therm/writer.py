@@ -627,6 +627,22 @@ def model_to_therm_xml_str(model):
 
     Args:
         model: A fairyfly Model for which an THERM XML text string will be returned.
+    """
+    # create the XML string
+    xml_root = model_to_therm_xml(model)
+    try:  # try to indent the XML to make it read-able
+        ET.indent(xml_root, '\t')
+        return ET.tostring(xml_root, encoding='unicode')
+    except AttributeError:  # we are in Python 2 and no indent is available
+        return ET.tostring(xml_root)
+
+
+def model_to_thmz(model, output_file):
+    """Write a THERM Zip (.thmz) file from a Fairyfly Model.
+
+    Args:
+        model: A fairyfly Model for which an THMZ file will be written.
+        output_file: The path to the THMZ file that will be written from the model.
 
     Usage:
 
@@ -647,29 +663,9 @@ def model_to_therm_xml_str(model):
         model.boundaries[1].properties.therm.condition = interior
         model.display_name = 'Roman Bath Wall'
 
-        # create the THERM XML string for the model
-        xml_str = model.to.therm_xml(model)
-
-        # write the final string into an XML file using DesignBuilder encoding
-        therm_xml = os.path.join(folders.default_simulation_folder, 'model.xml')
-        with open(therm_xml, 'wb') as fp:
-            fp.write(xml_str.encode('utf-8'))
-    """
-    # create the XML string
-    xml_root = model_to_therm_xml(model)
-    try:  # try to indent the XML to make it read-able
-        ET.indent(xml_root, '\t')
-        return ET.tostring(xml_root, encoding='unicode')
-    except AttributeError:  # we are in Python 2 and no indent is available
-        return ET.tostring(xml_root)
-
-
-def model_to_thmz(model, output_file):
-    """Write a THERM Zip (.thmz) file from a Fairyfly Model.
-
-    Args:
-        model: A fairyfly Model for which an THERM XML file will be written.
-        output_file: The path to the THMZ file that will be written from the model.
+        # create the THERM Zip file for the model
+        thmz = os.path.join(folders.default_simulation_folder, 'model.thmz')
+        xml_str = model.to_thmz(thmz)
     """
     # make sure the directory exists where the file will be written
     dir_name = os.path.dirname(os.path.abspath(output_file))
