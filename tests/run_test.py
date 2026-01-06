@@ -22,6 +22,7 @@ def test_run_model():
         model.shapes[2].properties.therm.material = concrete
         model.boundaries[0].properties.therm.condition = exterior
         model.boundaries[1].properties.therm.condition = interior_warm
+        model.boundaries[1].properties.therm.u_factor_tag = 'Wall Assembly'
 
         sim_dir = './tests/assets/test_sim'
         result_file = run_model(model, sim_dir)

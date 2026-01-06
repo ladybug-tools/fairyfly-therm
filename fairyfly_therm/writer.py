@@ -5,6 +5,7 @@ import uuid
 import random
 import datetime
 import zipfile
+import json
 import tempfile
 import xml.etree.ElementTree as ET
 
@@ -558,6 +559,10 @@ def model_to_therm_xml(model):
     xml_cre_date.text = str(datetime.datetime.now().replace(microsecond=0))
     xml_model_name = xml_gen.find('Title')
     xml_model_name.text = model_name
+
+    # write the 3D plane into the notes section
+    xml_notes = xml_gen.find('Notes')
+    xml_notes.text = 'Plane: {}'.format(json.dumps(plane.to_dict()))
 
     # write all of the cavity definitions into the model
     if len(cavity_props) != 0:
