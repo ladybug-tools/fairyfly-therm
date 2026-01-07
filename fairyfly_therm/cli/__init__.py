@@ -7,6 +7,8 @@ import json
 from fairyfly.cli import main
 from ..config import folders
 from .setconfig import set_config
+from .translate import translate
+from .simulate import simulate
 
 _logger = logging.getLogger(__name__)
 
@@ -42,6 +44,8 @@ def config(output_file):
 
 # add sub-commands to therm
 therm.add_command(set_config, name='set-config')
+therm.add_command(translate)
+therm.add_command(simulate)
 
 # add therm sub-commands to fairyfly CLI
 main.add_command(therm)
