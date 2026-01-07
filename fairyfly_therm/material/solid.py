@@ -262,6 +262,21 @@ class SolidMaterial(_ThermMaterialBase):
             new_mat.user_data = data['user_data']
         return new_mat
 
+    @classmethod
+    def from_energy_material(cls, material):
+        """Create a SolidMaterial from a honeybee EnergyMaterial.
+
+        Args:
+            material: A honeybee EnergyMaterial to be converted to a
+                THERM SolidMaterial.
+        """
+        new_mat = cls(
+            material.conductivity, material.thermal_absorptance,
+            density=material.density, specific_heat=material.specific_heat
+        )
+        new_mat.display_name = material.display_name
+        return new_mat
+
     def to_therm_xml(self, materials_element=None):
         """Get an THERM XML element of the material.
 
