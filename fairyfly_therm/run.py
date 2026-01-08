@@ -5,7 +5,7 @@ from __future__ import division
 import os
 import subprocess
 
-from ladybug.futil import write_to_file, preparedir
+from ladybug.futil import write_to_file
 from fairyfly.typing import clean_string
 from fairyfly.config import folders as ff_folders
 from fairyfly.model import Model
@@ -27,17 +27,25 @@ def run_model(model, directory=None, silent=False):
     assert isinstance(model, Model), \
         'Expected Fairyfly Model. Got {}.'.format(type(model))
     # get a default directory if none was specified
+    model_name = clean_string(model.display_name)
     if directory is None:
-        model_name = clean_string(model.display_name)
         directory = os.path.join(ff_folders.default_simulation_folder, model_name)
-    preparedir(directory)
+    thmz_file = os.path.join(directory, '{}.thmz'.format(model_name))
+    log_file = os.path.join(directory, 'therm.log')
+    if os.path.isdir(directory):
+        for exist_file in (thmz_file, log_file):
+            if os.path.isfile(exist_file):
+                try:
+                    os.remove(exist_file)
+                except Exception:
+                    print("Failed to remove %s" % exist_file)
+    else:
+        os.makedirs(directory)
     # write the Model to a .thmz file
-    thmz_file = os.path.join(directory, 'model.thmz')
     model.to_thmz(thmz_file)
     # run the thmz_file through THERM
     thmz_file = run_thmz(thmz_file, silent)
     # parse the log file to check if there were any failures
-    log_file = os.path.join(directory, 'therm.log')
     with open(log_file, 'r') as lf:
         sim_log = lf.read()
     if 'Calculation complete.' not in sim_log:

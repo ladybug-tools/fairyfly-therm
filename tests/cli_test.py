@@ -35,6 +35,6 @@ def test_simulate_model():
         result = runner.invoke(simulate_model_cli, [input_model, '--folder', folder])
         assert result.exit_code == 0
 
-        output_thmz = os.path.join(folder, 'model.thmz')
+        output_thmz = os.path.join(folder, 'Roman_Bath_Wall.thmz')
         assert os.path.isfile(output_thmz)
         nukedir(folder)

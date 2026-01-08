@@ -292,7 +292,7 @@ class CavityMaterial(_ThermMaterialBase):
             xml_mat = ET.Element('Material')
         # add all of the required basic attributes
         xml_id = ET.SubElement(xml_mat, 'UUID')
-        xml_id.text = self.identifier
+        xml_id.text = self.therm_uuid
         xml_name = ET.SubElement(xml_mat, 'Name')
         xml_name.text = self.display_name
         xml_protect = ET.SubElement(xml_mat, 'Protected')

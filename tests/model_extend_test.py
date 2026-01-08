@@ -184,7 +184,7 @@ def test_to_thmz():
 
 
 def test_to_thmz_cavity():
-    """Test the Model to_therm_xml method with an air cavity."""
+    """Test the Model to_thmz method with an air cavity."""
     model = Model.from_layers([100, 200, 100], height=200)
     interior_warm = SteadyState(26, 3.2)
     interior_warm.display_name = 'Warm Interior'
@@ -195,6 +195,17 @@ def test_to_thmz_cavity():
     model.boundaries[1].properties.therm.condition = interior_warm
 
     output_file = './tests/assets/thmz/CavityModel.thmz'
+    model.to_thmz(output_file)
+    assert os.path.isfile(output_file)
+    os.remove(output_file)
+
+
+def test_to_thmz_stud_wall():
+    """Test the Model to_thmz method with an stud wall."""
+    input_file = './tests/assets/json/stud_wall.ffjson'
+    model = Model.from_file(input_file)
+
+    output_file = './tests/assets/thmz/stud_wall.thmz'
     model.to_thmz(output_file)
     assert os.path.isfile(output_file)
     os.remove(output_file)

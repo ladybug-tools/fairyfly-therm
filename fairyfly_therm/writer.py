@@ -3,13 +3,15 @@
 import os
 import uuid
 import random
+import math
 import datetime
 import zipfile
 import json
 import tempfile
 import xml.etree.ElementTree as ET
 
-from ladybug_geometry.geometry3d import Point3D, Plane, Polyline3D, Face3D, Polyface3D
+from ladybug_geometry.geometry3d import Vector3D, Point3D, Plane, \
+    Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
 from fairyfly.typing import clean_string, therm_id_from_uuid
 from fairyfly.shape import Shape
@@ -82,7 +84,9 @@ def shape_to_therm_xml(shape, plane=None, polygons_element=None, reset_counter=T
     xml_id.text = str(HANDLE_COUNTER)
     HANDLE_COUNTER += 1
     xml_mat_id = ET.SubElement(xml_poly, 'MaterialUUID')
-    xml_mat_id.text = shape.properties.therm.material.identifier
+    shape_mat = shape.properties.therm.material
+    xml_mat_id.text = shape_mat.therm_uuid \
+        if isinstance(shape_mat, CavityMaterial) else shape_mat.identifier
     xml_mat_name = ET.SubElement(xml_poly, 'MaterialName')
     xml_mat_name.text = shape.properties.therm.material.display_name
     # add an origin
@@ -353,6 +357,7 @@ def model_to_therm_xml(model):
             'Is this correct?'.format(original_model.units)
         raise ValueError(error)
     # determine the plane and the scale to be used for all geometry translation
+    ang_tol = model.angle_tolerance
     min_pt, max_pt = bounding_box([s.geometry for s in model.shapes])
     origin = Point3D(min_pt.x, max_pt.y, max_pt.z)
     normal = model.shapes[0].geometry.normal
@@ -361,11 +366,15 @@ def model_to_therm_xml(model):
     if normal.y > 0:
         normal = normal.reverse()
     bp = Plane(n=normal, o=origin)
-    t_vec = (bp.x * -100) + (bp.y * 100)
+    t_vec = (bp.x * 100) + (bp.y * 100)
     offset_origin = origin.move(t_vec)
-    plane = Plane(n=normal, o=offset_origin)
+    up_vec = math.degrees(Vector3D(0, 0, 1).angle(normal))
+    if up_vec < ang_tol or up_vec > 180 - ang_tol:
+        plane = Plane(o=offset_origin)
+    else:
+        plane = Plane(n=normal, o=offset_origin)
     max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
-    scale = 1.0 if max_dim < 100 else 100 / max_dim
+    scale = 1.0 if max_dim < 100 else 100 / (max_dim * 0.5)
 
     # check that all geometries lie within the tolerance of the plane
     for shape in model.shapes:

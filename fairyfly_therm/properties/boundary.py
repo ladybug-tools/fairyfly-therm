@@ -14,7 +14,7 @@ class BoundaryThermProperties(object):
         condition: An optional Condition object to set the conductive properties
             of the Boundary. The default is set to a generic concrete condition.
         u_factor_tag: An optional text string for to define a U-Factor tag along
-            the boundary condition. This tags is used tell THERM the boundary on
+            the boundary condition. This tag is used tell THERM the boundary on
             which a net U-Value shall be computed. Typical values to input here,
             which are recognizable in LBNL WINDOW include the following.
 
