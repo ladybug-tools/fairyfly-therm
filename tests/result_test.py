@@ -15,7 +15,7 @@ def test_thmz_load_mesh():
 
     assert isinstance(thmz_obj.mesh, Mesh3D)
     assert len(thmz_obj.mesh.faces) == 32
-    assert len(thmz_obj.mesh.vertices) == 47
+    assert len(thmz_obj.mesh.vertices) == 45
 
     empty_file = './tests/assets/thmz/test_no_result.thmz'
     thmz_obj = THMZResult(empty_file)
@@ -29,13 +29,13 @@ def test_thmz_load_mesh_results():
     result_file = './tests/assets/thmz/test_result.thmz'
     thmz_obj = THMZResult(result_file)
 
-    assert len(thmz_obj.temperatures) == 47
+    assert len(thmz_obj.temperatures) == 45
     for val in thmz_obj.temperatures:
         assert isinstance(val, float)
-    assert len(thmz_obj.heat_fluxes) == 47
+    assert len(thmz_obj.heat_fluxes) == 45
     for val in thmz_obj.heat_fluxes:
         assert isinstance(val, Vector3D)
-    assert len(thmz_obj.heat_flux_magnitudes) == 47
+    assert len(thmz_obj.heat_flux_magnitudes) == 45
     for val in thmz_obj.heat_flux_magnitudes:
         assert isinstance(val, float)
 

@@ -179,14 +179,21 @@ class THMZResult(object):
         vertices = []
         for xml_node in xml_case.find('Nodes'):
             pt_2d = Point2D(xml_node.find('x').text, xml_node.find('y').text)
+            pt_2d = pt_2d * 1000  # convert from meters to mm
             vertices.append(plane.xy_to_xyz(pt_2d))
+        # remove the last two vertices (I don't know where they come from)
+        last_pt_i = (len(vertices), len(vertices))
+        vertices.pop(-1)
+        vertices.pop(-1)
         # extract the faces (aka. elements) from the model
         faces = []
         for xml_face in xml_case.find('Elements'):
             face_i = []
             for e_prop in xml_face:
                 if e_prop.tag.startswith('node'):
-                    face_i.append(int(e_prop.text) - 1)
+                    fi = int(e_prop.text)
+                    if fi not in last_pt_i:
+                        face_i.append(fi)
             faces.append(tuple(face_i))
         self._mesh = Mesh3D(vertices, faces)
 
@@ -212,6 +219,10 @@ class THMZResult(object):
             flux_vec = Vector3D(pt_3d.x, pt_3d.y, pt_3d.z)
             heat_fluxes.append(flux_vec)
             flux_magnitudes.append(flux_vec.magnitude)
+        # remove the last two vertices (I don't know where they come from)
+        for res_list in (temperatures, heat_fluxes, flux_magnitudes):
+            res_list.pop(-1)
+            res_list.pop(-1)
         self._temperatures = tuple(temperatures)
         self._heat_fluxes = tuple(heat_fluxes)
         self._heat_flux_magnitudes = tuple(flux_magnitudes)
