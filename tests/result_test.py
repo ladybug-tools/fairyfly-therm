@@ -1,6 +1,7 @@
 # coding=utf-8
 """Tests the fairyfly_therm result module."""
-from ladybug_geometry.geometry3d import Vector3D, Point3D, Plane, Mesh3D
+from ladybug_geometry.geometry2d import Vector2D
+from ladybug_geometry.geometry3d import Point3D, Plane, Mesh3D
 
 from fairyfly_therm.result import THMZResult, UFactor
 
@@ -12,6 +13,7 @@ def test_thmz_load_mesh():
 
     assert isinstance(thmz_obj.plane, Plane)
     assert thmz_obj.plane.o == Point3D(-100, 300, 0)
+    assert len(thmz_obj.shape_polygons) == 3
 
     assert isinstance(thmz_obj.mesh, Mesh3D)
     assert len(thmz_obj.mesh.faces) == 32
@@ -34,7 +36,7 @@ def test_thmz_load_mesh_results():
         assert isinstance(val, float)
     assert len(thmz_obj.heat_fluxes) == 45
     for val in thmz_obj.heat_fluxes:
-        assert isinstance(val, Vector3D)
+        assert isinstance(val, Vector2D)
     assert len(thmz_obj.heat_flux_magnitudes) == 45
     for val in thmz_obj.heat_flux_magnitudes:
         assert isinstance(val, float)
