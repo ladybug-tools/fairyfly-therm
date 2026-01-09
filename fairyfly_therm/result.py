@@ -8,8 +8,9 @@ import json
 import re
 import xml.etree.ElementTree as ET
 
-from ladybug_geometry.geometry2d import Point2D
-from ladybug_geometry.geometry3d import Vector3D, Plane, Mesh3D
+from ladybug_geometry.geometry2d import Vector2D, Point2D, Polygon2D
+from ladybug_geometry.geometry3d import Plane, Mesh3D
+from ladybug_geometry.bounding import bounding_rectangle
 
 
 class THMZResult(object):
@@ -22,6 +23,7 @@ class THMZResult(object):
         * file_path
         * u_factors
         * plane
+        * shape_polygons
         * mesh
         * temperatures
         * heat_fluxes
@@ -43,6 +45,7 @@ class THMZResult(object):
 
         # values to be computed as soon as they are requested
         self._plane = None
+        self._shape_polygons = None
         self._u_factors = None
         self._mesh = None
         self._temperatures = None
@@ -78,6 +81,14 @@ class THMZResult(object):
         return self._plane
 
     @property
+    def shape_polygons(self):
+        """Get a ladybug-geometry Polygon2Ds for the Shape geometries in the THMZ file.
+        """
+        if not self._plane_loaded:
+            self._extract_plane()
+        return self._shape_polygons
+
+    @property
     def mesh(self):
         """Get a ladybug-geometry Mesh3D for the finite element mesh of the model.
 
@@ -101,7 +112,7 @@ class THMZResult(object):
 
     @property
     def heat_fluxes(self):
-        """Get a tuple of Vector3Ds that correspond to the mesh vertices for heat fluxes.
+        """Get a tuple of Vector2Ds that correspond to the mesh vertices for heat fluxes.
 
         Will be None if the THMZ file has not been simulated and there are no
         steady state results in the file.
@@ -160,6 +171,15 @@ class THMZResult(object):
             self._plane = Plane.from_dict(json.loads(matches[0]))
         else:
             self._plane = Plane()
+        # extract the shape geometries as Polygon2Ds
+        shape_geos = []
+        xml_shapes = xml_root.find('Polygons')
+        for xml_shape in xml_shapes:
+            vertices = []
+            for xpt in xml_shape.find('Points'):
+                vertices.append(Point2D(xpt.find('x').text, xpt.find('y').text))
+            shape_geos.append(Polygon2D(vertices))
+        self._shape_polygons = tuple(shape_geos)
 
     def _extract_mesh(self):
         """Extract a Mesh3D object from the THMZ file."""
@@ -176,15 +196,23 @@ class THMZResult(object):
         xml_case = xml_root.find('Case')
         # extract the vertices (aka. nodes) from the model
         plane = self.plane
-        vertices = []
+        vertices_2d = []
         for xml_node in xml_case.find('Nodes'):
-            pt_2d = Point2D(xml_node.find('x').text, xml_node.find('y').text)
-            pt_2d = pt_2d * 1000  # convert from meters to mm
-            vertices.append(plane.xy_to_xyz(pt_2d))
+            pt_2d = Point2D(
+                float(xml_node.find('x').text) * 1000,
+                float(xml_node.find('y').text) * 1000
+            )  # convert from meters back to mm
+            vertices_2d.append(pt_2d)
         # remove the last two vertices (I don't know where they come from)
-        last_pt_i = (len(vertices), len(vertices))
-        vertices.pop(-1)
-        vertices.pop(-1)
+        vertices_2d.pop(-1)
+        vertices_2d.pop(-1)
+        # move the vertices to be in 3D Fairyfly space instead of 2D THERM space
+        mesh_min_pt, _ = bounding_rectangle(vertices_2d)
+        shape_min_pt, _ = bounding_rectangle(self.shape_polygons)
+        t_vec = shape_min_pt - mesh_min_pt  # translation vec from glazing origin
+        vertices = []
+        for pt2 in vertices_2d:
+            vertices.append(plane.xy_to_xyz(pt2.move(t_vec)))
         # extract the faces (aka. elements) from the model
         faces = []
         for xml_face in xml_case.find('Elements'):
@@ -192,8 +220,7 @@ class THMZResult(object):
             for e_prop in xml_face:
                 if e_prop.tag.startswith('node'):
                     fi = int(e_prop.text)
-                    if fi not in last_pt_i:
-                        face_i.append(fi)
+                    face_i.append(fi)
             faces.append(tuple(face_i))
         self._mesh = Mesh3D(vertices, faces)
 
@@ -210,15 +237,12 @@ class THMZResult(object):
         # extract the temperatures and heat fluxes from the model
         xml_root = ET.fromstring(content)
         xml_case = xml_root.find('Case')
-        plane = self.plane
         temperatures, heat_fluxes, flux_magnitudes = [], [], []
         for xml_node in xml_case.find('Nodes'):
             temperatures.append(float(xml_node.find('Temperature').text))
-            pt_2d = Point2D(xml_node.find('X-flux').text, xml_node.find('Y-flux').text)
-            pt_3d = plane.xy_to_xyz(pt_2d)
-            flux_vec = Vector3D(pt_3d.x, pt_3d.y, pt_3d.z)
-            heat_fluxes.append(flux_vec)
-            flux_magnitudes.append(flux_vec.magnitude)
+            vec_2d = Vector2D(xml_node.find('X-flux').text, xml_node.find('Y-flux').text)
+            heat_fluxes.append(vec_2d)
+            flux_magnitudes.append(vec_2d.magnitude)
         # remove the last two vertices (I don't know where they come from)
         for res_list in (temperatures, heat_fluxes, flux_magnitudes):
             res_list.pop(-1)
