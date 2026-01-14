@@ -10,7 +10,37 @@ import json
 _pure_gases = {}
 _gases = {}
 
-# first load the gasses from the LBNL library if they exist
+# make sure that we always have an Air gas
+air_dict = {
+    'type': 'PureGas',
+    'identifier': '8d33196f-f052-46e6-8353-bccb9a779f9c',
+    'conductivity_coeff_a': 0.002873,
+    'viscosity_coeff_a': 3.723e-06,
+    'specific_heat_coeff_a': 1002.737,
+    'conductivity_coeff_b': 7.76e-05,
+    'viscosity_coeff_b': 4.94e-08,
+    'specific_heat_coeff_b': 0.012324,
+    'conductivity_coeff_c': 0.0,
+    'viscosity_coeff_c': 0.0,
+    'specific_heat_coeff_c': 0.0,
+    'specific_heat_ratio': 1.4,
+    'molecular_weight': 28.97,
+    'display_name': 'Air',
+    'protected': True,
+    'color': '#556d11'
+}
+pure_air = PureGas.from_dict(air_dict)
+pure_air.lock()
+_pure_gases['Air'] = pure_air
+air_gas = Gas(
+    [pure_air], [1], identifier='6c2409e9-5296-46c1-be11-9029b59a549b'
+)
+air_gas.display_name = 'Air'
+air_gas.protected = True
+air_gas.lock()
+_gases['Air'] = air_gas
+
+# load the gasses from the LBNL library if they exist
 if folders.gas_lib_file is not None:
     gs, pgs = Gas.extract_all_from_xml_file(folders.gas_lib_file)
     for pg in pgs:
@@ -19,35 +49,6 @@ if folders.gas_lib_file is not None:
     for g in gs:
         g.lock()
         _gases[g.display_name] = g
-else:  # if not, at least make sure that we have an Air gas
-    air_dict = {
-        'type': 'PureGas',
-        'identifier': '8d33196f-f052-46e6-8353-bccb9a779f9c',
-        'conductivity_coeff_a': 0.002873,
-        'viscosity_coeff_a': 3.723e-06,
-        'specific_heat_coeff_a': 1002.737,
-        'conductivity_coeff_b': 7.76e-05,
-        'viscosity_coeff_b': 4.94e-08,
-        'specific_heat_coeff_b': 0.012324,
-        'conductivity_coeff_c': 0.0,
-        'viscosity_coeff_c': 0.0,
-        'specific_heat_coeff_c': 0.0,
-        'specific_heat_ratio': 1.4,
-        'molecular_weight': 28.97,
-        'display_name': 'Air',
-        'protected': True,
-        'color': '#556d11'
-    }
-    pure_air = PureGas.from_dict(air_dict)
-    pure_air.lock()
-    _pure_gases['Air'] = pure_air
-    air_gas = Gas(
-        [pure_air], [1], identifier='6c2409e9-5296-46c1-be11-9029b59a549b'
-    )
-    air_gas.display_name = 'Air'
-    air_gas.protected = True
-    air_gas.lock()
-    _gases['Air'] = air_gas
 
 
 def check_and_add_gas(gas):
