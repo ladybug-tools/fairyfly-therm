@@ -31,6 +31,7 @@ class Folders(object):
         * therm_exe
         * therm_version
         * therm_version_str
+        * fortran_dll_path
         * lbnl_data_path
         * therm_settings_path
         * therm_lib_path
@@ -42,6 +43,7 @@ class Folders(object):
     """
     THERM_VERSION = (8, 1, 30, 0)
     LBNL_URL = 'https://windows.lbl.gov/therm-software-downloads'
+    FORTRAN_URL = 'https://windows.lbl.gov/redistributable-packages'
 
     def __init__(self, config_file=None, mute=True):
         self.mute = bool(mute)  # set the mute value
@@ -107,6 +109,28 @@ class Folders(object):
         installation was found.
         """
         return self._therm_version_str
+
+    @property
+    def fortran_dll_path(self):
+        """Get or set the path to the DLL with FORTRAN runtime routines.
+
+        This is typically a .ddl file within the Shared Libraries folder of
+        the common Intel files under Program Files (x86).
+        """
+        return self._fortran_dll_path
+
+    @fortran_dll_path.setter
+    def fortran_dll_path(self, f_path):
+        if not f_path:  # check the default installation location
+            f_path = self._find_fortran_dll()
+
+        # if the executable exists, set the variables
+        if f_path and os.path.isfile(f_path):
+            self._fortran_dll_path = f_path
+            if not self.mute:
+                print("Path to Fortran DLL is set to: %s" % self._fortran_dll_path)
+        else:
+            self._fortran_dll_path = None
 
     @property
     def lbnl_data_path(self):
@@ -210,14 +234,23 @@ class Folders(object):
 
     def check_therm_version(self):
         """Raise an exception message about the THERM installation if it is not usable."""
+        # first, check that we are on the correct operating system
         if os.name != 'nt':
             msg = 'LBNL THERM can only run on Windows machines and so it cannot ' \
                 'be used while on "{}" operating system.'.format(os.name)
             raise ValueError(msg)
+        # then, check that THERM is installed and it is the correct version
         ver_str = '.'.join(str(i) for i in self.THERM_VERSION)
         dn_msg = 'Download and install THERM version {} from {}.'.format(
             ver_str, self.LBNL_URL)
         if self.therm_exe is not None:
+            # make sure that the FORTRAN DLL library was installed
+            if self.fortran_dll_path is None:
+                msg = 'A valid THERM installation was found at "{}"\n' \
+                    'but it does not have the required redistributable packages.\n' \
+                    'To install these packages, follow the instructions at:\n ' \
+                    '{}'.format(self.therm_path, self.FORTRAN_URL)
+                raise ValueError(msg)
             return None  # everything is good
         elif self.therm_path is not None:
             msg = 'A THERM installation was found at "{}" but it is not ' \
@@ -242,6 +275,7 @@ class Folders(object):
         # set the default paths to be all blank
         default_path = {
             "therm_path": r'',
+            "fortran_dll_path": r'',
             "lbnl_data_path": r'',
             "therm_lib_path": r''
         }
@@ -258,6 +292,7 @@ class Folders(object):
 
         # set paths for therm installations
         self.therm_path = default_path["therm_path"]
+        self.fortran_dll_path = default_path["fortran_dll_path"]
         self.lbnl_data_path = default_path["lbnl_data_path"]
         self.therm_lib_path = default_path["therm_lib_path"]
 
@@ -306,6 +341,24 @@ class Folders(object):
                     thm_path = sorted(therm_folders, key=getversion, reverse=True)[0]
 
         return thm_path
+
+    @staticmethod
+    def _find_fortran_dll():
+        """Find the Therm installation in its default location.
+
+        This method will first attempt to return the path of a standalone Therm
+        installation.
+
+        Returns:
+            File directory and full path to executable in case of success.
+            None, None in case of failure.
+        """
+        # check for the default location in Program Files (x86)
+        if os.name == 'nt':  # search the C:/ drive on Windows
+            dll_dir = 'C:/Program Files (x86)/Common Files/Intel/Shared Libraries/ia32'
+            test_path = '{}/{}'.format(dll_dir, 'libifcoremd.dll')
+            if os.path.isfile(test_path):
+                return test_path
 
     @staticmethod
     def _find_lbnl_data_folder():
