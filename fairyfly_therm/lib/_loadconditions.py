@@ -10,6 +10,50 @@ _conditions = {}
 _FUNDAMENTALS = ('Adiabatic', 'Frame Cavity Surface',
                  'Generic Exterior', 'Generic Interior')
 
+
+def check_and_add_condition(con):
+    """Check that a condition is not overwriting a default and add it."""
+    con.lock()
+    if con.display_name not in _FUNDAMENTALS:
+        if isinstance(con, SteadyState):
+            _conditions[con.display_name] = con
+
+
+def load_conditions_from_folder(lib_folder):
+    """Load all of the condition objects from a therm standards folder.
+
+    Args:
+        lib_folder: Path to a sub-folder within a honeybee standards folder.
+    """
+    for f in os.listdir(lib_folder):
+        f_path = os.path.join(lib_folder, f)
+        if os.path.isfile(f_path):
+            if f_path.endswith('.xml'):
+                conds = SteadyState.extract_all_from_xml_file(f_path)
+                for c in conds:
+                    check_and_add_condition(c)
+            elif f_path.endswith('.json'):
+                with open(f_path) as json_file:
+                    data = json.load(json_file)
+                if 'type' in data:  # single object
+                    if data['type'] == 'SteadyState':
+                        check_and_add_condition(SteadyState.from_dict(data))
+                else:  # a collection of several objects
+                    for m_id in data:
+                        try:
+                            m_dict = data[m_id]
+                            if m_dict['type'] == 'SteadyState':
+                                check_and_add_condition(
+                                    SteadyState.from_dict(m_dict))
+                        except (TypeError, KeyError):
+                            pass  # not an acceptable JSON; possibly a comment
+
+
+# load therm gases from a user folder if we are not using the official THERM lib
+if folders.user_steady_state_folder is not None:
+    load_conditions_from_folder(folders.user_steady_state_folder)
+
+
 # ensure that there is always an adiabatic and frame cavity condition
 adiabatic_dict = {
     'type': 'SteadyState',
@@ -71,46 +115,3 @@ if folders.bc_steady_state_lib_file is not None:
     for con in conds:
         con.lock()
         _conditions[con.display_name] = con
-
-
-def check_and_add_condition(con):
-    """Check that a condition is not overwriting a default and add it."""
-    con.lock()
-    if con.display_name not in _FUNDAMENTALS:
-        if isinstance(con, SteadyState):
-            _conditions[con.display_name] = con
-
-
-def load_conditions_from_folder(lib_folder):
-    """Load all of the condition objects from a therm standards folder.
-
-    Args:
-        lib_folder: Path to a sub-folder within a honeybee standards folder.
-    """
-    for f in os.listdir(lib_folder):
-        f_path = os.path.join(lib_folder, f)
-        if os.path.isfile(f_path):
-            if f_path.endswith('.xml'):
-                conds = SteadyState.extract_all_from_xml_file(f_path)
-                for c in conds:
-                    check_and_add_condition(c)
-            elif f_path.endswith('.json'):
-                with open(f_path) as json_file:
-                    data = json.load(json_file)
-                if 'type' in data:  # single object
-                    if data['type'] == 'SteadyState':
-                        check_and_add_condition(SteadyState.from_dict(data))
-                else:  # a collection of several objects
-                    for m_id in data:
-                        try:
-                            m_dict = data[m_id]
-                            if m_dict['type'] == 'SteadyState':
-                                check_and_add_condition(
-                                    SteadyState.from_dict(m_dict))
-                        except (TypeError, KeyError):
-                            pass  # not an acceptable JSON; possibly a comment
-
-
-# load therm gases from a user folder if we are not using the official THERM lib
-if folders.therm_lib_path is not None:
-    load_conditions_from_folder(folders.therm_lib_path)

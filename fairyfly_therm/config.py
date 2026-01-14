@@ -12,6 +12,8 @@ Usage:
 """
 import os
 import json
+import pkgutil
+
 import ladybug.config as lb_config
 
 
@@ -38,6 +40,9 @@ class Folders(object):
         * material_lib_file
         * gas_lib_file
         * bc_steady_state_lib_file
+        * user_material_folder
+        * user_gas_folder
+        * user_steady_state_folder
         * config_file
         * mute
     """
@@ -77,8 +82,9 @@ class Folders(object):
             if t_path is not None and os.path.isdir(t_path):
                 self._therm_path = t_path
             else:
-                msg = '{} is not a valid path to a Therm installation.'.format(t_path)
-                print(msg)
+                if t_path is not None:
+                    msg = '{} is not a valid path to a Therm installation.'.format(t_path)
+                    print(msg)
                 self._therm_path = None
             self._therm_exe = None
             self._therm_version = None
@@ -193,6 +199,12 @@ class Folders(object):
         # gather all of the sub folders underneath the master folder
         if path and os.path.isdir(path):
             self._therm_lib_path = path
+            mat_dir = os.path.join(path, 'materials')
+            gas_dir = os.path.join(path, 'gases')
+            bc_dir = os.path.join(path, 'conditions')
+            self._user_material_folder = mat_dir if os.path.isdir(mat_dir) else None
+            self._user_gas_folder = gas_dir if os.path.isdir(gas_dir) else None
+            self._user_steady_state_folder = bc_dir if os.path.isdir(bc_dir) else None
             if not self.mute:
                 print('Path to THERM library is set to: {}'.format(self._lbnl_data_path))
         else:
@@ -200,6 +212,9 @@ class Folders(object):
                 msg = '{} is not a valid path to a THERM standards library.'.format(path)
                 print(msg)
             self._therm_lib_path = None
+            self._user_material_folder = None
+            self._user_gas_folder = None
+            self._user_steady_state_folder = None
 
     @property
     def material_lib_file(self):
@@ -213,8 +228,23 @@ class Folders(object):
 
     @property
     def bc_steady_state_lib_file(self):
-        """Get the path to the modifierset library in the standards_data_folder."""
+        """Get the path to the steady state condition library file."""
         return self._bc_steady_state_lib_file
+
+    @property
+    def user_material_folder(self):
+        """Get the path to the user material library folder."""
+        return self._user_material_folder
+
+    @property
+    def user_gas_folder(self):
+        """Get the path to the user gas library folder."""
+        return self._user_gas_folder
+
+    @property
+    def user_steady_state_folder(self):
+        """Get the path to the user steady state condition library folder."""
+        return self._user_steady_state_folder
 
     @property
     def config_file(self):
@@ -241,7 +271,7 @@ class Folders(object):
             raise ValueError(msg)
         # then, check that THERM is installed and it is the correct version
         ver_str = '.'.join(str(i) for i in self.THERM_VERSION)
-        dn_msg = 'Download and install THERM version {} from {}.'.format(
+        dn_msg = 'Download and install THERM version {} from:\n{}'.format(
             ver_str, self.LBNL_URL)
         if self.therm_exe is not None:
             # make sure that the FORTRAN DLL library was installed
@@ -362,7 +392,7 @@ class Folders(object):
 
     @staticmethod
     def _find_lbnl_data_folder():
-        """Find the the LBNL data folder in its default location."""
+        """Find the LBNL data folder in its default location."""
         # then check the default location where the LBNL installer puts it
         lib_folder = None
         if os.name == 'nt':  # search the C:/ drive on Windows
@@ -384,13 +414,19 @@ class Folders(object):
 
     @staticmethod
     def _find_therm_lib():
-        """Find the the LBNL data folder in its default location."""
+        """Find the user standards folder in its default location."""
         # first check if there's a user-defined folder in AppData
         app_folder = os.getenv('APPDATA')
         if app_folder is not None:
             lib_folder = os.path.join(app_folder, 'ladybug_tools', 'standards', 'therm')
             if os.path.isdir(lib_folder):
                 return lib_folder
+        # then check next to the Python library
+        for finder, name, ispkg in pkgutil.iter_modules():
+            if name == 'fairyfly_therm_standards':
+                lib_folder = os.path.join(finder.path, name)
+                if os.path.isdir(lib_folder):
+                    return lib_folder
 
     @staticmethod
     def _check_therm_lib_file(path, lib_file):
