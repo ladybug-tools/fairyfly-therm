@@ -27,6 +27,11 @@ class SolidMaterial(_ThermMaterialBase):
             If None, it is not included in the export. (Default: None).
         vapor_diffusion_resistance: Optional number for the water vapor diffusion
             resistance factor [Dimensionless]. (Default: None).
+        reflectance: Optional number between 0 and 1 for the reflectance of solar
+            radiation off of the material at normal incidence, averaged over the
+            solar spectrum. (Default: None).
+        transmittance: Optional number between 0 and 1 for the transmittance of solar
+            radiation through the material at normal incidence. (Default: None).
         identifier: Text string for a unique object ID. Must be a UUID in the
             format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. If None, a UUID will
             automatically be generated. (Default: None).
@@ -41,6 +46,8 @@ class SolidMaterial(_ThermMaterialBase):
         * porosity
         * specific_heat
         * vapor_diffusion_resistance
+        * reflectance
+        * transmittance
         * resistivity
         * color
         * protected
@@ -48,15 +55,18 @@ class SolidMaterial(_ThermMaterialBase):
     """
     __slots__ = ('_conductivity', '_emissivity', '_emissivity_back',
                  '_density', '_porosity', '_specific_heat',
-                 '_vapor_diffusion_resistance')
+                 '_vapor_diffusion_resistance', '_reflectance', '_transmittance')
 
     def __init__(
         self, conductivity, emissivity=0.9, emissivity_back=None,
         density=None, porosity=None, specific_heat=None,
-        vapor_diffusion_resistance=None, identifier=None
+        vapor_diffusion_resistance=None, reflectance=None, transmittance=None,
+        identifier=None
     ):
         """Initialize therm material."""
+        # initialize the identifier and basic properties
         _ThermMaterialBase.__init__(self, identifier)
+        # add all of the thermal attributes
         self.conductivity = conductivity
         self.emissivity = emissivity
         self.emissivity_back = emissivity_back
@@ -64,6 +74,11 @@ class SolidMaterial(_ThermMaterialBase):
         self.porosity = porosity
         self.specific_heat = specific_heat
         self.vapor_diffusion_resistance = vapor_diffusion_resistance
+        # process the optical properties
+        self._reflectance = None
+        self._transmittance = None
+        self.reflectance = reflectance
+        self.transmittance = transmittance
 
     @property
     def conductivity(self):
@@ -142,6 +157,35 @@ class SolidMaterial(_ThermMaterialBase):
         self._vapor_diffusion_resistance = value
 
     @property
+    def reflectance(self):
+        """Get or set the front solar reflectance of the glass at normal incidence."""
+        return self._reflectance
+
+    @reflectance.setter
+    def reflectance(self, s_ref):
+        if s_ref is not None:
+            s_ref = float_in_range(s_ref, 0.0, 1.0, 'solid material reflectance')
+            if self._transmittance is not None:
+                assert s_ref + self._transmittance <= 1, 'Sum of transmittance ' \
+                    'and reflectance ({}) is greater than 1.'.format(
+                        s_ref + self._transmittance)
+        self._reflectance = s_ref
+
+    @property
+    def transmittance(self):
+        """Get or set the solar transmittance of the glass at normal incidence."""
+        return self._transmittance
+
+    @transmittance.setter
+    def transmittance(self, s_tr):
+        if s_tr is not None:
+            s_tr = float_in_range(s_tr, 0.0, 1.0, 'solid material transmittance')
+            if self._reflectance is not None:
+                assert s_tr + self._reflectance <= 1, 'Sum of transmittance and ' \
+                    'reflectance ({}) is greater than 1.'.format(s_tr + self._reflectance)
+        self._transmittance = s_tr
+
+    @property
     def resistivity(self):
         """Get or set the resistivity of the material layer [m-K/W]."""
         return 1 / self._conductivity
@@ -193,6 +237,18 @@ class SolidMaterial(_ThermMaterialBase):
                     xml_emiss_b = xml_inf.find('Emissivity-Back')
                     if xml_emiss_b is not None:
                         mat.emissivity_back = xml_emiss_b.text
+                xml_sol = xml_int.find('Solar')
+                if xml_sol is not None:
+                    xml_dir = xml_sol.find('Direct')
+                    if xml_dir is not None:
+                        xml_front = xml_dir.find('Front')
+                        if xml_front is not None:
+                            xml_trans = xml_front.find('Transmittance')
+                            if xml_trans is not None:
+                                mat.transmittance = xml_trans.text
+                            xml_ref = xml_front.find('Reflectance')
+                            if xml_ref is not None:
+                                mat.reflectance = xml_ref.text
         # assign the name and color if they are specified
         xml_name = xml_element.find('Name')
         if xml_name is not None:
@@ -234,7 +290,9 @@ class SolidMaterial(_ThermMaterialBase):
             "density": 2322,
             "porosity": 0.24,
             "specific_heat": 832,
-            "vapor_diffusion_resistance": 19
+            "vapor_diffusion_resistance": 19,
+            "reflectance": 0.3
+            "transmittance": 0
             }
         """
         assert data['type'] == 'SolidMaterial', \
@@ -248,10 +306,12 @@ class SolidMaterial(_ThermMaterialBase):
         s_heat = data['specific_heat'] if 'specific_heat' in data else None
         vdr = data['vapor_diffusion_resistance'] \
             if 'vapor_diffusion_resistance' in data else None
+        ref = data['reflectance'] if 'reflectance' in data else None
+        trans = data['transmittance'] if 'transmittance' in data else None
 
         new_mat = cls(
-            data['conductivity'], emiss, emiss_b, dens, poro, s_heat, vdr,
-            data['identifier'])
+            data['conductivity'], emiss, emiss_b, dens, poro, s_heat, vdr, ref, trans,
+            identifier=data['identifier'])
         if 'display_name' in data and data['display_name'] is not None:
             new_mat.display_name = data['display_name']
         if 'color' in data and data['color'] is not None:
@@ -272,7 +332,26 @@ class SolidMaterial(_ThermMaterialBase):
         """
         new_mat = cls(
             material.conductivity, material.thermal_absorptance,
-            density=material.density, specific_heat=material.specific_heat
+            density=material.density, specific_heat=material.specific_heat,
+            reflectance=material.solar_reflectance
+        )
+        new_mat.display_name = material.display_name
+        return new_mat
+
+    @classmethod
+    def from_energy_window_material_glazing(cls, material):
+        """Create a SolidMaterial from a honeybee EnergyWindowMaterialGlazing.
+
+        Args:
+            material: A honeybee EnergyWindowMaterialGlazing to be converted to a
+                THERM SolidMaterial.
+        """
+        e_back = material.emissivity_back \
+            if material.emissivity_back != material.emissivity else None
+        new_mat = cls(
+            material.conductivity, material.emissivity, e_back,
+            reflectance=material.solar_reflectance,
+            transmittance=material.solar_transmittance
         )
         new_mat.display_name = material.display_name
         return new_mat
@@ -333,6 +412,18 @@ class SolidMaterial(_ThermMaterialBase):
         xml_emiss.text = str(self.emissivity)
         xml_emiss_b = ET.SubElement(xml_inf, 'Emissivity-Back')
         xml_emiss_b.text = str(self.emissivity_back)
+        if self.reflectance is not None or self.transmittance is not None:
+            ref = '0' if self.reflectance is None else str(self.reflectance)
+            trans = '0' if self.transmittance is None else str(self.transmittance)
+            xml_sol = ET.SubElement(xml_int, 'Solar')
+            for sol_comp in ('Direct', 'Diffuse'):
+                xml_sol_comp = ET.SubElement(xml_sol, sol_comp)
+                for mat_side in ('Front', 'Back'):
+                    xml_comp_s = ET.SubElement(xml_sol_comp, mat_side)
+                    xml_comp_s_t = ET.SubElement(xml_comp_s, 'Transmittance')
+                    xml_comp_s_t.text = trans
+                    xml_comp_s_r = ET.SubElement(xml_comp_s, 'Reflectance')
+                    xml_comp_s_r.text = ref
         # add any of the optional hygrothermal attributes
         if self.density is not None:
             xml_dens = ET.SubElement(xml_hyt, 'BulkDensity')
@@ -375,6 +466,10 @@ class SolidMaterial(_ThermMaterialBase):
             base['specific_heat'] = self.specific_heat
         if self._vapor_diffusion_resistance is not None:
             base['vapor_diffusion_resistance'] = self.vapor_diffusion_resistance
+        if self._reflectance is not None:
+            base['reflectance'] = self.reflectance
+        if self._transmittance is not None:
+            base['transmittance'] = self.transmittance
         if self._display_name is not None:
             base['display_name'] = self.display_name
         base['protected'] = self._protected
@@ -387,7 +482,8 @@ class SolidMaterial(_ThermMaterialBase):
         """A tuple based on the object properties, useful for hashing."""
         return (self.identifier, self.conductivity, self.emissivity,
                 self.emissivity_back, self.density, self.porosity,
-                self.specific_heat, self.vapor_diffusion_resistance)
+                self.specific_heat, self.vapor_diffusion_resistance,
+                self.reflectance, self.transmittance)
 
     def __hash__(self):
         return hash(self.__key())
@@ -402,7 +498,8 @@ class SolidMaterial(_ThermMaterialBase):
         new_material = self.__class__(
             self.conductivity, self._emissivity, self._emissivity_back,
             self._density, self._porosity, self._specific_heat,
-            self._vapor_diffusion_resistance, self.identifier)
+            self._vapor_diffusion_resistance, self._reflectance, self._transmittance,
+            self.identifier)
         new_material._display_name = self._display_name
         new_material._color = self._color
         new_material._protected = self._protected
