@@ -437,7 +437,8 @@ def model_to_therm_xml(model):
         plural = 's' if region_count != 1 else ''
         hole_count = 0
         for mf in merged_faces:
-            hole_count += len(mf.holes)
+            if mf.has_holes:
+                hole_count += len(mf.holes)
         d_msg = '{} distinct region{} with {} total holes were found.'.format(
             region_count, plural, hole_count)
         raise ValueError('{}\n{}'.format(b_msg, d_msg))

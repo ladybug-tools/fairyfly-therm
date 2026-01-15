@@ -9,7 +9,7 @@ import re
 import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry2d import Vector2D, Point2D, Polygon2D
-from ladybug_geometry.geometry3d import Plane, Mesh3D
+from ladybug_geometry.geometry3d import Plane, Mesh3D, Face3D
 from ladybug_geometry.bounding import bounding_rectangle
 
 
@@ -24,6 +24,7 @@ class THMZResult(object):
         * u_factors
         * plane
         * shape_polygons
+        * shape_faces
         * mesh
         * temperatures
         * heat_fluxes
@@ -40,12 +41,15 @@ class THMZResult(object):
         # set up variables to track what has been loaded from the file
         self._plane_loaded = False
         self._mesh_loaded = False
+        self._faces_loaded = False
         self._u_factors_loaded = False
         self._ss_mesh_results_loaded = False
 
         # values to be computed as soon as they are requested
         self._plane = None
+        self._translation_vec = None
         self._shape_polygons = None
+        self._shape_faces = None
         self._u_factors = None
         self._mesh = None
         self._temperatures = None
@@ -87,6 +91,14 @@ class THMZResult(object):
         if not self._plane_loaded:
             self._extract_plane()
         return self._shape_polygons
+
+    @property
+    def shape_faces(self):
+        """Get a ladybug-geometry Face3Ds for the Shape geometries in the THMZ file.
+        """
+        if not self._faces_loaded:
+            self._extract_faces()
+        return self._shape_faces
 
     @property
     def mesh(self):
@@ -152,7 +164,7 @@ class THMZResult(object):
         self._u_factors = tuple(u_factors)
 
     def _extract_plane(self):
-        """Extract a Plane object from the THMZ file."""
+        """Extract a Plane object and Polygons from the THMZ file."""
         self._plane_loaded = True
         # load the root of the Model.xml
         with zipfile.ZipFile(self.file_path, 'r') as archive:
@@ -165,10 +177,13 @@ class THMZResult(object):
         xml_gen = xml_props.find('General')
         xml_notes = xml_gen.find('Notes')
         all_notes = xml_notes.text
-        _plane_pattern = re.compile(r"Plane:\s(.*)")
-        matches = _plane_pattern.findall(all_notes)
-        if len(matches) > 0:
-            self._plane = Plane.from_dict(json.loads(matches[0]))
+        if all_notes is not None:
+            _plane_pattern = re.compile(r"Plane:\s(.*)")
+            matches = _plane_pattern.findall(all_notes)
+            if len(matches) > 0:
+                self._plane = Plane.from_dict(json.loads(matches[0]))
+            else:
+                self._plane = Plane()
         else:
             self._plane = Plane()
         # extract the shape geometries as Polygon2Ds
@@ -210,6 +225,7 @@ class THMZResult(object):
         mesh_min_pt, _ = bounding_rectangle(vertices_2d)
         shape_min_pt, _ = bounding_rectangle(self.shape_polygons)
         t_vec = shape_min_pt - mesh_min_pt  # translation vec from glazing origin
+        self._translation_vec = t_vec
         vertices = []
         for pt2 in vertices_2d:
             vertices.append(plane.xy_to_xyz(pt2.move(t_vec)))
@@ -223,6 +239,17 @@ class THMZResult(object):
                     face_i.append(fi)
             faces.append(tuple(face_i))
         self._mesh = Mesh3D(vertices, faces)
+
+    def _extract_faces(self):
+        """Extract Face3D object from the THMZ file."""
+        self._faces_loaded = True
+        polygons, plane = self.shape_polygons, self.plane
+        faces = []
+        for polygon in polygons:
+            vertices = [plane.xy_to_xyz(pt2) for pt2 in polygon]
+            face_init = Face3D(vertices, plane)
+            faces.append(face_init.separate_boundary_and_holes(0.1))
+        self._shape_faces = tuple(faces)
 
     def _extract_steady_state_results(self):
         """Extract steady state results from the THMZ file."""
