@@ -118,9 +118,9 @@ class Folders(object):
 
     @property
     def fortran_dll_path(self):
-        """Get or set the path to the DLL with FORTRAN runtime routines.
+        """Get or set the path to the directory with DLLs for FORTRAN runtime routines.
 
-        This is typically a .ddl file within the Shared Libraries folder of
+        This is typically a folder within the Shared Libraries folder of
         the common Intel files under Program Files (x86).
         """
         return self._fortran_dll_path
@@ -131,7 +131,7 @@ class Folders(object):
             f_path = self._find_fortran_dll()
 
         # if the executable exists, set the variables
-        if f_path and os.path.isfile(f_path):
+        if f_path and os.path.isdir(f_path):
             self._fortran_dll_path = f_path
             if not self.mute:
                 print("Path to Fortran DLL is set to: %s" % self._fortran_dll_path)
@@ -328,15 +328,7 @@ class Folders(object):
 
     @staticmethod
     def _find_therm_folder():
-        """Find the Therm installation in its default location.
-
-        This method will first attempt to return the path of a standalone Therm
-        installation.
-
-        Returns:
-            File directory and full path to executable in case of success.
-            None, None in case of failure.
-        """
+        """Find the Therm installation in its default location."""
         # first check if there's a version installed in the ladybug_tools folder
         # note that this option is not likely to be used because of the THERM license
         lb_install = lb_config.folders.ladybug_tools_folder
@@ -374,21 +366,12 @@ class Folders(object):
 
     @staticmethod
     def _find_fortran_dll():
-        """Find the Therm installation in its default location.
-
-        This method will first attempt to return the path of a standalone Therm
-        installation.
-
-        Returns:
-            File directory and full path to executable in case of success.
-            None, None in case of failure.
-        """
+        """Find the folder to the Fortran DLLs in its default location."""
         # check for the default location in Program Files (x86)
         if os.name == 'nt':  # search the C:/ drive on Windows
             dll_dir = 'C:/Program Files (x86)/Common Files/Intel/Shared Libraries/ia32'
-            test_path = '{}/{}'.format(dll_dir, 'libifcoremd.dll')
-            if os.path.isfile(test_path):
-                return test_path
+            if os.path.isdir(dll_dir):
+                return dll_dir
 
     @staticmethod
     def _find_lbnl_data_folder():
