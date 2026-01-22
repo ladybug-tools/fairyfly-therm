@@ -356,6 +356,7 @@ def model_to_therm_xml(model):
         error = 'Failed to remove degenerate Shapes.\nYour Model units system is: {}. ' \
             'Is this correct?'.format(original_model.units)
         raise ValueError(error)
+
     # determine the plane and the scale to be used for all geometry translation
     ang_tol = model.angle_tolerance
     min_pt, max_pt = bounding_box([s.geometry for s in model.shapes])
@@ -391,6 +392,20 @@ def model_to_therm_xml(model):
                     'the shapes. Boundary "{}" is out of plane by {} ' \
                     'millimeters.'.format(bound.full_id, plane.distance_to_point(pt))
                 raise ValueError(msg)
+
+    # split any shapes that have holes in them
+    split_shapes = []
+    for shape in model.shapes:
+        if shape.geometry.has_holes:
+            for geo in shape.geometry.split_through_holes():
+                new_shp = shape.duplicate()
+                new_shp._geometry = geo
+                new_shp.identifier = str(uuid.uuid4())
+                split_shapes.append(new_shp)
+        else:
+            split_shapes.append(shape)
+    if len(model.shapes) != split_shapes:
+        model.shapes = split_shapes
 
     # intersect the shape geometries with one another
     Shape.intersect_adjacency(model.shapes, 0.1, plane)
