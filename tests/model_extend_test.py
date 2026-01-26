@@ -209,3 +209,14 @@ def test_to_thmz_stud_wall():
     model.to_thmz(output_file)
     assert os.path.isfile(output_file)
     os.remove(output_file)
+
+
+def test_to_thmz_bc_failure():
+    """Test the Model to_thmz method with an BC that is failing."""
+    input_file = './tests/assets/json/bc_failure.ffjson'
+    model = Model.from_file(input_file)
+
+    output_file = './tests/assets/thmz/bc_failure.thmz'
+    model.to_thmz(output_file)
+    assert os.path.isfile(output_file)
+    os.remove(output_file)
