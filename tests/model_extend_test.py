@@ -220,3 +220,14 @@ def test_to_thmz_bc_failure():
     model.to_thmz(output_file)
     assert os.path.isfile(output_file)
     os.remove(output_file)
+
+
+def test_to_thmz_long_boundary():
+    """Test the Model to_thmz method with an BC that is longer than any shape seg."""
+    input_file = './tests/assets/json/long_boundary.ffjson'
+    model = Model.from_file(input_file)
+
+    output_file = './tests/assets/thmz/long_boundary.thmz'
+    model.to_thmz(output_file)
+    assert os.path.isfile(output_file)
+    os.remove(output_file)
