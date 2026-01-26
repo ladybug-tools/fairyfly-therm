@@ -11,7 +11,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry2d import Polygon2D
-from ladybug_geometry.geometry3d import Vector3D, Point3D, Plane, \
+from ladybug_geometry.geometry3d import Vector3D, Point3D, LineSegment3D, Plane, \
     Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
 from fairyfly.typing import clean_string, therm_id_from_uuid
@@ -374,7 +374,7 @@ def model_to_therm_xml(model):
     offset_origin = origin.move(t_vec)
     plane = Plane(n=bp.n, o=offset_origin)
     max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
-    scale = 1.0 if max_dim < 100 else 100 / (max_dim * 0.5)
+    scale = 1.0 if max_dim < 100 else 100 / (max_dim * 0.25)
 
     # check that all geometries lie within the tolerance of the plane
     for shape in model.shapes:
@@ -468,12 +468,25 @@ def model_to_therm_xml(model):
     for edge in outer_edges:
         bnd_matched = False
         for bound in model.boundaries:
-            for seg in bound.geometry:
-                if edge.p1.is_equivalent(seg.p1, 0.1) or edge.p1.is_equivalent(seg.p2, 0.1):
-                    if edge.p2.is_equivalent(seg.p1, 0.1) or \
-                            edge.p2.is_equivalent(seg.p2, 0.1):
-                        bnd_matched = True
-                        break
+            for si, seg in enumerate(bound.geometry):
+                if seg.distance_to_point(edge.p1) < 0.1 and \
+                        seg.distance_to_point(edge.p2) < 0.1:
+                    if seg.length - edge.length > 0.1:  # split the boundary geo
+                        cpt_1 = seg.closest_point(edge.p1)
+                        cpt_2 = seg.closest_point(edge.p2)
+                        all_pts = [seg.p1, cpt_1, cpt_2, seg.p2]
+                        pt_dists = [seg.p1.distance_to_point(pt) for pt in all_pts]
+                        s_pts = [p for _, p in sorted(zip(pt_dists, all_pts),
+                                                      key=lambda pair: pair[0])]
+                        new_geo = list(bound.geometry)
+                        new_geo.pop(si)
+                        for p in range(3):
+                            if s_pts[p].distance_to_point(s_pts[p + 1]) > 0.1:
+                                nl = LineSegment3D.from_end_points(s_pts[p], s_pts[p + 1])
+                                new_geo.append(nl)
+                        bound._geometry = tuple(new_geo)
+                    bnd_matched = True
+                    break
             if bnd_matched:
                 break
         else:  # adiabatic segment to be added at the end
