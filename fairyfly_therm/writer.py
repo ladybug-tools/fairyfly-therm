@@ -10,6 +10,7 @@ import json
 import tempfile
 import xml.etree.ElementTree as ET
 
+from ladybug_geometry.geometry2d import Polygon2D
 from ladybug_geometry.geometry3d import Vector3D, Point3D, Plane, \
     Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
@@ -362,18 +363,16 @@ def model_to_therm_xml(model):
     min_pt, max_pt = bounding_box([s.geometry for s in model.shapes])
     origin = Point3D(min_pt.x, max_pt.y, max_pt.z)
     normal = model.shapes[0].geometry.normal
-    if normal.z < 0:
-        normal = normal.reverse()
-    if normal.y > 0:
-        normal = normal.reverse()
-    bp = Plane(n=normal, o=origin)
-    t_vec = (bp.x * 100) + (bp.y * 100)
-    offset_origin = origin.move(t_vec)
     up_vec = math.degrees(Vector3D(0, 0, 1).angle(normal))
     if up_vec < ang_tol or up_vec > 180 - ang_tol:
-        plane = Plane(o=offset_origin)
+        bp = Plane(o=origin)
     else:
-        plane = Plane(n=normal, o=offset_origin)
+        if normal.z < 0:
+            normal = normal.reverse()
+        bp = Plane(n=normal, o=origin)
+    t_vec = (bp.x * -100) + (bp.y * 100)
+    offset_origin = origin.move(t_vec)
+    plane = Plane(n=bp.n, o=offset_origin)
     max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
     scale = 1.0 if max_dim < 100 else 100 / (max_dim * 0.5)
 
@@ -406,6 +405,12 @@ def model_to_therm_xml(model):
             split_shapes.append(shape)
     if len(model.shapes) != split_shapes:
         model.shapes = split_shapes
+
+    # ensure that all shapes are counterclockwise
+    for shape in model.shapes:
+        poly = Polygon2D(plane.xyz_to_xy(pt) for pt in shape.geometry)
+        if poly.is_clockwise:
+            shape._geometry = shape.geometry.flip()
 
     # intersect the shape geometries with one another
     Shape.intersect_adjacency(model.shapes, 0.1, plane)
