@@ -738,19 +738,7 @@ def model_to_thmz(model, output_file, simulation_par=None):
     therm_trans_dir = tempfile.gettempdir()
     files_to_zip = []
 
-    # write the Model into the temporary directory
-    model_file = os.path.join(therm_trans_dir, 'Model.xml')
-    xml_model = model_to_therm_xml(model, simulation_par)
-    xml_props = xml_model.find('Properties')
-    xml_gen = xml_props.find('General')
-    xml_direct = xml_gen.find('Directory')
-    xml_direct.text = dir_name
-    xml_file_name = xml_gen.find('FileName')
-    xml_file_name.text = os.path.basename(output_file.replace('.thmz', ''))
-    _xml_element_to_file(xml_model, model_file)
-    files_to_zip.append(model_file)
-
-    # write the materials and gases to a file
+    # prepare the files for materials and gases
     mat_file = os.path.join(therm_trans_dir, 'Materials.xml')
     gas_file = os.path.join(therm_trans_dir, 'Gases.xml')
     gases, pure_gases = [], []
@@ -759,7 +747,20 @@ def model_to_thmz(model, output_file, simulation_par=None):
     for xml_rt in (xml_materials, xml_gases):
         xml_ver = ET.SubElement(xml_rt, 'Version')
         xml_ver.text = '1'
-    for mat in model.properties.therm.materials:
+    # rename any materials with duplicate display names
+    model_mats = model.properties.therm.materials
+    mat_names, reset_dict = {}, {}
+    for mat in model_mats:
+        if mat.display_name in mat_names:
+            mat_names[mat.display_name] += 1
+            reset_dict[mat.display_name] = mat
+            mat.unlock()
+            mat.display_name = mat.display_name + '_' + str(mat_names[mat.display_name])
+            mat.lock()
+        else:
+            mat_names[mat.display_name] = 1
+    # write the materials and gases to a file
+    for mat in model_mats:
         mat.to_therm_xml(xml_materials)
         if isinstance(mat, CavityMaterial):
             gases.append(mat.gas)
@@ -774,6 +775,18 @@ def model_to_thmz(model, output_file, simulation_par=None):
     _xml_element_to_file(xml_gases, gas_file)
     files_to_zip.append(gas_file)
 
+    # write the Model into the temporary directory
+    model_file = os.path.join(therm_trans_dir, 'Model.xml')
+    xml_model = model_to_therm_xml(model, simulation_par)
+    xml_props = xml_model.find('Properties')
+    xml_gen = xml_props.find('General')
+    xml_direct = xml_gen.find('Directory')
+    xml_direct.text = dir_name
+    xml_file_name = xml_gen.find('FileName')
+    xml_file_name.text = os.path.basename(output_file.replace('.thmz', ''))
+    _xml_element_to_file(xml_model, model_file)
+    files_to_zip.append(model_file)
+
     # write the boundary conditions to a file
     bc_file = os.path.join(therm_trans_dir, 'SteadyStateBC.xml')
     xml_bcs = ET.Element('BoundaryConditions')
@@ -783,6 +796,12 @@ def model_to_thmz(model, output_file, simulation_par=None):
         bc.to_therm_xml(xml_bcs)
     _xml_element_to_file(xml_bcs, bc_file)
     files_to_zip.append(bc_file)
+
+    # put back any materials that were edited
+    for mat_name, mat in reset_dict.items():
+        mat.unlock()
+        mat.display_name = mat_name
+        mat.lock()
 
     # zip everything together
     with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
