@@ -12,7 +12,7 @@ from fairyfly.model import Model
 from .config import folders
 
 
-def run_model(model, directory=None, silent=False):
+def run_model(model, directory=None, silent=False, simulation_par=None):
     """Run a fairyfly Model through THERM CLI.
 
     Args:
@@ -20,6 +20,9 @@ def run_model(model, directory=None, silent=False):
         directory: The directory in which the simulation files will be written.
             If None, this will default to the fairyfly-core default_simulation_folder.
         silent: Boolean to note whether the THERM simulation should be run silently.
+        simulation_par: A fairyfly-therm SimulationParameter object to specify
+            how the THERM simulation should be run. If None, default simulation
+            parameters will be generated. (Default: None).
 
     Returns:
         The path to the input thmz_file with results inside of it.
@@ -42,7 +45,7 @@ def run_model(model, directory=None, silent=False):
     else:
         os.makedirs(directory)
     # write the Model to a .thmz file
-    model.to_thmz(thmz_file)
+    model.to_thmz(thmz_file, simulation_par)
     # run the thmz_file through THERM
     thmz_file = run_thmz(thmz_file, silent)
     # parse the log file to check if there were any failures

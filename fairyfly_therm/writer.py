@@ -20,6 +20,7 @@ from fairyfly.boundary import Boundary
 
 from fairyfly_therm.config import folders
 from fairyfly_therm.material import CavityMaterial
+from fairyfly_therm.simulation.parameter import SimulationParameter
 from fairyfly_therm.lib.conditions import adiabatic, frame_cavity
 
 HANDLE_COUNTER = 1  # counter used to generate unique handles when necessary
@@ -331,7 +332,7 @@ def _cavity_to_therm_xml(properties, cavities_element=None):
     return xml_cav
 
 
-def model_to_therm_xml(model):
+def model_to_therm_xml(model, simulation_par=None):
     """Generate an THERM XML Element object for a fairyfly Model.
 
     The resulting Element has all geometry (Shapes and Boundaries).
@@ -339,6 +340,9 @@ def model_to_therm_xml(model):
     Args:
         model: A fairyfly Model for which a THERM XML ElementTree object will
             be returned.
+        simulation_par: A fairyfly-therm SimulationParameter object to specify
+            how the THERM simulation should be run. If None, default simulation
+            parameters will be generated. (Default: None).
     """
     global HANDLE_COUNTER  # declare that we will edit the global variable
     # check that we have at least one shape to translate
@@ -374,7 +378,7 @@ def model_to_therm_xml(model):
     offset_origin = origin.move(t_vec)
     plane = Plane(n=bp.n, o=offset_origin)
     max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
-    scale = 1.0 if max_dim < 100 else 100 / (max_dim * 0.25)
+    scale = 1.0 if max_dim < 100 else 100 / max_dim
 
     # check that all geometries lie within the tolerance of the plane
     for shape in model.shapes:
@@ -607,6 +611,11 @@ def model_to_therm_xml(model):
     xml_notes = xml_gen.find('Notes')
     xml_notes.text = 'Plane: {}'.format(json.dumps(plane.to_dict()))
 
+    # add the calculation options
+    sim_par = simulation_par if simulation_par is not None else SimulationParameter()
+    xml_calc_opt = xml_props.find('CalculationOptions')
+    sim_par.mesh.to_therm_xml(xml_calc_opt)
+
     # write all of the cavity definitions into the model
     if len(cavity_props) != 0:
         xml_cavities = ET.SubElement(xml_root, 'Cavities')
@@ -668,16 +677,19 @@ def boundary_to_therm_xml_str(boundary):
         return ET.tostring(xml_root)
 
 
-def model_to_therm_xml_str(model):
+def model_to_therm_xml_str(model, simulation_par=None):
     """Generate a THERM XML string for a Model.
 
     The resulting Element has all geometry (Shapes and Boundaries).
 
     Args:
         model: A fairyfly Model for which an THERM XML text string will be returned.
+        simulation_par: A fairyfly-therm SimulationParameter object to specify
+            how the THERM simulation should be run. If None, default simulation
+            parameters will be generated. (Default: None).
     """
     # create the XML string
-    xml_root = model_to_therm_xml(model)
+    xml_root = model_to_therm_xml(model, simulation_par)
     try:  # try to indent the XML to make it read-able
         ET.indent(xml_root, '\t')
         return ET.tostring(xml_root, encoding='unicode')
@@ -685,12 +697,15 @@ def model_to_therm_xml_str(model):
         return ET.tostring(xml_root)
 
 
-def model_to_thmz(model, output_file):
+def model_to_thmz(model, output_file, simulation_par=None):
     """Write a THERM Zip (.thmz) file from a Fairyfly Model.
 
     Args:
         model: A fairyfly Model for which an THMZ file will be written.
         output_file: The path to the THMZ file that will be written from the model.
+        simulation_par: A fairyfly-therm SimulationParameter object to specify
+            how the THERM simulation should be run. If None, default simulation
+            parameters will be generated. (Default: None).
 
     Usage:
 
@@ -725,7 +740,7 @@ def model_to_thmz(model, output_file):
 
     # write the Model into the temporary directory
     model_file = os.path.join(therm_trans_dir, 'Model.xml')
-    xml_model = model_to_therm_xml(model)
+    xml_model = model_to_therm_xml(model, simulation_par)
     xml_props = xml_model.find('Properties')
     xml_gen = xml_props.find('General')
     xml_direct = xml_gen.find('Directory')
