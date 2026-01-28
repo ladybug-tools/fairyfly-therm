@@ -356,7 +356,7 @@ def model_to_therm_xml(model, simulation_par=None):
         model.convert_to_units('Millimeters')
     # remove degenerate geometry within THERM native tolerance
     try:
-        model.remove_degenerate_geometry(0.1)
+        model.remove_degenerate_geometry(0.01)
     except ValueError:
         error = 'Failed to remove degenerate Shapes.\nYour Model units system is: {}. ' \
             'Is this correct?'.format(original_model.units)
