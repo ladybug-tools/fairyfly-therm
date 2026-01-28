@@ -630,7 +630,20 @@ def model_to_therm_xml(model, simulation_par=None):
     # translate all Boundaries
     xml_boundaries = ET.SubElement(xml_root, 'Boundaries')
     for bound in model.boundaries:
-        boundary_to_therm_xml(bound, plane, xml_boundaries, reset_counter=False)
+        # remove any boundary geometries that are not assigned to shapes
+        adj_polys, seg_es = bound.user_data['adj_polys'], bound.user_data['emissivities']
+        new_segs, new_adj_polys, new_seg_es = [], [], []
+        for seg, adj_poly, seg_e in zip(bound.geometry, adj_polys, seg_es):
+            if len(adj_poly) != 0:
+                new_segs.append(seg)
+                new_adj_polys.append(adj_poly)
+                new_seg_es.append(seg_e)
+        # write the boundary into the XML
+        if len(new_segs) != 0:
+            bound._geometry = tuple(new_segs)
+            bound.user_data['adj_polys'] = new_adj_polys
+            bound.user_data['emissivities'] = new_seg_es
+            boundary_to_therm_xml(bound, plane, xml_boundaries, reset_counter=False)
 
     # add the extra adiabatic boundaries
     ad_bnd = Boundary(adiabatic_geo)
