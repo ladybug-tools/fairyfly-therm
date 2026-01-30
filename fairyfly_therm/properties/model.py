@@ -1,13 +1,20 @@
 # coding=utf-8
 """Model Therm Properties."""
+import math
 try:
     from itertools import izip as zip  # python 2
 except ImportError:
     pass   # python 3
 
+from ladybug_geometry.geometry3d import Vector3D, Point3D, Plane, Face3D, \
+    Polyline3D, Polyface3D
+from ladybug_geometry.bounding import bounding_box
+
 from fairyfly.extensionutil import model_extension_dicts
 from fairyfly.typing import invalid_dict_error
 from fairyfly.checkdup import check_duplicate_identifiers
+from fairyfly.units import conversion_factor_to_meters
+from fairyfly.shape import Shape
 
 from ..material.dictutil import dict_to_material, dict_abridged_to_material, \
     MATERIAL_TYPES
@@ -27,6 +34,7 @@ class ModelThermProperties(object):
         * materials
         * conditions
         * gases
+        * therm_plane
     """
     # dictionary mapping validation error codes to a corresponding check function
     ERROR_MAP = {
@@ -74,6 +82,54 @@ class ModelThermProperties(object):
                 if not self._instance_in_array(gas, gases):
                     gases.append(gas)
         return list(set(gases))
+
+    @property
+    def therm_plane(self):
+        """Get a ladybug-geometry Plane that represents the 2D THERM canvas."""
+        ang_tol = self.host.angle_tolerance
+        min_pt, max_pt = bounding_box([s.geometry for s in self.host.shapes])
+        origin = Point3D(min_pt.x, max_pt.y, max_pt.z)
+        normal = self.host.shapes[0].geometry.normal
+        up_vec = math.degrees(Vector3D(0, 0, 1).angle(normal))
+        if up_vec < ang_tol or up_vec > 180 - ang_tol:
+            bp = Plane(o=origin)
+        else:
+            if normal.z < 0:
+                normal = normal.reverse()
+            bp = Plane(n=normal, o=origin)
+        conversion = 0.001 / conversion_factor_to_meters(self.host.units)
+        t_vec = (bp.x * -100 * conversion) + (bp.y * 100 * conversion)
+        offset_origin = origin.move(t_vec)
+        return Plane(n=bp.n, o=offset_origin)
+
+    @property
+    def problem_areas(self):
+        """Get a tuple with two values for geometry that make the model un-simulate-able.
+
+        problem_regions - Polyline3D for regions of shapes that are separate
+        from one another and are therefore un-simulate-able.
+
+        problem_holes - Polyline3D for holes in the model that make it un-simulate-able.
+        """
+        plane = self.therm_plane
+        Shape.intersect_adjacency(self.host.shapes, 0.1, plane)
+        # ensure that there is only one contiguous shape without holes
+        shape_geos = [shape.geometry for shape in self.host.shapes]
+        polyface = Polyface3D.from_faces(shape_geos, tolerance=0.1)
+        outer_edges = polyface.naked_edges
+        joined_boundary = Polyline3D.join_segments(outer_edges, tolerance=0.1)
+        problem_regions, problem_holes = [], []
+        if len(joined_boundary) != 1:
+            join_faces = [Face3D(poly.vertices) for poly in joined_boundary]
+            merged_faces = Face3D.merge_faces_to_holes(join_faces, 0.1)
+            if len(merged_faces) > 1:
+                for region in merged_faces:
+                    problem_regions.append(Polyline3D(region.boundary))
+            for mf in merged_faces:
+                if mf.has_holes:
+                    for hole in mf.holes:
+                        problem_holes.append(Polyline3D(hole))
+        return problem_regions, problem_holes
 
     def check_for_extension(self, raise_exception=True, detailed=False):
         """Check that the Model is valid for Therm simulation.
