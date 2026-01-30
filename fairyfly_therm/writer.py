@@ -3,7 +3,6 @@
 import os
 import uuid
 import random
-import math
 import datetime
 import zipfile
 import json
@@ -11,8 +10,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry2d import Polygon2D
-from ladybug_geometry.geometry3d import Vector3D, Point3D, LineSegment3D, Plane, \
-    Polyline3D, Face3D, Polyface3D
+from ladybug_geometry.geometry3d import LineSegment3D, Polyline3D, Face3D, Polyface3D
 from ladybug_geometry.bounding import bounding_box
 from fairyfly.typing import clean_string, therm_id_from_uuid
 from fairyfly.shape import Shape
@@ -363,20 +361,8 @@ def model_to_therm_xml(model, simulation_par=None):
         raise ValueError(error)
 
     # determine the plane and the scale to be used for all geometry translation
-    ang_tol = model.angle_tolerance
+    plane = model.properties.therm.therm_plane
     min_pt, max_pt = bounding_box([s.geometry for s in model.shapes])
-    origin = Point3D(min_pt.x, max_pt.y, max_pt.z)
-    normal = model.shapes[0].geometry.normal
-    up_vec = math.degrees(Vector3D(0, 0, 1).angle(normal))
-    if up_vec < ang_tol or up_vec > 180 - ang_tol:
-        bp = Plane(o=origin)
-    else:
-        if normal.z < 0:
-            normal = normal.reverse()
-        bp = Plane(n=normal, o=origin)
-    t_vec = (bp.x * -100) + (bp.y * 100)
-    offset_origin = origin.move(t_vec)
-    plane = Plane(n=bp.n, o=offset_origin)
     max_dim = max((max_pt.x - min_pt.x, max_pt.y - min_pt.y, max_pt.z - min_pt.z))
     scale = 1.0 if max_dim < 100 else 100 / max_dim
 
@@ -400,11 +386,19 @@ def model_to_therm_xml(model, simulation_par=None):
     split_shapes = []
     for shape in model.shapes:
         if shape.geometry.has_holes:
-            for geo in shape.geometry.split_through_holes():
-                new_shp = shape.duplicate()
-                new_shp._geometry = geo
-                new_shp.identifier = str(uuid.uuid4())
-                split_shapes.append(new_shp)
+            shape_geo = shape.geometry
+            split_geo = shape_geo.split_through_holes()
+            if any(g.is_self_intersecting for g in split_geo):
+                split_geo = shape_geo.split_through_hole_center_lines(0.1)
+            for geo in split_geo:
+                try:
+                    geo = geo.remove_colinear_vertices(0.1)
+                    new_shp = shape.duplicate()
+                    new_shp._geometry = geo
+                    new_shp.identifier = str(uuid.uuid4())
+                    split_shapes.append(new_shp)
+                except AssertionError:  # degenerate geometry to ignore
+                    pass
         else:
             split_shapes.append(shape)
     if len(model.shapes) != split_shapes:
@@ -459,13 +453,21 @@ def model_to_therm_xml(model, simulation_par=None):
         merged_faces = Face3D.merge_faces_to_holes(join_faces, 0.1)
         region_count = len(merged_faces)
         plural = 's' if region_count != 1 else ''
-        hole_count = 0
+        hole_count, hole_areas = 0, []
         for mf in merged_faces:
             if mf.has_holes:
                 hole_count += len(mf.holes)
-        d_msg = '{} distinct region{} with {} total holes were found.'.format(
-            region_count, plural, hole_count)
-        raise ValueError('{}\n{}'.format(b_msg, d_msg))
+                for h in mf.holes:
+                    hole_areas.append(Face3D(h).area)
+        if region_count == 1 and sum(hole_areas) < 0.1:
+            pass  # artifact of splitting holes
+        else:
+            d_msg = '{} distinct region{} with {} total holes were found.'.format(
+                region_count, plural, hole_count)
+            if hole_count != 0:
+                d_msg = '{}\nHole Areas [mm2]: {}'.format(
+                    d_msg, ', '.join(str(h) for h in hole_areas))
+            raise ValueError('{}\n{}'.format(b_msg, d_msg))
 
     # gather all of the extra edges to be written as adiabatic
     adiabatic_geo, adiabatic_adj = [], []
