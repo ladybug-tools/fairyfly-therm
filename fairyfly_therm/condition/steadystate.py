@@ -320,11 +320,13 @@ class SteadyState(_ThermConditionBase):
             xml_flux = ET.SubElement(xml_heat, 'Flux')
             xml_flux.text = str(self.heat_flux)
             xml_rad = ET.SubElement(xml_comp, 'Radiation')
-            xml_auto = ET.SubElement(xml_rad, 'AutomaticEnclosure')
-            xml_mrt = ET.SubElement(xml_auto, 'Temperature')
+            xml_bb_rad = ET.SubElement(xml_rad, 'BlackBodyRadiation')
+            xml_mrt = ET.SubElement(xml_bb_rad, 'Temperature')
             xml_mrt.text = str(self.radiant_temperature)
-            xml_emiss = ET.SubElement(xml_auto, 'Emissivity')
+            xml_emiss = ET.SubElement(xml_bb_rad, 'Emissivity')
             xml_emiss.text = str(self.emissivity)
+            xml_vf = ET.SubElement(xml_bb_rad, 'ViewFactor')
+            xml_vf.text = '1'
         return xml_cond
 
     def to_therm_xml_str(self):
