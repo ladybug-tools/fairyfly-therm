@@ -10,7 +10,6 @@ import xml.etree.ElementTree as ET
 
 from ladybug_geometry.geometry2d import Vector2D, Point2D, Polygon2D
 from ladybug_geometry.geometry3d import Plane, Mesh3D, Face3D
-from ladybug_geometry.bounding import bounding_rectangle
 
 
 class THMZResult(object):
@@ -52,6 +51,7 @@ class THMZResult(object):
         self._shape_faces = None
         self._u_factors = None
         self._mesh = None
+        self._disconnected_i = None
         self._temperatures = None
         self._heat_fluxes = None
         self._heat_flux_magnitudes = None
@@ -195,6 +195,11 @@ class THMZResult(object):
                 vertices.append(Point2D(xpt.find('x').text, xpt.find('y').text))
             shape_geos.append(Polygon2D(vertices))
         self._shape_polygons = tuple(shape_geos)
+        # extract the translation vector from the glazing origin
+        xml_origin = xml_root.find('GlazingOrigin')
+        xml_o_x = xml_origin.find('x')
+        xml_o_y = xml_origin.find('y')
+        self._translation_vec = Vector2D(float(xml_o_x.text), float(xml_o_y.text))
 
     def _extract_mesh(self):
         """Extract a Mesh3D object from the THMZ file."""
@@ -218,26 +223,28 @@ class THMZResult(object):
                 float(xml_node.find('y').text) * 1000
             )  # convert from meters back to mm
             vertices_2d.append(pt_2d)
-        # remove the last two vertices (I don't know where they come from)
-        vertices_2d.pop(-1)
-        vertices_2d.pop(-1)
         # move the vertices to be in 3D Fairyfly space instead of 2D THERM space
-        mesh_min_pt, _ = bounding_rectangle(vertices_2d)
-        shape_min_pt, _ = bounding_rectangle(self.shape_polygons)
-        t_vec = shape_min_pt - mesh_min_pt  # translation vec from glazing origin
-        self._translation_vec = t_vec
         vertices = []
         for pt2 in vertices_2d:
-            vertices.append(plane.xy_to_xyz(pt2.move(t_vec)))
+            vertices.append(plane.xy_to_xyz(pt2.move(self._translation_vec)))
         # extract the faces (aka. elements) from the model
-        faces = []
+        faces, pt_set = [], set()
         for xml_face in xml_case.find('Elements'):
             face_i = []
             for e_prop in xml_face:
                 if e_prop.tag.startswith('node'):
                     fi = int(e_prop.text)
                     face_i.append(fi)
+                    pt_set.add(fi)
             faces.append(tuple(face_i))
+        # remove any vertices that do not connect to a face
+        self._disconnected_i = []
+        for i in range(len(vertices)):
+            if i not in pt_set:
+                self._disconnected_i.append(i)
+        self._disconnected_i = list(reversed(self._disconnected_i))
+        for ri in self._disconnected_i:
+            vertices.pop(ri)
         self._mesh = Mesh3D(vertices, faces)
 
     def _extract_faces(self):
@@ -247,13 +254,13 @@ class THMZResult(object):
         faces = []
         for polygon in polygons:
             vertices = [plane.xy_to_xyz(pt2) for pt2 in polygon]
-            face_init = Face3D(vertices, plane)
-            faces.append(face_init.separate_boundary_and_holes(0.1))
+            faces.append(Face3D(vertices, plane))
         self._shape_faces = tuple(faces)
 
     def _extract_steady_state_results(self):
         """Extract steady state results from the THMZ file."""
-        self._mesh_loaded = True
+        self.mesh  # extract the mesh to coordinate results
+        self._ss_mesh_results_loaded = True
         try:  # load the root of the SteadyStateMeshResults.xml
             with zipfile.ZipFile(self.file_path, 'r') as archive:
                 with archive.open('SteadyStateMeshResults.xml') as f:
@@ -272,8 +279,8 @@ class THMZResult(object):
             flux_magnitudes.append(vec_2d.magnitude)
         # remove the last two vertices (I don't know where they come from)
         for res_list in (temperatures, heat_fluxes, flux_magnitudes):
-            res_list.pop(-1)
-            res_list.pop(-1)
+            for ri in self._disconnected_i:
+                res_list.pop(ri)
         self._temperatures = tuple(temperatures)
         self._heat_fluxes = tuple(heat_fluxes)
         self._heat_flux_magnitudes = tuple(flux_magnitudes)
