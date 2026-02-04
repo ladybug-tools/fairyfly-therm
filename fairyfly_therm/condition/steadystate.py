@@ -326,7 +326,7 @@ class SteadyState(_ThermConditionBase):
             xml_emiss = ET.SubElement(xml_bb_rad, 'Emissivity')
             xml_emiss.text = str(self.emissivity)
             xml_vf = ET.SubElement(xml_bb_rad, 'ViewFactor')
-            xml_vf.text = '1'
+            xml_vf.text = '0.5'
         return xml_cond
 
     def to_therm_xml_str(self):
