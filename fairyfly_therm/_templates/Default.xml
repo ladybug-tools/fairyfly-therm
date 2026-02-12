@@ -109,7 +109,7 @@
 		</ModelExposure>
 		<Miscellaneous>
 			<FloatTolerance>0.03</FloatTolerance>
-			<CheckingTolerance>0.1</CheckingTolerance>
+			<CheckingTolerance>0.05</CheckingTolerance>
 		</Miscellaneous>
 	</Properties>
 	<GlazingOrigin>
