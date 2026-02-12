@@ -1,0 +1,7 @@
+fairyfly\_therm.material.gas module
+===================================
+
+.. automodule:: fairyfly_therm.material.gas
+   :members:
+   :undoc-members:
+   :show-inheritance:
