@@ -60,7 +60,7 @@ class MeshControl(object):
 
     @property
     def mesh_type(self):
-        """Get or set text for the convection model to be used in the cavity."""
+        """Get or set text for the meshing algorithm to be used."""
         return self._mesh_type
 
     @mesh_type.setter
@@ -103,7 +103,7 @@ class MeshControl(object):
 
     @property
     def max_error_percent(self):
-        """Get or set a number that will get multiplied by the peak cooling loads."""
+        """Get or set a number for the maximum accepted percentage of error."""
         return self._max_error_percent
 
     @max_error_percent.setter
@@ -136,7 +136,6 @@ class MeshControl(object):
         Args:
             xml_element: An XML element of a THERM MeshControl.
         """
-        # create the base material from the UUID and conductivity
         xml_type = xml_element.find('MeshType')
         mesh_type = 'Simmetrix' \
             if xml_type.text == 'Simmetrix Version 2022' else 'QuadTree'
@@ -243,6 +242,10 @@ class MeshControl(object):
             'max_iterations': self.max_iterations
         }
         return base
+
+    def duplicate(self):
+        """Get a copy of this object."""
+        return self.__copy__()
 
     def ToString(self):
         """Overwrite .NET ToString."""

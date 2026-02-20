@@ -617,6 +617,7 @@ def model_to_therm_xml(model, simulation_par=None):
     sim_par = simulation_par if simulation_par is not None else SimulationParameter()
     xml_calc_opt = xml_props.find('CalculationOptions')
     sim_par.mesh.to_therm_xml(xml_calc_opt)
+    sim_par.exposure.to_therm_xml(xml_props, plane)
 
     # write all of the cavity definitions into the model
     if len(cavity_props) != 0:

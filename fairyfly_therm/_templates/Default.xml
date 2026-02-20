@@ -99,14 +99,6 @@
 				<CheckForCorrectBCOnGlazingSystem>false</CheckForCorrectBCOnGlazingSystem>
 			</MiscellaneousProperties>
 		</CalculationOptions>
-		<ModelExposure>
-			<ModelOrientation>0</ModelOrientation>
-			<GravityOrientation>Down</GravityOrientation>
-			<Exposure>
-				<ModelPurpose>Window/Transparent Facade</ModelPurpose>
-				<WindowCrossSection>Sill</WindowCrossSection>
-			</Exposure>
-		</ModelExposure>
 		<Miscellaneous>
 			<FloatTolerance>0.03</FloatTolerance>
 			<CheckingTolerance>0.05</CheckingTolerance>
