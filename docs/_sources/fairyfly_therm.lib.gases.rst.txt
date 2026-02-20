@@ -1,0 +1,7 @@
+fairyfly\_therm.lib.gases module
+================================
+
+.. automodule:: fairyfly_therm.lib.gases
+   :members:
+   :undoc-members:
+   :show-inheritance:

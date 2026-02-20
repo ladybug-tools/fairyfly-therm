@@ -1,0 +1,17 @@
+CLI Docs
+========
+
+Installation
+------------
+
+To check if the command line is installed correctly use ``fairyfly-therm --help``
+
+Commands
+--------
+.. toctree::
+   :maxdepth: 1
+
+   translate
+   simulate
+   setconfig
+   __init__

@@ -1,0 +1,18 @@
+fairyfly\_therm.condition package
+=================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.condition.steadystate
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm.condition
+   :members:
+   :undoc-members:
+   :show-inheritance:
