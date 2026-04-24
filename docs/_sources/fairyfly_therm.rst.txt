@@ -1,0 +1,34 @@
+fairyfly\_therm package
+=======================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.cli
+   fairyfly_therm.condition
+   fairyfly_therm.lib
+   fairyfly_therm.material
+   fairyfly_therm.properties
+   fairyfly_therm.simulation
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.config
+   fairyfly_therm.result
+   fairyfly_therm.run
+   fairyfly_therm.writer
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm
+   :members:
+   :undoc-members:
+   :show-inheritance:
