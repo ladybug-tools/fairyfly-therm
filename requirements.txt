@@ -1,2 +1,2 @@
-fairyfly-core==0.2.33
+fairyfly-core==0.2.34
 fairyfly-therm-standards==0.1.0
