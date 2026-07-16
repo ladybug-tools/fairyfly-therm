@@ -1,0 +1,6 @@
+simulate
+========
+
+.. click:: fairyfly_therm.cli.simulate:simulate
+   :prog: fairyfly-therm simulate
+   :show-nested:

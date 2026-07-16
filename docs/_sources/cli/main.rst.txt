@@ -1,0 +1,7 @@
+main
+====
+
+.. click:: fairyfly_therm.cli.__init__:therm
+   :prog: fairyfly-therm
+   :show-nested:
+   :commands: config

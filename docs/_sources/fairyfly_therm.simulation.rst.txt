@@ -1,0 +1,20 @@
+fairyfly\_therm.simulation package
+==================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.simulation.exposure
+   fairyfly_therm.simulation.mesh
+   fairyfly_therm.simulation.parameter
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm.simulation
+   :members:
+   :undoc-members:
+   :show-inheritance:

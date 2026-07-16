@@ -1,0 +1,7 @@
+fairyfly\_therm.cli.setconfig module
+====================================
+
+.. automodule:: fairyfly_therm.cli.setconfig
+   :members:
+   :undoc-members:
+   :show-inheritance:

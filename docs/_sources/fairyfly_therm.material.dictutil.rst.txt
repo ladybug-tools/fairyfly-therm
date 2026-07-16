@@ -1,0 +1,7 @@
+fairyfly\_therm.material.dictutil module
+========================================
+
+.. automodule:: fairyfly_therm.material.dictutil
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,6 @@
+setconfig
+=========
+
+.. click:: fairyfly_therm.cli.setconfig:set_config
+   :prog: fairyfly-therm set-config
+   :show-nested:
