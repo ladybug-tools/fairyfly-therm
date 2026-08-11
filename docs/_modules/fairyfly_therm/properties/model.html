@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fairyfly_therm.properties.model &#8212; fairyfly-therm  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css?v=0bf093e7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9ac6488d" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<link rel="icon" type="image/x-icon" href="https://github.com/ladybug-tools/artwork/raw/refs/heads/master/icons_bugs/ico/fairyfly.ico">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          fairyfly-therm</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/index.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/translate.html">translate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/translate.html#fairyfly-therm-translate">fairyfly-therm translate</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/translate.html#fairyfly-therm-translate-model-to-thmz">model-to-thmz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/simulate.html">simulate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/simulate.html#fairyfly-therm-simulate">fairyfly-therm simulate</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/simulate.html#fairyfly-therm-simulate-model">model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/setconfig.html">setconfig</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config">fairyfly-therm set-config</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-lbnl-data-path">lbnl-data-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-therm-lib-path">therm-lib-path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../cli/setconfig.html#fairyfly-therm-set-config-therm-path">therm-path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.cli.html">fairyfly_therm.cli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.cli.setconfig.html">fairyfly_therm.cli.setconfig module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.cli.simulate.html">fairyfly_therm.cli.simulate module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.cli.simulate.html#fairyfly_therm.cli.simulate.simulate_model"><code class="docutils literal notranslate"><span class="pre">simulate_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.cli.translate.html">fairyfly_therm.cli.translate module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.cli.translate.html#fairyfly_therm.cli.translate.model_to_thmz"><code class="docutils literal notranslate"><span class="pre">model_to_thmz()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.cli.html#module-fairyfly_therm.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.condition.html">fairyfly_therm.condition package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.condition.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html">fairyfly_therm.condition.steadystate module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState"><code class="docutils literal notranslate"><span class="pre">SteadyState</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.extract_all_from_xml_file"><code class="docutils literal notranslate"><span class="pre">extract_all_from_xml_file()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.film_coefficient"><code class="docutils literal notranslate"><span class="pre">film_coefficient</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.heat_flux"><code class="docutils literal notranslate"><span class="pre">heat_flux</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.project_tag"><code class="docutils literal notranslate"><span class="pre">project_tag</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.radiant_temperature"><code class="docutils literal notranslate"><span class="pre">radiant_temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.relative_humidity"><code class="docutils literal notranslate"><span class="pre">relative_humidity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.temperature"><code class="docutils literal notranslate"><span class="pre">temperature</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.condition.steadystate.html#fairyfly_therm.condition.steadystate.SteadyState.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.condition.html#module-fairyfly_therm.condition">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.lib.html">fairyfly_therm.lib package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.lib.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.lib.conditions.html">fairyfly_therm.lib.conditions module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.lib.conditions.html#fairyfly_therm.lib.conditions.condition_by_name"><code class="docutils literal notranslate"><span class="pre">condition_by_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.lib.gases.html">fairyfly_therm.lib.gases module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.lib.gases.html#fairyfly_therm.lib.gases.gas_by_name"><code class="docutils literal notranslate"><span class="pre">gas_by_name()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.lib.gases.html#fairyfly_therm.lib.gases.pure_gas_by_name"><code class="docutils literal notranslate"><span class="pre">pure_gas_by_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.lib.materials.html">fairyfly_therm.lib.materials module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.lib.materials.html#fairyfly_therm.lib.materials.cavity_material_by_name"><code class="docutils literal notranslate"><span class="pre">cavity_material_by_name()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.lib.materials.html#fairyfly_therm.lib.materials.solid_material_by_name"><code class="docutils literal notranslate"><span class="pre">solid_material_by_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.lib.html#module-fairyfly_therm.lib">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.material.html">fairyfly_therm.material package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.material.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html">fairyfly_therm.material.cavity module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial"><code class="docutils literal notranslate"><span class="pre">CavityMaterial</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.from_dict_abridged"><code class="docutils literal notranslate"><span class="pre">from_dict_abridged()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.CAVITY_MODELS"><code class="docutils literal notranslate"><span class="pre">CAVITY_MODELS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.cavity_model"><code class="docutils literal notranslate"><span class="pre">cavity_model</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.emissivity_back"><code class="docutils literal notranslate"><span class="pre">emissivity_back</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.gas"><code class="docutils literal notranslate"><span class="pre">gas</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.therm_uuid"><code class="docutils literal notranslate"><span class="pre">therm_uuid</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.cavity.html#fairyfly_therm.material.cavity.CavityMaterial.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.dictutil.html">fairyfly_therm.material.dictutil module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.dictutil.html#fairyfly_therm.material.dictutil.dict_abridged_to_material"><code class="docutils literal notranslate"><span class="pre">dict_abridged_to_material()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.dictutil.html#fairyfly_therm.material.dictutil.dict_to_material"><code class="docutils literal notranslate"><span class="pre">dict_to_material()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html">fairyfly_therm.material.gas module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas"><code class="docutils literal notranslate"><span class="pre">Gas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.density_at_temperature"><code class="docutils literal notranslate"><span class="pre">density_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.extract_all_from_xml_file"><code class="docutils literal notranslate"><span class="pre">extract_all_from_xml_file()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.from_dict_abridged"><code class="docutils literal notranslate"><span class="pre">from_dict_abridged()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.prandtl_at_temperature"><code class="docutils literal notranslate"><span class="pre">prandtl_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.conductivity"><code class="docutils literal notranslate"><span class="pre">conductivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.gas_count"><code class="docutils literal notranslate"><span class="pre">gas_count</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.gas_fractions"><code class="docutils literal notranslate"><span class="pre">gas_fractions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.prandtl"><code class="docutils literal notranslate"><span class="pre">prandtl</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.pure_gases"><code class="docutils literal notranslate"><span class="pre">pure_gases</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.specific_heat"><code class="docutils literal notranslate"><span class="pre">specific_heat</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.Gas.viscosity"><code class="docutils literal notranslate"><span class="pre">viscosity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas"><code class="docutils literal notranslate"><span class="pre">PureGas</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_at_temperature"><code class="docutils literal notranslate"><span class="pre">conductivity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.density_at_temperature"><code class="docutils literal notranslate"><span class="pre">density_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.prandtl_at_temperature"><code class="docutils literal notranslate"><span class="pre">prandtl_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_at_temperature"><code class="docutils literal notranslate"><span class="pre">specific_heat_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_at_temperature"><code class="docutils literal notranslate"><span class="pre">viscosity_at_temperature()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity"><code class="docutils literal notranslate"><span class="pre">conductivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_a"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_b"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.conductivity_coeff_c"><code class="docutils literal notranslate"><span class="pre">conductivity_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.molecular_weight"><code class="docutils literal notranslate"><span class="pre">molecular_weight</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.prandtl"><code class="docutils literal notranslate"><span class="pre">prandtl</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat"><code class="docutils literal notranslate"><span class="pre">specific_heat</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_a"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_b"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_coeff_c"><code class="docutils literal notranslate"><span class="pre">specific_heat_coeff_c</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.specific_heat_ratio"><code class="docutils literal notranslate"><span class="pre">specific_heat_ratio</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity"><code class="docutils literal notranslate"><span class="pre">viscosity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_a"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_b"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_b</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.gas.html#fairyfly_therm.material.gas.PureGas.viscosity_coeff_c"><code class="docutils literal notranslate"><span class="pre">viscosity_coeff_c</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html">fairyfly_therm.material.solid module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial"><code class="docutils literal notranslate"><span class="pre">SolidMaterial</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_energy_material"><code class="docutils literal notranslate"><span class="pre">from_energy_material()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_energy_window_material_glazing"><code class="docutils literal notranslate"><span class="pre">from_energy_window_material_glazing()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.lock"><code class="docutils literal notranslate"><span class="pre">lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.unlock"><code class="docutils literal notranslate"><span class="pre">unlock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.conductivity"><code class="docutils literal notranslate"><span class="pre">conductivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.density"><code class="docutils literal notranslate"><span class="pre">density</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.display_name"><code class="docutils literal notranslate"><span class="pre">display_name</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity"><code class="docutils literal notranslate"><span class="pre">emissivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.emissivity_back"><code class="docutils literal notranslate"><span class="pre">emissivity_back</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.identifier"><code class="docutils literal notranslate"><span class="pre">identifier</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.porosity"><code class="docutils literal notranslate"><span class="pre">porosity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.protected"><code class="docutils literal notranslate"><span class="pre">protected</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.reflectance"><code class="docutils literal notranslate"><span class="pre">reflectance</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.resistivity"><code class="docutils literal notranslate"><span class="pre">resistivity</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.specific_heat"><code class="docutils literal notranslate"><span class="pre">specific_heat</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.transmittance"><code class="docutils literal notranslate"><span class="pre">transmittance</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.user_data"><code class="docutils literal notranslate"><span class="pre">user_data</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.material.solid.html#fairyfly_therm.material.solid.SolidMaterial.vapor_diffusion_resistance"><code class="docutils literal notranslate"><span class="pre">vapor_diffusion_resistance</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.material.xmlutil.html">fairyfly_therm.material.xmlutil module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.material.xmlutil.html#fairyfly_therm.material.xmlutil.extract_all_materials_from_xml_file"><code class="docutils literal notranslate"><span class="pre">extract_all_materials_from_xml_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.material.html#module-fairyfly_therm.material">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.properties.html">fairyfly_therm.properties package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.properties.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html">fairyfly_therm.properties.boundary module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties"><code class="docutils literal notranslate"><span class="pre">BoundaryThermProperties</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.apply_properties_from_dict"><code class="docutils literal notranslate"><span class="pre">apply_properties_from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.is_equivalent"><code class="docutils literal notranslate"><span class="pre">is_equivalent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.condition"><code class="docutils literal notranslate"><span class="pre">condition</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.host"><code class="docutils literal notranslate"><span class="pre">host</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.boundary.html#fairyfly_therm.properties.boundary.BoundaryThermProperties.u_factor_tag"><code class="docutils literal notranslate"><span class="pre">u_factor_tag</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html">fairyfly_therm.properties.model module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties"><code class="docutils literal notranslate"><span class="pre">ModelThermProperties</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.apply_properties_from_dict"><code class="docutils literal notranslate"><span class="pre">apply_properties_from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_all"><code class="docutils literal notranslate"><span class="pre">check_all()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_all_duplicate_identifiers"><code class="docutils literal notranslate"><span class="pre">check_all_duplicate_identifiers()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_condition_identifiers"><code class="docutils literal notranslate"><span class="pre">check_duplicate_condition_identifiers()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_gas_identifiers"><code class="docutils literal notranslate"><span class="pre">check_duplicate_gas_identifiers()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_material_identifiers"><code class="docutils literal notranslate"><span class="pre">check_duplicate_material_identifiers()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_for_extension"><code class="docutils literal notranslate"><span class="pre">check_for_extension()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.load_properties_from_dict"><code class="docutils literal notranslate"><span class="pre">load_properties_from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.ERROR_MAP"><code class="docutils literal notranslate"><span class="pre">ERROR_MAP</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.conditions"><code class="docutils literal notranslate"><span class="pre">conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.gases"><code class="docutils literal notranslate"><span class="pre">gases</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.host"><code class="docutils literal notranslate"><span class="pre">host</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.materials"><code class="docutils literal notranslate"><span class="pre">materials</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.problem_areas"><code class="docutils literal notranslate"><span class="pre">problem_areas</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.therm_plane"><code class="docutils literal notranslate"><span class="pre">therm_plane</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html">fairyfly_therm.properties.shape module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties"><code class="docutils literal notranslate"><span class="pre">ShapeThermProperties</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.apply_properties_from_dict"><code class="docutils literal notranslate"><span class="pre">apply_properties_from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.is_equivalent"><code class="docutils literal notranslate"><span class="pre">is_equivalent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.host"><code class="docutils literal notranslate"><span class="pre">host</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.properties.shape.html#fairyfly_therm.properties.shape.ShapeThermProperties.material"><code class="docutils literal notranslate"><span class="pre">material</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.properties.html#module-fairyfly_therm.properties">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.simulation.html">fairyfly_therm.simulation package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.simulation.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html">fairyfly_therm.simulation.exposure module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure"><code class="docutils literal notranslate"><span class="pre">ModelExposure</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.ALL_SECTIONS"><code class="docutils literal notranslate"><span class="pre">ALL_SECTIONS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.GRAVITY_ORIENTATIONS"><code class="docutils literal notranslate"><span class="pre">GRAVITY_ORIENTATIONS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.MODEL_TYPES"><code class="docutils literal notranslate"><span class="pre">MODEL_TYPES</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.OPAQUE_SECTIONS"><code class="docutils literal notranslate"><span class="pre">OPAQUE_SECTIONS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.OTHER_SECTIONS"><code class="docutils literal notranslate"><span class="pre">OTHER_SECTIONS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.SECTION_MAP"><code class="docutils literal notranslate"><span class="pre">SECTION_MAP</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.WINDOW_SECTIONS"><code class="docutils literal notranslate"><span class="pre">WINDOW_SECTIONS</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.cross_section_type"><code class="docutils literal notranslate"><span class="pre">cross_section_type</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.gravity_orientation"><code class="docutils literal notranslate"><span class="pre">gravity_orientation</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.model_type"><code class="docutils literal notranslate"><span class="pre">model_type</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.exposure.html#fairyfly_therm.simulation.exposure.ModelExposure.wind_orientation"><code class="docutils literal notranslate"><span class="pre">wind_orientation</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html">fairyfly_therm.simulation.mesh module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl"><code class="docutils literal notranslate"><span class="pre">MeshControl</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.from_therm_xml"><code class="docutils literal notranslate"><span class="pre">from_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.from_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">from_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.to_therm_xml"><code class="docutils literal notranslate"><span class="pre">to_therm_xml()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.TYPES"><code class="docutils literal notranslate"><span class="pre">TYPES</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.max_error_percent"><code class="docutils literal notranslate"><span class="pre">max_error_percent</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.max_iterations"><code class="docutils literal notranslate"><span class="pre">max_iterations</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.mesh_type"><code class="docutils literal notranslate"><span class="pre">mesh_type</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.parameter"><code class="docutils literal notranslate"><span class="pre">parameter</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.mesh.html#fairyfly_therm.simulation.mesh.MeshControl.run_error_estimator"><code class="docutils literal notranslate"><span class="pre">run_error_estimator</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html">fairyfly_therm.simulation.parameter module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter"><code class="docutils literal notranslate"><span class="pre">SimulationParameter</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.duplicate"><code class="docutils literal notranslate"><span class="pre">duplicate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.from_dict"><code class="docutils literal notranslate"><span class="pre">from_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.to_dict"><code class="docutils literal notranslate"><span class="pre">to_dict()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.exposure"><code class="docutils literal notranslate"><span class="pre">exposure</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../fairyfly_therm.simulation.parameter.html#fairyfly_therm.simulation.parameter.SimulationParameter.mesh"><code class="docutils literal notranslate"><span class="pre">mesh</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.simulation.html#module-fairyfly_therm.simulation">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.config.html">fairyfly_therm.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders"><code class="docutils literal notranslate"><span class="pre">Folders</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.check_therm_version"><code class="docutils literal notranslate"><span class="pre">check_therm_version()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.FORTRAN_URL"><code class="docutils literal notranslate"><span class="pre">FORTRAN_URL</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.LBNL_URL"><code class="docutils literal notranslate"><span class="pre">LBNL_URL</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.THERM_VERSION"><code class="docutils literal notranslate"><span class="pre">THERM_VERSION</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.bc_steady_state_lib_file"><code class="docutils literal notranslate"><span class="pre">bc_steady_state_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.config_file"><code class="docutils literal notranslate"><span class="pre">config_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.fortran_dll_path"><code class="docutils literal notranslate"><span class="pre">fortran_dll_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.gas_lib_file"><code class="docutils literal notranslate"><span class="pre">gas_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.lbnl_data_path"><code class="docutils literal notranslate"><span class="pre">lbnl_data_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.material_lib_file"><code class="docutils literal notranslate"><span class="pre">material_lib_file</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_exe"><code class="docutils literal notranslate"><span class="pre">therm_exe</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_lib_path"><code class="docutils literal notranslate"><span class="pre">therm_lib_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_path"><code class="docutils literal notranslate"><span class="pre">therm_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_settings_path"><code class="docutils literal notranslate"><span class="pre">therm_settings_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version"><code class="docutils literal notranslate"><span class="pre">therm_version</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.therm_version_str"><code class="docutils literal notranslate"><span class="pre">therm_version_str</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.user_gas_folder"><code class="docutils literal notranslate"><span class="pre">user_gas_folder</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.user_material_folder"><code class="docutils literal notranslate"><span class="pre">user_material_folder</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.config.html#fairyfly_therm.config.Folders.user_steady_state_folder"><code class="docutils literal notranslate"><span class="pre">user_steady_state_folder</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.result.html">fairyfly_therm.result module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult"><code class="docutils literal notranslate"><span class="pre">THMZResult</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.file_path"><code class="docutils literal notranslate"><span class="pre">file_path</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.heat_flux_magnitudes"><code class="docutils literal notranslate"><span class="pre">heat_flux_magnitudes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.heat_fluxes"><code class="docutils literal notranslate"><span class="pre">heat_fluxes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.mesh"><code class="docutils literal notranslate"><span class="pre">mesh</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.plane"><code class="docutils literal notranslate"><span class="pre">plane</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.shape_faces"><code class="docutils literal notranslate"><span class="pre">shape_faces</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.shape_polygons"><code class="docutils literal notranslate"><span class="pre">shape_polygons</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.temperatures"><code class="docutils literal notranslate"><span class="pre">temperatures</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.THMZResult.u_factors"><code class="docutils literal notranslate"><span class="pre">u_factors</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor"><code class="docutils literal notranslate"><span class="pre">UFactor</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.ToString"><code class="docutils literal notranslate"><span class="pre">ToString()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.custom_rotation_length"><code class="docutils literal notranslate"><span class="pre">custom_rotation_length</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.custom_rotation_u_factor"><code class="docutils literal notranslate"><span class="pre">custom_rotation_u_factor</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.delta_temperature"><code class="docutils literal notranslate"><span class="pre">delta_temperature</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.heat_flux"><code class="docutils literal notranslate"><span class="pre">heat_flux</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_in_glass_plane_length"><code class="docutils literal notranslate"><span class="pre">projected_in_glass_plane_length</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_in_glass_plane_u_factor"><code class="docutils literal notranslate"><span class="pre">projected_in_glass_plane_u_factor</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_x_length"><code class="docutils literal notranslate"><span class="pre">projected_x_length</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_x_u_factor"><code class="docutils literal notranslate"><span class="pre">projected_x_u_factor</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_y_length"><code class="docutils literal notranslate"><span class="pre">projected_y_length</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.projected_y_u_factor"><code class="docutils literal notranslate"><span class="pre">projected_y_u_factor</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.total_length"><code class="docutils literal notranslate"><span class="pre">total_length</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../fairyfly_therm.result.html#fairyfly_therm.result.UFactor.total_u_factor"><code class="docutils literal notranslate"><span class="pre">total_u_factor</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.run.html">fairyfly_therm.run module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.run.html#fairyfly_therm.run.run_model"><code class="docutils literal notranslate"><span class="pre">run_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.run.html#fairyfly_therm.run.run_thmz"><code class="docutils literal notranslate"><span class="pre">run_thmz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fairyfly_therm.writer.html">fairyfly_therm.writer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.boundary_to_therm_xml"><code class="docutils literal notranslate"><span class="pre">boundary_to_therm_xml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.boundary_to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">boundary_to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.model_to_therm_xml"><code class="docutils literal notranslate"><span class="pre">model_to_therm_xml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.model_to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">model_to_therm_xml_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.model_to_thmz"><code class="docutils literal notranslate"><span class="pre">model_to_thmz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.shape_to_therm_xml"><code class="docutils literal notranslate"><span class="pre">shape_to_therm_xml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../fairyfly_therm.writer.html#fairyfly_therm.writer.shape_to_therm_xml_str"><code class="docutils literal notranslate"><span class="pre">shape_to_therm_xml_str()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../fairyfly_therm.html#module-fairyfly_therm">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../fairyfly_therm.html">fairyfly_therm package</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <h1>Source code for fairyfly_therm.properties.model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="sd">&quot;&quot;&quot;Model Therm Properties.&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">izip</span> <span class="k">as</span> <span class="nb">zip</span>  <span class="c1"># python 2</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>   <span class="c1"># python 3</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_geometry.geometry3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector3D</span><span class="p">,</span> <span class="n">Point3D</span><span class="p">,</span> <span class="n">Plane</span><span class="p">,</span> <span class="n">Face3D</span><span class="p">,</span> \
+    <span class="n">Polyline3D</span><span class="p">,</span> <span class="n">Polyface3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_geometry.bounding</span><span class="w"> </span><span class="kn">import</span> <span class="n">bounding_box</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.extensionutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">model_extension_dicts</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">invalid_dict_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.checkdup</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_duplicate_identifiers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">conversion_factor_to_meters</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fairyfly.shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">Shape</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..material.dictutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">dict_to_material</span><span class="p">,</span> <span class="n">dict_abridged_to_material</span><span class="p">,</span> \
+    <span class="n">MATERIAL_TYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..material.gas</span><span class="w"> </span><span class="kn">import</span> <span class="n">PureGas</span><span class="p">,</span> <span class="n">Gas</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..material.cavity</span><span class="w"> </span><span class="kn">import</span> <span class="n">CavityMaterial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..condition.steadystate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SteadyState</span>
+
+
+<div class="viewcode-block" id="ModelThermProperties">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ModelThermProperties</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Therm Properties for Fairyfly Model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        host: A fairyfly_core Model object that hosts these properties.</span>
+
+<span class="sd">    Properties:</span>
+<span class="sd">        * host</span>
+<span class="sd">        * materials</span>
+<span class="sd">        * conditions</span>
+<span class="sd">        * gases</span>
+<span class="sd">        * therm_plane</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># dictionary mapping validation error codes to a corresponding check function</span>
+    <span class="n">ERROR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;210001&#39;</span><span class="p">:</span> <span class="s1">&#39;check_duplicate_material_identifiers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;210002&#39;</span><span class="p">:</span> <span class="s1">&#39;check_duplicate_condition_identifiers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;210003&#39;</span><span class="p">:</span> <span class="s1">&#39;check_duplicate_gas_identifiers&#39;</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize Model therm properties.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">host</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the Model object hosting these properties.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">materials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a list of all unique materials assigned to Shapes.&quot;&quot;&quot;</span>
+        <span class="n">materials</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
+            <span class="n">mat</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">therm</span><span class="o">.</span><span class="n">material</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance_in_array</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">materials</span><span class="p">):</span>
+                <span class="n">materials</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">materials</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a list of all unique conditions contained within the model.&quot;&quot;&quot;</span>
+        <span class="n">conditions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">bnd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">boundaries</span><span class="p">:</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="n">bnd</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">therm</span><span class="o">.</span><span class="n">condition</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance_in_array</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">conditions</span><span class="p">):</span>
+                <span class="n">conditions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">conditions</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a list of all unique gases contained within the model.&quot;&quot;&quot;</span>
+        <span class="n">gases</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">CavityMaterial</span><span class="p">):</span>
+                <span class="n">gas</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">gas</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance_in_array</span><span class="p">(</span><span class="n">gas</span><span class="p">,</span> <span class="n">gases</span><span class="p">):</span>
+                    <span class="n">gases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gas</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">gases</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">therm_plane</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a ladybug-geometry Plane that represents the 2D THERM canvas.&quot;&quot;&quot;</span>
+        <span class="n">ang_tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">angle_tolerance</span>
+        <span class="n">min_pt</span><span class="p">,</span> <span class="n">max_pt</span> <span class="o">=</span> <span class="n">bounding_box</span><span class="p">([</span><span class="n">s</span><span class="o">.</span><span class="n">geometry</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">])</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="n">Point3D</span><span class="p">(</span><span class="n">min_pt</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">max_pt</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">max_pt</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">normal</span>
+        <span class="n">up_vec</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">Vector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">normal</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">up_vec</span> <span class="o">&lt;</span> <span class="n">ang_tol</span> <span class="ow">or</span> <span class="n">up_vec</span> <span class="o">&gt;</span> <span class="mi">180</span> <span class="o">-</span> <span class="n">ang_tol</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="n">Plane</span><span class="p">(</span><span class="n">o</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">normal</span><span class="o">.</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">normal</span> <span class="o">=</span> <span class="n">normal</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="n">Plane</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">normal</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
+        <span class="n">conversion</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">/</span> <span class="n">conversion_factor_to_meters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+        <span class="n">t_vec</span> <span class="o">=</span> <span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">100</span> <span class="o">*</span> <span class="n">conversion</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">bp</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">conversion</span><span class="p">)</span>
+        <span class="n">offset_origin</span> <span class="o">=</span> <span class="n">origin</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">t_vec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Plane</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">bp</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">offset_origin</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">problem_areas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a tuple with two values for geometry that make the model un-simulate-able.</span>
+
+<span class="sd">        problem_regions - Polyline3D for regions of shapes that are separate</span>
+<span class="sd">        from one another and are therefore un-simulate-able.</span>
+
+<span class="sd">        problem_holes - Polyline3D for holes in the model that make it un-simulate-able.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plane</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">therm_plane</span>
+        <span class="n">Shape</span><span class="o">.</span><span class="n">intersect_adjacency</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span>
+        <span class="c1"># ensure that there is only one contiguous shape without holes</span>
+        <span class="n">shape_geos</span> <span class="o">=</span> <span class="p">[</span><span class="n">shape</span><span class="o">.</span><span class="n">geometry</span> <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">]</span>
+        <span class="n">polyface</span> <span class="o">=</span> <span class="n">Polyface3D</span><span class="o">.</span><span class="n">from_faces</span><span class="p">(</span><span class="n">shape_geos</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">outer_edges</span> <span class="o">=</span> <span class="n">polyface</span><span class="o">.</span><span class="n">naked_edges</span>
+        <span class="n">joined_boundary</span> <span class="o">=</span> <span class="n">Polyline3D</span><span class="o">.</span><span class="n">join_segments</span><span class="p">(</span><span class="n">outer_edges</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">problem_regions</span><span class="p">,</span> <span class="n">problem_holes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">joined_boundary</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">join_faces</span> <span class="o">=</span> <span class="p">[</span><span class="n">Face3D</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">vertices</span><span class="p">)</span> <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">joined_boundary</span><span class="p">]</span>
+            <span class="n">merged_faces</span> <span class="o">=</span> <span class="n">Face3D</span><span class="o">.</span><span class="n">merge_faces_to_holes</span><span class="p">(</span><span class="n">join_faces</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">merged_faces</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">merged_faces</span><span class="p">:</span>
+                    <span class="n">problem_regions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Polyline3D</span><span class="p">(</span><span class="n">region</span><span class="o">.</span><span class="n">boundary</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">mf</span> <span class="ow">in</span> <span class="n">merged_faces</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">mf</span><span class="o">.</span><span class="n">has_holes</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">hole</span> <span class="ow">in</span> <span class="n">mf</span><span class="o">.</span><span class="n">holes</span><span class="p">:</span>
+                        <span class="n">problem_holes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Polyline3D</span><span class="p">(</span><span class="n">hole</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">problem_regions</span><span class="p">,</span> <span class="n">problem_holes</span>
+
+<div class="viewcode-block" id="ModelThermProperties.check_for_extension">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_for_extension">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_for_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that the Model is valid for Therm simulation.</span>
+
+<span class="sd">        This process includes all relevant fairyfly-core checks as well as checks</span>
+<span class="sd">        that apply only for Therm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if any errors are found. If False, this method will simply</span>
+<span class="sd">                return a text string with all errors that were found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A text string with all errors that were found or a list if detailed is True.</span>
+<span class="sd">            This string (or list) will be empty if no errors were found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># set up defaults to ensure the method runs correctly</span>
+        <span class="n">detailed</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">raise_exception</span> <span class="k">else</span> <span class="n">detailed</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">tolerance</span>
+
+        <span class="c1"># perform checks for duplicate identifiers, which might mess with other checks</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">check_all_duplicate_identifiers</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+
+        <span class="c1"># perform several checks for the Fairyfly schema geometry rules</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">check_planar</span><span class="p">(</span><span class="n">tol</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">check_self_intersecting</span><span class="p">(</span><span class="n">tol</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+
+        <span class="c1"># output a final report of errors or raise an exception</span>
+        <span class="n">full_msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">full_msgs</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="n">full_msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raise_exception</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">full_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">full_msg</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.check_all">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_all">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check all of the aspects of the Model therm properties.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if any errors are found. If False, this method will simply</span>
+<span class="sd">                return a text string with all errors that were found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A text string with all errors that were found or a list if detailed is True.</span>
+<span class="sd">            This string (or list) will be empty if no errors were found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># set up defaults to ensure the method runs correctly</span>
+        <span class="n">detailed</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">raise_exception</span> <span class="k">else</span> <span class="n">detailed</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># perform checks for duplicate identifiers</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_all_duplicate_identifiers</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+        <span class="c1"># output a final report of errors or raise an exception</span>
+        <span class="n">full_msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">full_msgs</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="n">full_msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raise_exception</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">full_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">full_msg</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.check_all_duplicate_identifiers">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_all_duplicate_identifiers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_all_duplicate_identifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that there are no duplicate identifiers for any therm objects.</span>
+
+<span class="sd">        This includes Materials, Gases, and Conditions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if any duplicate identifiers are found. If False, this method will simply</span>
+<span class="sd">                return a text string with all errors that were found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A text string with all errors that were found or a list if detailed is True.</span>
+<span class="sd">            This string (or list) will be empty if no errors were found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># set up defaults to ensure the method runs correctly</span>
+        <span class="n">detailed</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">raise_exception</span> <span class="k">else</span> <span class="n">detailed</span>
+        <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># perform checks for duplicate identifiers</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_duplicate_material_identifiers</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_duplicate_condition_identifiers</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+        <span class="n">msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_duplicate_gas_identifiers</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">detailed</span><span class="p">))</span>
+        <span class="c1"># output a final report of errors or raise an exception</span>
+        <span class="n">full_msgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">msgs</span> <span class="k">if</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">detailed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">full_msgs</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">]</span>
+        <span class="n">full_msg</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raise_exception</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_msgs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">full_msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">full_msg</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.check_duplicate_material_identifiers">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_material_identifiers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_duplicate_material_identifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that there are no duplicate Material identifiers in the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if duplicate identifiers are found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string with the message or a list with a dictionary if detailed is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">check_duplicate_identifiers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">materials</span><span class="p">,</span> <span class="n">raise_exception</span><span class="p">,</span> <span class="s1">&#39;Material&#39;</span><span class="p">,</span>
+            <span class="n">detailed</span><span class="p">,</span> <span class="s1">&#39;210001&#39;</span><span class="p">,</span> <span class="s1">&#39;Therm&#39;</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="s1">&#39;Duplicate Material Identifier&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.check_duplicate_condition_identifiers">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_condition_identifiers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_duplicate_condition_identifiers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that there are no duplicate Condition identifiers in the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if duplicate identifiers are found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string with the message or a list with a dictionary if detailed is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">check_duplicate_identifiers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="p">,</span> <span class="n">raise_exception</span><span class="p">,</span> <span class="s1">&#39;Condition&#39;</span><span class="p">,</span>
+            <span class="n">detailed</span><span class="p">,</span> <span class="s1">&#39;210002&#39;</span><span class="p">,</span> <span class="s1">&#39;Therm&#39;</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="s1">&#39;Duplicate Condition Identifier&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.check_duplicate_gas_identifiers">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.check_duplicate_gas_identifiers">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_duplicate_gas_identifiers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">detailed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check that there are no duplicate Gas identifiers in the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            raise_exception: Boolean to note whether a ValueError should be raised</span>
+<span class="sd">                if duplicate identifiers are found. (Default: True).</span>
+<span class="sd">            detailed: Boolean for whether the returned object is a detailed list of</span>
+<span class="sd">                dicts with error info or a string with a message. (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string with the message or a list with a dictionary if detailed is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">check_duplicate_identifiers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gases</span><span class="p">,</span> <span class="n">raise_exception</span><span class="p">,</span> <span class="s1">&#39;Gas&#39;</span><span class="p">,</span>
+            <span class="n">detailed</span><span class="p">,</span> <span class="s1">&#39;020003&#39;</span><span class="p">,</span> <span class="s1">&#39;Therm&#39;</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="s1">&#39;Duplicate Gas Identifier&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.apply_properties_from_dict">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.apply_properties_from_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_properties_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply the therm properties of a dictionary to the host Model of this object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: A dictionary representation of an entire fairyfly-core Model.</span>
+<span class="sd">                Note that this dictionary must have ModelThermProperties in order</span>
+<span class="sd">                for this method to successfully apply the therm properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;therm&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">],</span> \
+            <span class="s1">&#39;Dictionary possesses no ModelThermProperties.&#39;</span>
+        <span class="n">materials</span><span class="p">,</span> <span class="n">conditions</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_properties_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># collect lists of therm property dictionaries</span>
+        <span class="n">shape_t_dicts</span><span class="p">,</span> <span class="n">boundary_t_dicts</span> <span class="o">=</span> <span class="n">model_extension_dicts</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;therm&#39;</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[])</span>
+
+        <span class="c1"># apply therm properties to objects using the therm property dictionaries</span>
+        <span class="k">for</span> <span class="n">shape</span><span class="p">,</span> <span class="n">s_dict</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">shapes</span><span class="p">,</span> <span class="n">shape_t_dicts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">shape</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">therm</span><span class="o">.</span><span class="n">apply_properties_from_dict</span><span class="p">(</span>
+                    <span class="n">s_dict</span><span class="p">,</span> <span class="n">materials</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">bound</span><span class="p">,</span> <span class="n">b_dict</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">boundaries</span><span class="p">,</span> <span class="n">boundary_t_dicts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">b_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">bound</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">therm</span><span class="o">.</span><span class="n">apply_properties_from_dict</span><span class="p">(</span><span class="n">b_dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.to_dict">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return Model therm properties as a dictionary.&quot;&quot;&quot;</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;therm&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ModelThermProperties&#39;</span><span class="p">}}</span>
+        <span class="c1"># add the materials to the dictionary</span>
+        <span class="n">all_mats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">materials</span>
+        <span class="n">gases</span><span class="p">,</span> <span class="n">pure_gases</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_mats</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;materials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">all_mats</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">CavityMaterial</span><span class="p">):</span>
+                    <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;materials&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">abridged</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                    <span class="n">gases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">gas</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">pg</span> <span class="ow">in</span> <span class="n">mat</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">pure_gases</span><span class="p">:</span>
+                        <span class="n">pure_gases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># SolidMaterial</span>
+                    <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;materials&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gases</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;gases&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">abridged</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">gases</span><span class="p">)]</span>
+                <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;pure_gases&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">pg</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">pg</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">pure_gases</span><span class="p">)]</span>
+        <span class="c1"># add the conditions to the dictionary</span>
+        <span class="n">all_conds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_conds</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;conditions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">all_conds</span><span class="p">:</span>
+                <span class="n">base</span><span class="p">[</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;conditions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">base</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.duplicate">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.duplicate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_host</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a copy of this object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_host: A new Model object that hosts these properties.</span>
+<span class="sd">                If None, the properties will be duplicated with the same host.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_host</span> <span class="o">=</span> <span class="n">new_host</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
+        <span class="k">return</span> <span class="n">ModelThermProperties</span><span class="p">(</span><span class="n">_host</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelThermProperties.load_properties_from_dict">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.load_properties_from_dict">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_properties_from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">skip_invalid</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load model therm properties of a dictionary to Python objects.</span>
+
+<span class="sd">        Loaded objects include Materials, Boundaries, Gases, and PureGases.</span>
+
+<span class="sd">        The function is called when re-serializing a Model object from a dictionary</span>
+<span class="sd">        to load fairyfly_therm objects into their Python object form before</span>
+<span class="sd">        applying them to the Model geometry.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: A dictionary representation of an entire fairyfly-core Model.</span>
+<span class="sd">                Note that this dictionary must have ModelThermProperties in order</span>
+<span class="sd">                for this method to successfully load the therm properties.</span>
+<span class="sd">            skip_invalid: A boolean to note whether objects that cannot be loaded</span>
+<span class="sd">                should be ignored (True) or whether an exception should be raised</span>
+<span class="sd">                about the invalid object (False). (Default: False).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple with eight elements</span>
+
+<span class="sd">            -   materials -- A dictionary with identifiers of materials as keys</span>
+<span class="sd">                and Python material objects as values.</span>
+
+<span class="sd">            -   conditions -- A dictionary with identifiers of conditions</span>
+<span class="sd">                as keys and Python boundary objects as values.</span>
+
+<span class="sd">            -   gases -- A dictionary with identifiers of gases as keys and</span>
+<span class="sd">                Python gas objects as values.</span>
+
+<span class="sd">            -   pure_gases -- A dictionary with identifiers of pure gases</span>
+<span class="sd">                and Python PureGas objects as values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;therm&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">],</span> \
+            <span class="s1">&#39;Dictionary possesses no ModelThermProperties.&#39;</span>
+
+        <span class="c1"># process all pure gases in the ModelThermProperties dictionary</span>
+        <span class="n">pure_gases</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;pure_gases&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;pure_gases&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pg</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;pure_gases&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">pure_gases</span><span class="p">[</span><span class="n">pg</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">PureGas</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">pg</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_invalid</span><span class="p">:</span>
+                        <span class="n">invalid_dict_error</span><span class="p">(</span><span class="n">pg</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># process all gases in the ModelThermProperties dictionary</span>
+        <span class="n">gases</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;gases&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;gases&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;gases&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Gas&#39;</span><span class="p">:</span>
+                        <span class="n">gases</span><span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Gas</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">gases</span><span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Gas</span><span class="o">.</span><span class="n">from_dict_abridged</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">pure_gases</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_invalid</span><span class="p">:</span>
+                        <span class="n">invalid_dict_error</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># process all materials in the ModelThermProperties dictionary</span>
+        <span class="n">materials</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;materials&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;materials&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;materials&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">MATERIAL_TYPES</span><span class="p">:</span>
+                        <span class="n">materials</span><span class="p">[</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict_to_material</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">materials</span><span class="p">[</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> \
+                            <span class="n">dict_abridged_to_material</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">gases</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_invalid</span><span class="p">:</span>
+                        <span class="n">invalid_dict_error</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># process all conditions in the ModelThermProperties dictionary</span>
+        <span class="n">conditions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;conditions&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;conditions&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;therm&#39;</span><span class="p">][</span><span class="s1">&#39;conditions&#39;</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">conditions</span><span class="p">[</span><span class="n">con</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]]</span> <span class="o">=</span> \
+                        <span class="n">SteadyState</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_invalid</span><span class="p">:</span>
+                        <span class="n">invalid_dict_error</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">materials</span><span class="p">,</span> <span class="n">conditions</span><span class="p">,</span> <span class="n">gases</span><span class="p">,</span> <span class="n">pure_gases</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_instance_in_array</span><span class="p">(</span><span class="n">object_instance</span><span class="p">,</span> <span class="n">object_array</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a specific object instance is already in an array.</span>
+
+<span class="sd">        This can be much faster than  `if object_instance in object_array`</span>
+<span class="sd">        when you expect to be testing a lot of the same instance of an object for</span>
+<span class="sd">        inclusion in an array since the builtin method uses an == operator to</span>
+<span class="sd">        test inclusion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">object_array</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="n">object_instance</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="ModelThermProperties.ToString">
+<a class="viewcode-back" href="../../../fairyfly_therm.properties.model.html#fairyfly_therm.properties.model.ModelThermProperties.ToString">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ToString</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Model Therm Properties: [host: </span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span></div>
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2026, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

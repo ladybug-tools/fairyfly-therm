@@ -1,0 +1,22 @@
+fairyfly\_therm.material package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.material.cavity
+   fairyfly_therm.material.dictutil
+   fairyfly_therm.material.gas
+   fairyfly_therm.material.solid
+   fairyfly_therm.material.xmlutil
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm.material
+   :members:
+   :undoc-members:
+   :show-inheritance:

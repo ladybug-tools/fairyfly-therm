@@ -1,0 +1,20 @@
+fairyfly\_therm.lib package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.lib.conditions
+   fairyfly_therm.lib.gases
+   fairyfly_therm.lib.materials
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm.lib
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+fairyfly\_therm.cli.simulate module
+===================================
+
+.. automodule:: fairyfly_therm.cli.simulate
+   :members:
+   :undoc-members:
+   :show-inheritance:
