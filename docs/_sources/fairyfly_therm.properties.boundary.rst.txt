@@ -1,0 +1,7 @@
+fairyfly\_therm.properties.boundary module
+==========================================
+
+.. automodule:: fairyfly_therm.properties.boundary
+   :members:
+   :undoc-members:
+   :show-inheritance:

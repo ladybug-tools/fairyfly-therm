@@ -1,0 +1,7 @@
+fairyfly\_therm.material.solid module
+=====================================
+
+.. automodule:: fairyfly_therm.material.solid
+   :members:
+   :undoc-members:
+   :show-inheritance:

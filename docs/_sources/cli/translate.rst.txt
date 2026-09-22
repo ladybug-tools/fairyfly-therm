@@ -1,0 +1,6 @@
+translate
+=========
+
+.. click:: fairyfly_therm.cli.translate:translate
+   :prog: fairyfly-therm translate
+   :show-nested:

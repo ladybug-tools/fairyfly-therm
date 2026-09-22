@@ -1,0 +1,20 @@
+fairyfly\_therm.cli package
+===========================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   fairyfly_therm.cli.setconfig
+   fairyfly_therm.cli.simulate
+   fairyfly_therm.cli.translate
+
+Module contents
+---------------
+
+.. automodule:: fairyfly_therm.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:

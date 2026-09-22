@@ -1,0 +1,7 @@
+fairyfly\_therm.lib.materials module
+====================================
+
+.. automodule:: fairyfly_therm.lib.materials
+   :members:
+   :undoc-members:
+   :show-inheritance:
