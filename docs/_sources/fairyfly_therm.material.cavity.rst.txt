@@ -1,0 +1,7 @@
+fairyfly\_therm.material.cavity module
+======================================
+
+.. automodule:: fairyfly_therm.material.cavity
+   :members:
+   :undoc-members:
+   :show-inheritance:
