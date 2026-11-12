@@ -1,0 +1,7 @@
+fairyfly\_therm.run module
+==========================
+
+.. automodule:: fairyfly_therm.run
+   :members:
+   :undoc-members:
+   :show-inheritance:

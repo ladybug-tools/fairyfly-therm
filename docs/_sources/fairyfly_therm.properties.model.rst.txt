@@ -1,0 +1,7 @@
+fairyfly\_therm.properties.model module
+=======================================
+
+.. automodule:: fairyfly_therm.properties.model
+   :members:
+   :undoc-members:
+   :show-inheritance:
