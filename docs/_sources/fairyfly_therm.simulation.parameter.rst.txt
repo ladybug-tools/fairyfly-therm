@@ -1,0 +1,7 @@
+fairyfly\_therm.simulation.parameter module
+===========================================
+
+.. automodule:: fairyfly_therm.simulation.parameter
+   :members:
+   :undoc-members:
+   :show-inheritance:

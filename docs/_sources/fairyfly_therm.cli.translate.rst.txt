@@ -1,0 +1,7 @@
+fairyfly\_therm.cli.translate module
+====================================
+
+.. automodule:: fairyfly_therm.cli.translate
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+fairyfly\_therm.result module
+=============================
+
+.. automodule:: fairyfly_therm.result
+   :members:
+   :undoc-members:
+   :show-inheritance:
